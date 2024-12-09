@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import MainLayout from "../layout/MainLayout"
-import Loading from "./others/loading-image"
 import { StyledEngineProvider } from "@mui/material/styles"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment"
@@ -62,9 +61,6 @@ const App = (props) => {
  const checkApp = () => {
   const { loading, hasLayout } = state
 
-  if (loading) {
-   return <Loading />
-  }
   if (hasLayout) {
    return <MainLayout>{React.Children.only(props.children)}</MainLayout>
   }

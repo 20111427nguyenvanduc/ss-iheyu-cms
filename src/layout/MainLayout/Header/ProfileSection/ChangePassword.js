@@ -11,7 +11,7 @@ import ModalFooter from "../../../../ui-component/modal/common/Footer"
 import Input from "../../../../ui-component/input/Password"
 //3rd
 import toastr from "toastr"
-import { changePassword } from "../../../../services/authentication"
+// import { changePassword } from "../../../../services/authentication"
 
 export default function ChangePassword({ open, onClose }) {
  const [loading, setLoading] = useState(false)
@@ -55,11 +55,11 @@ export default function ChangePassword({ open, onClose }) {
    confirmPassword: confirmPass,
    user,
   }
-  changePassword(data).then((response) => {
-   if (response.code === 200) {
+//   changePassword(data).then((response) => {
+//    if (response.code === 200) {
     return onClose()
-   }
-  })
+//    }
+//   })
  }
 
  return (

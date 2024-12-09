@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import _ from "lodash"
 import { Box, Button, Container, TextField } from "@mui/material"
 import PasswordInput from "../../ui-component/input/Password"
-import { login } from "../../services/authentication"
+// import { login } from "../../services/authentication"
 import history from "../../core/history"
 import toastr from "toastr"
 
@@ -12,15 +12,15 @@ const Login = (props) => {
 
  const submit = (e) => {
   e.preventDefault()
-  login({
-   username: username.trim(),
-   password: password.trim(),
-   lastpath: localStorage.getItem("last-link"),
-  }).then((res) => {
-   if (_.get(res, "code") === 200) {
-    history.replace(_.get(res, "data"))
-   }
-  })
+//   login({
+//    username: username.trim(),
+//    password: password.trim(),
+//    lastpath: localStorage.getItem("last-link"),
+//   }).then((res) => {
+//    if (_.get(res, "code") === 200) {
+//     history.replace(_.get(res, "data"))
+//    }
+//   })
  }
  return (
   <React.Fragment>

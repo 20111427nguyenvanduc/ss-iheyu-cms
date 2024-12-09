@@ -4,7 +4,7 @@
 export default {
  path: "/",
 
- children: [require("./login").default,   require("./userManager").default, require("./notFound").default],
+ children: [require("./login").default, require("./notFound").default],
 
  async action({next}) {
   const route = await next()

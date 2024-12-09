@@ -12,15 +12,10 @@ class Html extends React.Component {
 
      <title>{title || "HeyCare"}</title>
      <link rel='icon' href='/img/HeyUfavicon.png' />
+     <link href='/css/style.css' rel='stylesheet' />
+     <link href='/css/toastr/toastr.min.css' rel='stylesheet' />
      <link href='/css/bootstrap.css' rel='stylesheet' />
      <link href='/font-awesome/css/font-awesome.css' rel='stylesheet' />
-     {/* <link href='/css/animate.css' rel='stylesheet' /> */}
-     <link href='/css/style.css' rel='stylesheet' />
-     {/* <link href='/css/argon.css' rel='stylesheet' /> */}
-     <link href='/css/toastr/toastr.min.css' rel='stylesheet' />
-     <link href='/fontello/css/heyu.css' rel='stylesheet' />
-     <link href='/penguin-icon/bold/style.css' rel='stylesheet' />
-     <link href='/penguin-icon/linear/style.css' rel='stylesheet' />
      <link
       rel='stylesheet'
       href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css'
@@ -31,24 +26,13 @@ class Html extends React.Component {
      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='true' />
      <link href='https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap' rel='stylesheet' />
      {(styles || []).map((style) => (
-      <style
-       key={style.id}
-       id={style.id}
-       // eslint-disable-next-line react/no-danger
-       dangerouslySetInnerHTML={{ __html: style.cssText }}
-      />
+      <style key={style.id} id={style.id} dangerouslySetInnerHTML={{ __html: style.cssText }} />
      ))}
-     <script src='/js/jquery-2.1.1.js'></script>
+     <script src='/js/jquery-3.7.1.js'></script>
      <script src='/js/bootstrap.min.js'></script>
-     {/* <script src='/js/inspinia.js'></script> */}
-     <script src='https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js'></script>
     </head>
     <body>
-     <div
-      id='app'
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: children }}
-     />
+     <div id='app' dangerouslySetInnerHTML={{ __html: children }} />
 
      {(scripts || []).map((script) => (
       <script key={script} src={script} />

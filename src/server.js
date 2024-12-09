@@ -19,7 +19,6 @@ import assets from "./assets.json" // eslint-disable-line import/no-unresolved
 import { port, MONGO_DB, REDIS } from "./config"
 import _ from "lodash"
 import CONSTANT from "./const"
-import mailer from "./api/mailer"
 
 const app = (global.app = express())
 const multipartMiddleware = multipart()
@@ -34,8 +33,6 @@ global.axios = require("axios")
 global.bcrypt = require("bcrypt")
 global.ms = require("ms")
 global.mongoConnections = require("./connections/mongo")
-global.CONSTANT = CONSTANT
-global.mailer = mailer
 mongoose.Promise = global.Promise
 global.navigator = global.navigator || {}
 global.navigator.userAgent = global.navigator.userAgent || "all"
@@ -105,8 +102,6 @@ if (__DEV__) {
 import ProxyHandle from "./api/proxy"
 
 //middleware
-import UserRolesMiddleware from "./config/userRolesMiddleware"
-
 // -----------------------------------------------------------------------------
 app.get("*", async (req, res, next) => {
  try {
