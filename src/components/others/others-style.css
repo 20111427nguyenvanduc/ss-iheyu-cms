@@ -1,0 +1,48 @@
+.loadingimg {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
+  color: darkred;
+}
+
+.loading {
+  position: fixed;
+  z-index: 9999;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(52, 73, 94, 0.5);
+}
+
+.loadingText {
+  top: 50%;
+  left: 40%;
+}
+
+.update-handler--message {
+  width: 100% !important;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 0;
+}
+
+.update-handler--error {
+  border-radius: 4px;
+  background-color: red;
+  color: white;
+}
+
+.update-handler--success {
+  background-color: green;
+  color: white;
+}
