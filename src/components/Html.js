@@ -12,9 +12,9 @@ class Html extends React.Component {
 
      <title>{title || "HeyCare"}</title>
      <link rel='icon' href='/img/HeyUfavicon.png' />
+     <link href='/css/bootstrap.css' rel='stylesheet' />
      <link href='/css/style.css' rel='stylesheet' />
      <link href='/css/toastr/toastr.min.css' rel='stylesheet' />
-     <link href='/css/bootstrap.css' rel='stylesheet' />
      <link href='/font-awesome/css/font-awesome.css' rel='stylesheet' />
      <link
       rel='stylesheet'

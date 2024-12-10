@@ -4,7 +4,7 @@ const LocalStrategy = require("passport-local").Strategy
 
 passport.use(
  new LocalStrategy((username, password, done) => {
-  Users.findOne({ $or: [{ email: username }, { username }] }).exec((err, user) => {
+  UsersModel.findOne({ $or: [{ email: username }, { username }] }).exec((err, user) => {
    if (err) {
     return done(err)
    }
@@ -43,7 +43,7 @@ passport.use(
 passport.serializeUser((user, done) => done(null, user._id))
 
 passport.deserializeUser((id, done) =>
- Users.findOne({ _id: id })
+ UsersModel.findOne({ _id: id })
   .select("-ip -password -access_token")
   .exec((err, user) => done(err, user)),
 )

@@ -108,11 +108,14 @@ const NavCollapse = ({ menu, level, drawerOpen }) => {
 
  const checkRole = () => {
   const roles = menu.children ? menu.children.map((item) => item.role).flat(1) : []
-  if (!user.roles) {
+  if (_.isEmpty(roles)) {
+   return true
+  }
+  if (!user.roles || _.isEmpty(user.roles)) {
    return false
   }
   return roles ? roles.some((rol) => user.roles[rol]) : false
- }
+ } 
  if (!checkRole()) {
   return null
  }

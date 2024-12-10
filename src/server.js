@@ -9,21 +9,19 @@ import UniversalRouter from "universal-router"
 import PrettyError from "pretty-error"
 import App from "./components/App"
 import Html from "./components/Html"
-import { ErrorPageWithoutStyle } from "./routes/error/ErrorPage"
-import errorPageStyle from "./routes/error/ErrorPage.css"
+import { ErrorPageWithoutStyle } from "./pages/error/ErrorPage"
+import errorPageStyle from "./pages/error/ErrorPage.css"
 import routes from "./routes"
 import fs from "fs.extra"
 import multipart from "connect-multiparty"
 import passport from "passport"
 import assets from "./assets.json" // eslint-disable-line import/no-unresolved
-import { port, MONGO_DB, REDIS } from "./config"
 import _ from "lodash"
 import CONSTANT from "./const"
-
+import { port, REDIS } from "./config"
 const app = (global.app = express())
 const multipartMiddleware = multipart()
 const redis = require("redis")
-
 global.mongoose = require("mongoose")
 global.moment = require("moment")
 global.request = require("request")
@@ -33,16 +31,18 @@ global.axios = require("axios")
 global.bcrypt = require("bcrypt")
 global.ms = require("ms")
 global.mongoConnections = require("./connections/mongo")
+global.CONSTANT = CONSTANT
 mongoose.Promise = global.Promise
 global.navigator = global.navigator || {}
 global.navigator.userAgent = global.navigator.userAgent || "all"
+global.redisClient = redis.createClient(REDIS)
 
 fs.readdirSync(`${__dirname}/data`).forEach((file) => {
- global[_.upperFirst(_.camelCase(file.replace(".js", "")))] = require(`${__dirname}/data/${file}`)
+ global[_.upperFirst(_.camelCase(file.replace(".js", "Model")))] = require(`${__dirname}/data/${file}`)
 })
 
 fs.readdirSync(`${__dirname}/dataRead`).forEach((file) => {
- global[_.upperFirst(_.camelCase(file.replace(".js", "Read")))] = require(`${__dirname}/dataRead/${file}`)
+ global[_.upperFirst(_.camelCase(file.replace(".js", "ReadModel")))] = require(`${__dirname}/dataRead/${file}`)
 })
 //
 // Register Node.js middleware
@@ -56,23 +56,24 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({ limit: "50mb" }))
 
 let RedisStore = require("connect-redis")(session)
-let redisClient = redis.createClient(REDIS)
 redisClient.on("ready", (err) => {
-  console.info(`[REDIS-${REDIS.host}] - READY`)
-  setInterval(() => {
-   redisClient.ping((err, data) => {
-    if (err) console.error("Redis keepalive error", err)
-   })
-  }, 30000)
- })
-redisClient.on('ready', (err) => {
-  console.log(`[REDIS] - READY`)
-  setInterval(() => {
-    redisClient.ping((err,data) => {
-      if (err) console.error('Redis keepalive error', err);
-    });
-  }, 30000);
+ console.info(`[REDIS-${REDIS.host}] - READY`)
+ setInterval(() => {
+  redisClient.ping((err, data) => {
+   if (err) console.error("Redis keepalive error", err)
+  })
+ }, 30000)
 })
+
+redisClient.on("ready", (err) => {
+ console.log(`[REDIS] - READY`)
+ setInterval(() => {
+  redisClient.ping((err, data) => {
+   if (err) console.error("Redis keepalive error", err)
+  })
+ }, 30000)
+})
+
 app.use(
  session({
   secret: "heycare-cms-token-user",
@@ -87,7 +88,8 @@ app.use(
 )
 app.use(passport.initialize())
 app.use(passport.session())
-
+//middleware
+// -----------------------------------------------------------------------------
 require("./config/middleware")
 require("./config/authentication")
 require("./api")
@@ -96,17 +98,9 @@ if (__DEV__) {
  app.enable("trust proxy")
 }
 
-//
-// Routes
-// -----------------------------------------------------------------------------
-import ProxyHandle from "./api/proxy"
-
-//middleware
-// -----------------------------------------------------------------------------
 app.get("*", async (req, res, next) => {
  try {
   const css = new Set()
-
   // Global (context) variables that can be easily accessed from any React component
   // https://facebook.github.io/react/docs/context.html
   const context = {

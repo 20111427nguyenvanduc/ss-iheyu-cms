@@ -2,10 +2,11 @@ const UserSchema = new mongoose.Schema(
  {
   email: {
    type: String,
-   default: null,
+   default: "",
   },
   username: {
    type: String,
+   default: "",
   },
   password: {
    type: String,
@@ -20,10 +21,11 @@ const UserSchema = new mongoose.Schema(
   },
   phone: {
    type: String,
-   default: null,
+   default: "",
   },
   code: {
    type: String,
+   default: "",
   },
   createdAt: { type: Number, default: Date.now },
   updatedAt: { type: Number, default: Date.now },
@@ -34,9 +36,6 @@ const UserSchema = new mongoose.Schema(
   region: {
    type: String,
   },
-  workingRegion: {
-   type: mongoose.Schema.Types.Mixed,
-  },
   roles: {
    type: mongoose.Schema.Types.Object,
   },
@@ -44,4 +43,4 @@ const UserSchema = new mongoose.Schema(
  { id: false, versionKey: "v" },
 )
 
-module.exports = mongoConnections("master").model("UserHeyCare", UserSchema)
+module.exports = mongoConnections("master").model("User", UserSchema)

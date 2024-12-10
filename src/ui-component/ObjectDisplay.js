@@ -1,6 +1,5 @@
 import React from "react";
 import _ from "lodash";
-import toastr from "toastr";
 import { Box, ButtonBase } from "@mui/material";
 import Copy from './Copy'
 const keysTrans = {

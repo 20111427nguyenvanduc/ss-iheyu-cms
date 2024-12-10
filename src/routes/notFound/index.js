@@ -1,21 +1,16 @@
+import React from "react"
+import NotFound from "../../pages/notFound"
 
-
-import React from 'react';
-
-import NotFound from './NotFound';
-
-const title = 'Page Not Found';
+const title = "Page Not Found"
 
 export default {
+ path: "*",
 
-  path: '*',
-
-  action() {
-    return {
-      title,
-      component: <NotFound title={title} />,
-      status: 404,
-    };
-  },
-
-};
+ action() {
+  return {
+   title,
+   component: <NotFound title={title} />,
+   status: 404,
+  }
+ },
+}

@@ -14,9 +14,9 @@ const dashboard = {
    id: "manager-user",
    title: "Quản lý tài khoản",
    type: "item",
-   url: "/admin/user-manager",
+   url: "/user-manager",
    icon: ManageAccountsIcon,
-   role: ["userManager"],
+//    role: [""],
   },
  ],
 }

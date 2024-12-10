@@ -14,5 +14,21 @@ var ActivityLog = new mongoose.Schema({
  region: { type: String },
 })
 
-// module.exports = mongoose.model('ActivityLog', ActivityLog);
+ActivityLog.statics.createLog = function (body, user, cb = () => {}) {
+ const { action, reason, phone, member, data } = body
+ this.create(
+  {
+   author: _.get(user, "fullName") || `${_.get(user, "name.first")} ${_.get(user, "name.last")}`,
+   action,
+   phone,
+   reason,
+   userId: _.get(user, "_id"),
+   data,
+   member,
+   region: _.get(user, "region"),
+  },
+  cb,
+ )
+}
+
 module.exports = mongoConnections("master").model("ActivityLog", ActivityLog)

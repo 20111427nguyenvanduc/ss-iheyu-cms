@@ -13,7 +13,7 @@ import axios from "../../services/axios"
 import { MENU_OPEN, SET_MENU } from "../../store/actions"
 import { drawerWidth } from "../../store/constant"
 // import { getRegion } from "../../services/app"
-// import { getUserInf } from "../../services/authentication"
+import { getUserInf } from "../../services/authentication"
 
 const Main = styled(Box, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
  backgroundColor: theme.palette.background.main,
@@ -47,11 +47,11 @@ export default function MiniDrawer({ children }) {
  }
 
  const getInitState = () => {
-//   getUserInf({}).then((response) => {
-//    const user = _.get(response, "data")
-//    localStorage.setItem("user", JSON.stringify(user))
-//    dispatch({ type: SET_USER, payload: user })
-//   })
+  getUserInf({}).then((response) => {
+   const user = _.get(response, "data")
+   localStorage.setItem("user", JSON.stringify(user))
+   dispatch({ type: SET_USER, payload: user })
+  })
 //   getRegion({}).then((response) => {
 //    const regions = _.get(response, "data")
 //    dispatch({ type: SET_REGIONS, payload: regions })

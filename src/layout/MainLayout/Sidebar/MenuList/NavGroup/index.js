@@ -72,9 +72,9 @@ const NavGroup = ({ item, drawerOpen }) => {
     )
   }
  })
- if (!roles.some((role) => user.roles[role] === 1)) {
-  return null
- }
+//  if (!roles.some((role) => _.get(user, `roles.${role}`) === 1)) {
+//   return null
+//  }
 //  const isActived = urls.includes(item.url)
  return (
   <React.Fragment>

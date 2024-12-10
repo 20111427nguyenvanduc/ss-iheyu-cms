@@ -24,7 +24,6 @@ async function copy() {
     copyDir('public', 'build/public'),
     copyDir('src/data', 'build/data'),
     copyDir('src/dataRead', 'build/dataRead'),
-    copyDir('src/content', 'build/content'),
   ]);
 
   if (process.argv.includes('--watch')) {

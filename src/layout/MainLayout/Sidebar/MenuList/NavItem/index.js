@@ -79,7 +79,10 @@ const NavItem = ({ item, level, drawerOpen, handleCloseMenu }) => {
  }
 
  const checkRole = () => {
-  if (!user.roles) {
+  if (_.isEmpty(item.role) || !item.role) {
+   return true
+  }
+  if (!user.roles || _.isEmpty(user.roles)) {
    return false
   }
   return item.role ? item.role.some((rol) => user.roles[rol]) : false
@@ -87,7 +90,7 @@ const NavItem = ({ item, level, drawerOpen, handleCloseMenu }) => {
  if (!checkRole()) {
   return null
  }
- const isActived = _.get(history, 'location.pathname') === item.url
+ const isActived = _.get(history, "location.pathname") === item.url
  return (
   <ListItemButton
    component='a'
@@ -102,7 +105,7 @@ const NavItem = ({ item, level, drawerOpen, handleCloseMenu }) => {
     borderRadius: `${customization.borderRadius}px`,
     alignItems: "flex-start",
     justifyContent: "center",
-    backgroundColor: isActived ? 'rgba(20, 161, 255, 0.15)' : level > 1 ? "transparent !important" : "inherit",
+    backgroundColor: isActived ? "rgba(20, 161, 255, 0.15)" : level > 1 ? "transparent !important" : "inherit",
    }}
    selected={customization.isOpen.findIndex((id) => id === item.id) > -1}
    onClick={(e) => itemHandler(item.id, item.url, e)}
