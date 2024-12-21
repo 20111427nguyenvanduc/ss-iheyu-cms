@@ -25,7 +25,7 @@ const App = (props) => {
 
  useEffect(() => {
   const { pathname } = history.location
-  const checkLayout = !["/login"].includes(pathname)
+  const checkLayout = !["/login", "/forgot-password"].includes(pathname)
 
   if (checkLayout !== state.hasLayout) {
    setState({
@@ -64,7 +64,7 @@ const App = (props) => {
   if (hasLayout) {
    return <MainLayout>{React.Children.only(props.children)}</MainLayout>
   }
-  return <div style={{ width: "100%", height: "100%" }}>{React.Children.only(props.children)}</div>
+  return <div className="layout-container-login" style={{ width: "100%", height: "100%" }}>{React.Children.only(props.children)}</div>
  }
 
  return (
