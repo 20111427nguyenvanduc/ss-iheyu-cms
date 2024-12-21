@@ -8860,3 +8860,8 @@ body.md-skin {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.layout-container-login{
+  background-image: url(/images/login/background.png);
+  background-size: cover;
+}

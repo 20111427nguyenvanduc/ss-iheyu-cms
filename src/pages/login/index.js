@@ -1,50 +1,133 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 import _ from "lodash"
-import { Box, Button, Container, TextField } from "@mui/material"
+import {Box, Button, Container, TextField, Grid, Typography, Stack, Divider, FormGroup, FormControlLabel, Checkbox} from "@mui/material"
 import PasswordInput from "../../ui-component/input/Password"
-import { login } from "../../services/authentication"
+import {login} from "../../services/authentication"
 import history from "../../core/history"
+import Link from "../../components/Link"
 
 const Login = (props) => {
  const [username, setUsername] = useState("")
  const [password, setPassword] = useState("")
+ const [rememberMe, setRememberMe] = useState(true)
+
+ const handleRememberMeChange = (event) => {
+  setRememberMe(event.target.checked)
+ }
 
  const submit = (e) => {
   e.preventDefault()
   login({
    username: username.trim(),
    password: password.trim(),
+   rememberMe: rememberMe, // Truyền trạng thái ghi nhớ
    lastpath: localStorage.getItem("last-link"),
   }).then((res) => {
    if (_.get(res, "code") === 200) {
+    if (rememberMe) {
+     localStorage.setItem("username", username) // Lưu tên đăng nhập nếu được chọn
+    } else {
+     localStorage.removeItem("username") // Xóa nếu không được chọn
+    }
     history.replace(_.get(res, "data"))
    }
   })
  }
+
  return (
   <React.Fragment>
-   <Container maxWidth='sm'>
-    <form onSubmit={submit}>
-     <Box sx={{ height: "100vh" }} display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px'>
-      <img style={{ width: "auto", height: "auto", maxWidth: "400px", maxHeight: "200px" }} src='/img/loginLogo.png' />
-      <Box sx={{ width: "100%", maxWidth: "400px" }} display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='10px'>
-       <TextField
-        fullWidth
-        label='Tên đăng nhập/email'
-        variant='outlined'
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        autoFocus
-        inputProps={{ name: "username", ariallabel: "username" }}
-       />
-       <PasswordInput fullWidth label='Mật khẩu' variant='outlined' value={password} onChange={(e) => setPassword(e.target.value)} inputProps={{ name: "password", ariallabel: "password" }} />
-       <Button fullWidth variant='contained' type='submit'>
-        Đăng nhập
-       </Button>
-      </Box>
-     </Box>
-    </form>
-   </Container>
+   <Grid container direction='row' justifyContent='center' alignItems='center' style={{minHeight: "100vh"}}>
+    <Grid item>
+     <Grid container style={{maxWidth: "808px", height: "auto"}}>
+      <Grid item xs={12} md={6} display={{xs: "none", md: "block"}}>
+       <img style={{width: "100%", height: "100%", borderRadius: "24px 0px 0px 24px"}} src='/images/login/city.png'></img>
+      </Grid>
+      <Grid item xs={12} md={6} lg={6}>
+       <Box p={3} style={{width: "100%", height: "100%", display: "flex", flexDirection: "column", backgroundColor: "#ffffff"}} sx={{borderRadius: {xs: "24px", md: "0px 24px 24px 0px"}}}>
+        <form onSubmit={submit}>
+         <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
+          <img style={{width: "auto", height: "auto", maxWidth: "56px", maxHeight: "56px"}} src='/images/logo.png' />
+          <Box>
+           <Typography variant='h5' sx={{fontSize: "16px", color: "#021E38", fontWeight: 500}}>
+            HỆ THỐNG QUẢN TRỊ
+           </Typography>
+           <Typography variant='h5' sx={{fontSize: "16px", color: "#021E38", fontWeight: 500}}>
+            ỨNG DỤNG CÔNG DÂN SỐ HẢI PHÒNG
+           </Typography>
+          </Box>
+         </Stack>
+
+         <Divider sx={{margin: "24px 0"}} />
+
+         <Typography variant='h5' sx={{fontSize: "20px", color: "#021E38", fontWeight: 500, textAlign: "center"}}>
+          Đăng nhập
+         </Typography>
+
+         <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px' mt={3}>
+          <Box sx={{width: "100%", maxWidth: "400px"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
+           <Typography variant='h5' sx={{fontSize: "16px", color: "#021E38", fontWeight: 500}}>
+            Tên đăng nhập
+           </Typography>
+           <TextField
+            fullWidth
+            label='Nhập tên đăng nhập'
+            variant='outlined'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoFocus
+            inputProps={{name: "username", ariallabel: "username"}}
+            InputProps={{
+             sx: {borderRadius: "12px"},
+            }}
+           />
+           <Typography variant='h5' sx={{fontSize: "16px", color: "#021E38", fontWeight: 500}}>
+            Mật khẩu
+           </Typography>
+           <PasswordInput fullWidth label='Nhập mật khẩu' variant='outlined' value={password} onChange={(e) => setPassword(e.target.value)} inputProps={{name: "password", ariallabel: "password"}} />
+           <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center", width: "100%"}}>
+            <FormGroup>
+             <FormControlLabel
+              control={
+               <Checkbox
+                checked={rememberMe}
+                onChange={handleRememberMeChange} // Liên kết sự kiện thay đổi
+               />
+              }
+              label={
+               <Typography variant='h5' sx={{fontSize: "16px", color: "#2E3236"}}>
+                Ghi nhớ đăng nhập
+               </Typography>
+              }
+             />
+            </FormGroup>
+            <Typography variant='h5' sx={{fontSize: "16px", color: "#007CFE", fontWeight: 600}}>
+             <Link title={"Quên mật khẩu?"} to={"/forgot-password"}>
+              Quên mật khẩu?
+             </Link>
+            </Typography>
+           </Stack>
+
+           <Button fullWidth variant='contained' type='submit' sx={{borderRadius: "12px", background: "#007CFE", fontSize: "16px", padding: "12px"}}>
+            Đăng nhập
+           </Button>
+          </Box>
+         </Box>
+        </form>
+       </Box>
+      </Grid>
+     </Grid>
+     {/* <Grid container mt={8}>
+      <Grid item xs={12} sx={{textAlign: "center"}}>
+       <Typography variant='h5' sx={{fontSize: "18px", color: "#F3F3F3", fontWeight: 600}}>
+        GIẢI PHÁP CÔNG NGHỆ CỦA CÔNG TY
+       </Typography>
+       <Typography variant='h5' sx={{fontSize: "18px", color: "#F3F3F3", fontWeight: 500, marginTop: "8px"}}>
+        Công ty Cổ Phần Công Nghệ HeyU Việt Nam
+       </Typography>
+      </Grid>
+     </Grid> */}
+    </Grid>
+   </Grid>
   </React.Fragment>
  )
 }
