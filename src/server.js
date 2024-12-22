@@ -76,13 +76,13 @@ redisClient.on("ready", (err) => {
 
 app.use(
  session({
-  secret: "heycare-cms-token-user",
-  key: "heycare-cms-token-user",
+  secret: "iheyu-token-cms",
+  key: "iheyu-token-cms",
   resave: false,
   saveUninitialized: false,
   store: new RedisStore({ client: redisClient }),
   cookie: {
-   maxAge: ms("7d"),
+   maxAge: ms("90d"),
   },
  }),
 )

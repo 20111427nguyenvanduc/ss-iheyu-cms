@@ -21,7 +21,7 @@ import MailIcon from "@mui/icons-material/Mail"
 
 import { drawerWidth } from "../../../store/constant"
 import MenuList from "./MenuList"
-import Header from "../Header"
+import Header from "./Header"
 
 const openedMixin = (theme) => ({
  width: drawerWidth,

@@ -10,7 +10,7 @@ import Logo from "../../../ui-component/Logo"
 
 const LogoSection = () => (
  <ButtonBase disableRipple>
-  <img alt='image' src='/tile-wide.png' width='auto' height='40' />
+  <img alt='image' src='/images/logo.png' width='auto' height='40' />
  </ButtonBase>
 )
 

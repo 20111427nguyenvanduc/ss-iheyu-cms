@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles"
 import { Box, useMediaQuery } from "@mui/material"
 import { SET_USER, SET_REGIONS, SET_ORDER_TYPES } from "../../store/actions"
 import { blueGray } from "@mui/material/colors"
+import Header from "./Header"
 import Sidebar from "./Sidebar"
 import themes from "../../themes"
 import CssBaseline from "@mui/material/CssBaseline"
@@ -52,10 +53,10 @@ export default function MiniDrawer({ children }) {
    localStorage.setItem("user", JSON.stringify(user))
    dispatch({ type: SET_USER, payload: user })
   })
-//   getRegion({}).then((response) => {
-//    const regions = _.get(response, "data")
-//    dispatch({ type: SET_REGIONS, payload: regions })
-//   })
+  //   getRegion({}).then((response) => {
+  //    const regions = _.get(response, "data")
+  //    dispatch({ type: SET_REGIONS, payload: regions })
+  //   })
  }
 
  React.useEffect(() => {
@@ -73,6 +74,8 @@ export default function MiniDrawer({ children }) {
    <Box sx={{ display: "flex", justifyContent: "space-between" }}>
     <Sidebar open={customization.opened} drawerToggle={handleDrawerToggle} />
     <Main component='main' sx={{ flexGrow: 1 }} open={customization.opened}>
+     {/* <Header open={customization.opened} drawerToggle={handleDrawerToggle}/> */}
+     <Header handleLeftDrawerToggle={handleDrawerToggle} drawerOpen={customization.opened} />
      {children}
     </Main>
    </Box>

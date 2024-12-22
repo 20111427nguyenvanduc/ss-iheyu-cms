@@ -9,13 +9,13 @@ import { Drawer, Fab, FormControl, FormControlLabel, Grid, IconButton, Radio, Ra
 import PerfectScrollbar from "react-perfect-scrollbar"
 
 // project imports
-import SubCard from "ui-component/cards/SubCard"
-import AnimateButton from "ui-component/extended/AnimateButton"
+import SubCard from "../../ui-component/cards/SubCard"
+import AnimateButton from "../../ui-component/extended/AnimateButton"
 import { SET_BORDER_RADIUS, SET_FONT_FAMILY } from "store/actions" // THEME_RTL
 import { gridSpacing } from "store/constant"
 
 // assets
-import { IconSettings } from "@tabler/icons"
+import SettingsIcon from '@mui/icons-material/Settings';
 
 // concat 'px'
 function valueText(value) {
@@ -100,7 +100,7 @@ const Customization = () => {
     >
      <AnimateButton type='rotate'>
       <IconButton color='inherit' size='large' disableRipple>
-       <IconSettings />
+       <SettingsIcon />
       </IconButton>
      </AnimateButton>
     </Fab>
