@@ -8,15 +8,15 @@ import Header from "./Header"
 import Sidebar from "./Sidebar"
 import themes from "../../themes"
 import CssBaseline from "@mui/material/CssBaseline"
-import { ThemeProvider } from "@mui/material/styles"
+import {ThemeProvider} from "@mui/material/styles"
 // 3rd party
 import axios from "../../services/axios"
-import { MENU_OPEN, SET_MENU } from "../../store/actions"
-import { drawerWidth } from "../../store/constant"
+import {MENU_OPEN, SET_MENU} from "../../store/actions"
+import {drawerWidth} from "../../store/constant"
 // import { getRegion } from "../../services/app"
-import { getUserInf } from "../../services/authentication"
+import {getUserInf} from "../../services/authentication"
 
-const Main = styled(Box, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
+const Main = styled(Box, {shouldForwardProp: (prop) => prop !== "open"})(({theme, open}) => ({
  backgroundColor: theme.palette.background.main,
  flexGrow: 1,
  height: "100vh",
@@ -40,18 +40,18 @@ const Main = styled(Box, { shouldForwardProp: (prop) => prop !== "open" })(({ th
  },
 }))
 
-export default function MiniDrawer({ children }) {
- const { user, customization } = useSelector((state) => state)
+export default function MiniDrawer({children}) {
+ const {user, customization} = useSelector((state) => state)
  const dispatch = useDispatch()
  const handleDrawerToggle = () => {
-  dispatch({ type: SET_MENU, opened: !customization.opened })
+  dispatch({type: SET_MENU, opened: !customization.opened})
  }
 
  const getInitState = () => {
   getUserInf({}).then((response) => {
    const user = _.get(response, "data")
    localStorage.setItem("user", JSON.stringify(user))
-   dispatch({ type: SET_USER, payload: user })
+   dispatch({type: SET_USER, payload: user})
   })
   //   getRegion({}).then((response) => {
   //    const regions = _.get(response, "data")
@@ -71,7 +71,7 @@ export default function MiniDrawer({ children }) {
  return (
   <ThemeProvider theme={themes(customization)}>
    <CssBaseline />
-   <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+   <Box sx={{display: "flex", justifyContent: "space-between"}}>
     <Sidebar open={customization.opened} drawerToggle={handleDrawerToggle} />
     <Main component='main' sx={{ flexGrow: 1 }} open={customization.opened}>
      {/* <Header open={customization.opened} drawerToggle={handleDrawerToggle}/> */}
