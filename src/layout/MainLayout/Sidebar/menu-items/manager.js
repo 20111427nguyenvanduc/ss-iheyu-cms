@@ -34,6 +34,14 @@ const dashboard = {
     icon: ManageAccountsIcon,
  //    role: [""],
    },
+   {
+    id: "group-permission",
+    title: "Quản lý nhóm chức năng",
+    type: "item",
+    url: "/group-permission",
+    icon: ManageAccountsIcon,
+ //    role: [""],
+   },
  ],
 }
 
