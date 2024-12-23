@@ -1,8 +1,10 @@
-import { Router } from "express"
+import {Router} from "express"
 import passport from "passport"
+import {IHEYU_SERVICE} from "../config"
+import { apiPost } from "./api"
 
 const login = (req, res, next) => {
- const { lastpath, username } = req.body
+ const {lastpath, username} = req.body
  let ip = `${req.headers["x-real-ip"]} ${req.headers["x-forwarded-for"]} ${req.socket.remoteAddress} ${req.ip}`
  passport.authenticate("local", (err, user, info = {}) => {
   if (err) {
@@ -32,7 +34,7 @@ const login = (req, res, next) => {
    if (user) {
     ActivityLogsModel.createLog({
      body: {
-      action: "Đăng nhập thành coong",
+      action: "Đăng nhập thành công",
       reason: ip,
       username,
      },
@@ -41,7 +43,7 @@ const login = (req, res, next) => {
    }
    res.json({
     code: 200,
-    data: lastpath || "/",
+    data: "/",
    })
   }
  })(req, res, next)

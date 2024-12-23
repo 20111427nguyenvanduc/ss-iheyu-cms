@@ -3,6 +3,7 @@ import {mail} from "../config"
 import {eatcake} from "../helpers"
 
 app.use((req, res, next) => {
+
  if (!req.isAuthenticated() && req.originalUrl.indexOf("/forgot-password") >= 0) {
   return next()
  }

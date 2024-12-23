@@ -3,7 +3,7 @@ export default function themePalette(theme) {
  return {
   mode: theme.customization.mode || "light",
   background: {
-   main: theme.customization.mode === "dark" ? "#121212" : "#EEF2F6",
+   main: theme.customization.mode === "dark" ? "#121212" : "#FFF",
   },
   text:
    theme.customization.mode === "dark"

@@ -20,16 +20,11 @@ const Login = (props) => {
   login({
    username: username.trim(),
    password: password.trim(),
-   rememberMe: rememberMe, // Truyền trạng thái ghi nhớ
-   lastpath: localStorage.getItem("last-link"),
+   //    rememberMe: rememberMe, // Truyền trạng thái ghi nhớ
+   //    lastpath: localStorage.getItem("last-link"),
   }).then((res) => {
    if (_.get(res, "code") === 200) {
-    if (rememberMe) {
-     localStorage.setItem("username", username) // Lưu tên đăng nhập nếu được chọn
-    } else {
-     localStorage.removeItem("username") // Xóa nếu không được chọn
-    }
-    history.replace(_.get(res, "data"))
+    history.replace("/")
    }
   })
  }
