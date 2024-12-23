@@ -70,7 +70,7 @@ const ForgotPassword = (props) => {
             </Typography>
             <TextField
              fullWidth
-             label='Nhập tên đăng nhập'
+             placeholder='Nhập tên đăng nhập'
              variant='outlined'
              value={username}
              onChange={(e) => setUsername(e.target.value)}
@@ -102,7 +102,7 @@ const ForgotPassword = (props) => {
             </Typography>
             <TextField
              fullWidth
-             label='Nhập mã xác thực'
+             placeholder='Nhập mã xác thực'
              variant='outlined'
              value={otp}
              onChange={(e) => setOtp(e.target.value)}
@@ -136,7 +136,7 @@ const ForgotPassword = (props) => {
             </Typography>
             <PasswordInput
              fullWidth
-             label='Nhập mật khẩu mới'
+             placeholder='Nhập mật khẩu mới'
              variant='outlined'
              value={newPassword}
              onChange={(e) => setNewPassword(e.target.value)}
@@ -147,7 +147,7 @@ const ForgotPassword = (props) => {
             </Typography>
             <PasswordInput
              fullWidth
-             label='Nhập lại mật khẩu mới'
+             placeholder='Nhập lại mật khẩu mới'
              variant='outlined'
              value={confirmPassword}
              onChange={(e) => setConfirmPassword(e.target.value)}

@@ -10,19 +10,11 @@ export default {
   require("./login").default,
   require("./forgotPassword").default,
   require("./home").default,
-  require("./groupPermission").default,
   require("./permissions").default,
   require("./role").default,
-  {
-   path: "/group-permission/:id",
-   action({params}) {
-    const {id} = params
-    return {
-     title: `Chi tiết của nhóm quyền`,
-     component: <GroupPermissionDetail id={id} />,
-    }
-   },
-  },
+  require("./groupPermission").default,
+  require("./groupPermission/detail").default,
+  require("./userManager").default,
   require("./notFound").default,
  ],
 

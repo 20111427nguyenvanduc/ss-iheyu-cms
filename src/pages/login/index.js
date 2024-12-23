@@ -65,7 +65,7 @@ const Login = (props) => {
            </Typography>
            <TextField
             fullWidth
-            label='Nhập tên đăng nhập'
+            placeholder='Nhập tên đăng nhập'
             variant='outlined'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -78,7 +78,7 @@ const Login = (props) => {
            <Typography variant='h5' sx={{fontSize: "16px", color: "#021E38", fontWeight: 500}}>
             Mật khẩu
            </Typography>
-           <PasswordInput fullWidth label='Nhập mật khẩu' variant='outlined' value={password} onChange={(e) => setPassword(e.target.value)} inputProps={{name: "password", ariallabel: "password"}} />
+           <PasswordInput fullWidth placeholder='Nhập mật khẩu' variant='outlined' value={password} onChange={(e) => setPassword(e.target.value)} inputProps={{name: "password", ariallabel: "password"}} />
            <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center", width: "100%"}}>
             <FormGroup>
              <FormControlLabel

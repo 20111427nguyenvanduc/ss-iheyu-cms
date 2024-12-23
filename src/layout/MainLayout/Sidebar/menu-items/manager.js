@@ -18,6 +18,22 @@ const dashboard = {
    icon: ManageAccountsIcon,
 //    role: [""],
   },
+  {
+    id: "role",
+    title: "Quản lý quyền",
+    type: "item",
+    url: "/role",
+    icon: ManageAccountsIcon,
+ //    role: [""],
+   },
+   {
+    id: "permissions",
+    title: "Quản lý chức năng",
+    type: "item",
+    url: "/permissions",
+    icon: ManageAccountsIcon,
+ //    role: [""],
+   },
  ],
 }
 
