@@ -23,6 +23,11 @@ const StyledBox = styled(Box)(({ theme }) => ({
  justifyContent: "center",
 }))
 
+const StyledButton = styled(Button)(({ theme }) => ({
+ padding: "16px 32px",
+ borderRadius: "16px",
+}))
+
 const Manage = () => {
  const { pathname } = history.location
  const dispatch = useDispatch()
@@ -75,6 +80,11 @@ const Manage = () => {
      <Typography variant='h5' sx={{ fontSize: "22px", color: "#2E3236", fontWeight: 700 }}>
       Quản lý tài khoản
      </Typography>
+     <Link to='/user-manager/add-new-user'>
+      <StyledButton variant='contained' color='info' disableElevation>
+       Thêm mới
+      </StyledButton>
+     </Link>
     </Stack>
    </Box>
    <Box sx={{ p: 2 }}>
@@ -93,7 +103,7 @@ const Manage = () => {
      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", alignItems: "center", margin: "0 24px" }}></Box>
     </SearchHeader>
    </Box>
-   <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}}>
+   <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
     <DataTable
      tableContainerProps={{ sx: { borderRadius: 0 } }}
      heads={["STT", "Họ và tên", "Tên tài khoản", "SĐT", "Đơn vị", "Vai trò", "Trạng thái", "Thao tác"].map((head, i) =>

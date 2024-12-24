@@ -14,13 +14,13 @@ import PasswordInput from "../../ui-component/input/Password"
 import Link from "../../components/Link"
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
-import { get, update, inactive } from "../../services/user"
+import { get, create, update, inactive } from "../../services/user"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import LoadingBackdrop from "../../ui-component/loading/LoadingBackdrop"
 import { list as listUnit } from "../../services/unit"
 import { list as listRole } from "../../services/role"
 import FilterAddPermission from "../../components/GroupPermission/FilterAddPermission"
-
+import CONSTANT from "../../const"
 const StyledBox = styled(Box)(({ theme }) => ({
  display: "flex",
  gap: theme.spacing(1),
@@ -104,12 +104,12 @@ const DetailUser = ({ id }) => {
  }
 
  const getUserInf = (cb) => {
-  if (!id) {
+  if (!id || id === "add-new-user") {
    return cb(null, {})
   }
   get({ id }).then((response) => {
    const { data } = response
-   cb(null, data)
+   cb(null, data || {})
   })
  }
 
@@ -148,6 +148,20 @@ const DetailUser = ({ id }) => {
   initState()
  }, [id])
 
+ const createData = () => {
+  setLoadingSave(true)
+  create(userData)
+   .then((response) => {
+    setLoadingSave(false)
+    if (_.get(response, "code") === CONSTANT.CODE.SUCCESS) {
+     history.push(`/user-manager/${_.get(response, "data")}`)
+    }
+   })
+   .catch(() => {
+    setLoadingSave(false)
+   })
+ }
+
  const updateData = () => {
   setLoadingSave(true)
   update(userData)
@@ -161,7 +175,7 @@ const DetailUser = ({ id }) => {
 
  const handleInactive = () => {
   setLoadingSave(true)
-  inactive({ id })
+  inactive({ id: userData._id })
    .then((res) => {
     setLoadingSave(false)
     history.push("/user-manager")
@@ -250,10 +264,23 @@ const DetailUser = ({ id }) => {
          fullWidth
          placeholder='Nhập mật khẩu'
          variant='outlined'
-         value={id ? "*********" : _.get(userData, "password", "")}
+         value={_.get(userData, '_id') ? "*********" : _.get(userData, "password", "")}
          onChange={(e) => setUserData({ password: e.target.value })}
-         disabled={id ? true : false}
+         disabled={_.get(userData, '_id') ? true : false}
          inputProps={{ name: "password", ariallabel: "password" }}
+        />
+       </Grid>
+       <Grid item xs={12} md={6}>
+        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+         Email
+        </Typography>
+        <StyledTextField
+         fullWidth
+         placeholder='Nhập email'
+         variant='outlined'
+         value={_.get(userData, "email", "")}
+         onChange={(e) => setUserData({ email: e.target.value })}
+         inputProps={{ name: "email", ariallabel: "email" }}
         />
        </Grid>
        <Grid item xs={12} md={6}>
@@ -284,17 +311,22 @@ const DetailUser = ({ id }) => {
        </Grid>
       </Grid>
       <Box sx={{ display: "flex", gap: "16px" }}>
-       {userData.status ? (
+       {_.get(userData, 'status') ? (
         <AlertDialogDelete description={"Bạn muốn xóa tài khoản " + userData.name + "?"} onHandle={handleInactive}>
          <StyledButton variant='contained' color='error' size='large' disableElevation>
           Xóa thành viên
          </StyledButton>
         </AlertDialogDelete>
        ) : null}
-
-       <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={updateData}>
-        Lưu thông tin
-       </StyledLoadingButton>
+       {_.get(userData, '_id') ? (
+        <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={updateData}>
+         Lưu thông tin
+        </StyledLoadingButton>
+       ) : (
+        <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={createData}>
+         Tạo mới
+        </StyledLoadingButton>
+       )}
       </Box>
      </Paper>
     </Box>
