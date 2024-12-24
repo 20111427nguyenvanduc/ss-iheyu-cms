@@ -59,14 +59,14 @@ const AddGroup = ({children, onClose = () => {}}) => {
    </Button>
    <Dialog fullWidth={true} maxWidth={"sm"} open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
     <DialogTitle>
-     <Typography variant='h5' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+     <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
       Thêm nhóm quyền mới{" "}
      </Typography>
     </DialogTitle>
     <DialogContent dividers>
      <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px' mt={1}>
       <Box sx={{width: "100%"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
-       <Typography variant='h5' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
         Tên nhóm quyền
        </Typography>
        <TextField
@@ -75,23 +75,21 @@ const AddGroup = ({children, onClose = () => {}}) => {
         variant='outlined'
         value={name}
         onChange={(e) => setName(e.target.value)}
-        autoFocus
         inputProps={{name: "name", ariallabel: "name"}}
         InputProps={{
          sx: {borderRadius: "16px"},
         }}
        />
-       <Typography variant='h5' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
         Mô tả
        </Typography>
        <TextField
         fullWidth
-        label='Nhập tên nhóm quyền'
+        label='Mô tả nhóm quyền'
         variant='outlined'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        autoFocus
-        inputProps={{name: "name", ariallabel: "name"}}
+        inputProps={{name: "description", ariallabel: "description"}}
         InputProps={{
          sx: {borderRadius: "16px"},
         }}

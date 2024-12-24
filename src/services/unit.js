@@ -19,3 +19,7 @@ export const logout = (body = {}) => {
 export const inactive = (body) => {
  return axios.post("/admin/unit/inactive", body)
 }
+
+export const listLevel = (body) => {
+ return axios.post("/admin/unit/list-level", body)
+}
