@@ -29,13 +29,15 @@ app.post("/admin/role/update", RoleHandle.update)
 app.post("/admin/role/inactive", RoleHandle.inactive)
 
 //unit
-app.post("/admin/role/list", UnitHandle.list)
-app.post("/admin/role/create", UnitHandle.create)
-app.post("/admin/role/update", UnitHandle.update)
-app.post("/admin/role/inactive", UnitHandle.inactive)
+app.post("/admin/unit/list", UnitHandle.list)
+app.post("/admin/unit/create", UnitHandle.create)
+app.post("/admin/unit/update", UnitHandle.update)
+app.post("/admin/unit/inactive", UnitHandle.inactive)
+app.post("/admin/unit/list-level", UnitHandle.listLevel)
 
 //user
 app.post("/admin/user/list", UserHandle.list)
 app.post("/admin/user/create", UserHandle.create)
 app.post("/admin/user/update", UserHandle.update)
 app.post("/admin/user/inactive", UserHandle.inactive)
+

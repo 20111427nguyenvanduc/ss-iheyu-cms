@@ -13,6 +13,7 @@ const AddPermission = ({groupPermission, handleAddPermission}) => {
  const [open, setOpen] = React.useState(false)
  const [name, setName] = useState("")
  const [code, setCode] = useState("")
+ const [description, setDescription] = useState("")
 
  const handleClickOpen = () => {
   setOpen(true)
@@ -25,6 +26,7 @@ const AddPermission = ({groupPermission, handleAddPermission}) => {
  const resetState = () => {
   setName("")
   setCode("")
+  setDescription("")
  }
 
  const handleCreate = () => {
@@ -37,7 +39,7 @@ const AddPermission = ({groupPermission, handleAddPermission}) => {
    return false
   }
   try {
-   createPermission({name, code}).then((res) => {
+   createPermission({name, code, description}).then((res) => {
     if (_.get(res, "code") === 200) {
      handleClose()
      onClose()
@@ -63,14 +65,14 @@ const AddPermission = ({groupPermission, handleAddPermission}) => {
    </Button>
    <Dialog fullWidth={true} maxWidth={"sm"} open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
     <DialogTitle>
-     <Typography variant='h5' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+     <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
       Thêm quyền mới
      </Typography>
     </DialogTitle>
     <DialogContent dividers>
      <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px' mt={1}>
       <Box sx={{width: "100%"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
-       <Typography variant='h5' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
         Tên quyền
        </Typography>
        <TextField
@@ -85,7 +87,7 @@ const AddPermission = ({groupPermission, handleAddPermission}) => {
          sx: {borderRadius: "16px"},
         }}
        />
-       <Typography variant='h5' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
         Mã code
        </Typography>
        <TextField
@@ -98,6 +100,22 @@ const AddPermission = ({groupPermission, handleAddPermission}) => {
         InputProps={{
          sx: {borderRadius: "16px"},
         }}
+       />
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+        Mô tả
+       </Typography>
+       <TextField
+        fullWidth
+        label='Nhập mô tả quyền'
+        variant='outlined'
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        inputProps={{name: "name", ariallabel: "name"}}
+        InputProps={{
+         sx: {borderRadius: "16px"},
+        }}
+        multiline
+        rows={4}
        />
        <Button
         onClick={() => {

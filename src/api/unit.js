@@ -2,7 +2,7 @@
 import fs from "fs"
 import _ from "lodash"
 import {IHEYU_SERVICE} from "../config.js"
-import {apiPost} from "./api.js"
+import {authPost} from "./api.js"
 
 export default {
  list(req, res) {
@@ -19,6 +19,10 @@ export default {
  },
  inactive(req, res) {
   const url = `${IHEYU_SERVICE}/api/v1.0/admin/unit/inactive`
+  authPost(url, req, res)
+ },
+ listLevel(req, res) {
+  const url = `${IHEYU_SERVICE}/api/v1.0/admin/unit/list-level`
   authPost(url, req, res)
  },
 }

@@ -6,18 +6,37 @@ import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField} from "@mui/material"
-import {create as createPermission, update as updatePermission} from "../../services/permission"
+import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField, FormControlLabel, Checkbox, Grid} from "@mui/material"
+import {create as createRole, update as updateRole} from "../../services/role"
+import {list as listGroupPermission} from "../../services/groupPermission"
+import FilterAddPermission from "../GroupPermission/FilterAddPermission"
 
 const AddGroup = ({children, onClose = () => {}, detail = null}) => {
  const [open, setOpen] = React.useState(false)
  const [name, setName] = useState("")
  const [description, setDescription] = useState("")
  const [code, setCode] = useState("")
+ const [permissions, setPermissions] = useState([])
+ const [groupPermissions, setGroupPermissions] = useState([])
+ const [dataGroup, setDataGroup] = useState([])
 
  useEffect(() => {
-  resetState(detail)
- }, [detail])
+  if (detail && open) {
+   fillDataState(detail)
+  }
+ }, [open, detail])
+
+ useEffect(() => {
+  getListGroupPermissions()
+ }, [])
+
+ const getListGroupPermissions = () => {
+  listGroupPermission({}).then((res) => {
+   if (_.get(res, "code") === 200) {
+    setDataGroup(_.get(res, "data"))
+   }
+  })
+ }
 
  const handleClickOpen = () => {
   setOpen(true)
@@ -28,22 +47,34 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
  }
 
  const resetState = (detail) => {
+  setName("")
+  setDescription("")
+  setPermissions([])
+  setGroupPermissions([])
+ }
+
+ const fillDataState = (detail) => {
   setName(_.get(detail, "name"))
   setDescription(_.get(detail, "description"))
-  setCode(_.get(detail, "code"))
+  setPermissions(_.get(detail, "permissions"))
+  setGroupPermissions(_.get(detail, "groupPermissions"))
  }
 
  const handleCreate = () => {
   if (!name) {
-   toastr.warning("Nhập tên quyền")
+   toastr.warning("Nhập tên vai trò")
    return false
   }
-  if (!code) {
-   toastr.warning("Nhập mã code")
+  if (!description) {
+   toastr.warning("Nhập mô tả vai trò")
+   return false
+  }
+  if (!permissions.length) {
+   toastr.warning("Chọn quyền cho vai trò")
    return false
   }
   try {
-   createPermission({name, description, code}).then((res) => {
+   createRole({name, description, permissions, groupPermissions}).then((res) => {
     if (_.get(res, "code") === 200) {
      handleClose()
      onClose()
@@ -58,15 +89,19 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
 
  const handleUpdate = () => {
   if (!name) {
-   toastr.warning("Nhập tên quyền")
+   toastr.warning("Nhập tên vai trò")
    return false
   }
-  if (!code) {
-   toastr.warning("Nhập mã code")
+  if (!description) {
+   toastr.warning("Nhập mô tả vai trò")
+   return false
+  }
+  if (!permissions.length) {
+   toastr.warning("Chọn quyền cho vai trò")
    return false
   }
   try {
-   updatePermission({_id: _.get(detail, "_id"), name, description, code}).then((res) => {
+   updateRole({_id: _.get(detail, "_id"), name, description, permissions, groupPermissions}).then((res) => {
     if (_.get(res, "code") === 200) {
      handleClose()
      onClose()
@@ -90,21 +125,21 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
     {onClick: handleClickOpen},
    )}
 
-   <Dialog fullWidth={true} maxWidth={"sm"} open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
+   <Dialog fullWidth={true} maxWidth={"lg"} open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
     <DialogTitle>
-     <Typography variant='h5' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-      {detail ? "Chỉnh sửa quyền " : "Thêm quyền mới"}
+     <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+      {detail ? "Chỉnh sửa vai trò " : "Thêm vai trò mới"}
      </Typography>
     </DialogTitle>
     <DialogContent dividers>
      <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px' mt={1}>
       <Box sx={{width: "100%"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
-       <Typography variant='h5' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
-        Tên quyền
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+        Tên vai trò
        </Typography>
        <TextField
         fullWidth
-        label='Nhập tên quyền'
+        label='Nhập tên vai trò'
         variant='outlined'
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -113,26 +148,13 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
          sx: {borderRadius: "16px"},
         }}
        />
-       <Typography variant='h5' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
-        Mã code quyền
-       </Typography>
-       <TextField
-        fullWidth
-        label='Nhập mã code'
-        variant='outlined'
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-        inputProps={{name: "code", ariallabel: "code"}}
-        InputProps={{
-         sx: {borderRadius: "16px"},
-        }}
-       />
-       <Typography variant='h5' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
         Mô tả
        </Typography>
        <TextField
         fullWidth
-        label='Nhập mô tả quyền'
+        label='Nhập mô tả vai trò'
         variant='outlined'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -143,6 +165,9 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
         multiline
         rows={4}
        />
+
+       <FilterAddPermission permissions={permissions} setPermissions={setPermissions} groupPermissions={groupPermissions} setGroupPermissions={setGroupPermissions} dataGroup={dataGroup} />
+
        <Button
         onClick={() => {
          if (detail) {

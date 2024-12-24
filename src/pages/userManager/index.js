@@ -10,7 +10,7 @@ import { Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip
 import Link from "../../components/Link"
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
-import AddGroup from "../../components/Role/AddEditPermission"
+// import AddGroup from "../../components/Role/AddEditPermission"
 import { list, inactive } from "../../services/user"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import LoadingBackdrop from "../../ui-component/loading/LoadingBackdrop"
