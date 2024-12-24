@@ -18,7 +18,7 @@ const StyledTableContainer = styled(TableContainer)(({theme}) => ({
 const StyledTableCell = styled(TableCell)(({theme}) => ({
  fontSize: "14px",
  [`&.${tableCellClasses.head}`]: {
-  // backgroundColor: theme.palette.common.white,
+  backgroundColor: theme.palette.background.tableHead,
   // color: theme.palette.common.black,
   border: `1px solid #CCCFD3`,
   padding: theme.spacing(1.5),
@@ -50,10 +50,10 @@ export default function CustomizedTables({heads = [], rows = [], tableContainerP
      minWidth: 700,
      boxShadow: "none",
      wordWrap: "break-word",
-     tableLayout: "fixed",
+     tableLayout: "auto",
     }}
    >
-    <TableHead sx={{background:'#F0F0F1'}}>
+    <TableHead>
      <TableRow>
       {heads.map((head, i) => (
        <StyledTableCell key={"head" + i} {...head.props}>

@@ -3,7 +3,9 @@ import GroupPermissionHandle from "./groupPermission"
 import PermissionHandle from "./permission"
 import RoleHandle from "./role"
 import UnitHandle from "./unit"
+import UserHandle from "./user"
 
+//authenticate
 app.post("/login", AuthenticateHandle.login)
 app.get("/logout", AuthenticateHandle.logout)
 app.post("/user-inf", AuthenticateHandle.userInf)

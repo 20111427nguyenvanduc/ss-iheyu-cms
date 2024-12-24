@@ -1,7 +1,6 @@
 import {Router} from "express"
 import passport from "passport"
 import {IHEYU_SERVICE} from "../config"
-import { apiPost } from "./api"
 
 const login = (req, res, next) => {
  const {lastpath, username} = req.body

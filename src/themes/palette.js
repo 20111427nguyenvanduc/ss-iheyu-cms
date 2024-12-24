@@ -4,6 +4,7 @@ export default function themePalette(theme) {
   mode: theme.customization.mode || "light",
   background: {
    main: theme.customization.mode === "dark" ? "#121212" : "#FFF",
+   tableHead: theme.customization.mode === "dark" ? "#121212" : "#F0F0F1",
   },
   text:
    theme.customization.mode === "dark"
@@ -26,7 +27,7 @@ export default function themePalette(theme) {
    contractText: "#ffffff",
   },
   grey: {
-   main: '#0a0a0a',
+   main: "#0a0a0a",
    dark: grey[900],
   },
  }

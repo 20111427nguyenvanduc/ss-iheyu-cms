@@ -18,7 +18,7 @@ passport.use(
      message: "Không tìm thấy người dùng này",
     })
    }
-   if (!user.active) {
+   if (!user.status) {
     return done(null, false, {
      message: "Người dùng bị vô hiệu hóa",
     })

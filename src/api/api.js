@@ -1,28 +1,5 @@
 import request from "request"
 
-const postApi = (url, body, res) => {
- let options = {
-  url: url,
-  method: "POST",
-  strictSSL: false,
-  headers: {
-   "content-type": "application/json",
-  },
-  body: JSON.stringify(body),
- }
- request(options, (error, response, body) => {
-  let bodyData = body ? JSON.parse(body) : { code: 500 }
-  if (error) {
-   res.json({
-    code: 300,
-    message: "Có lỗi xảy ra vui lòng thử lại sau",
-   })
-  } else {
-   res.json(bodyData)
-  }
- })
-}
-
 const apiPost = (url, body, cb, headers) => {
  let options = {
   url: url,
@@ -83,4 +60,40 @@ const apiGet = (url, body, cb, headers) => {
  })
 }
 
-export { postApi, apiPost, apiGet }
+const authPost = (url, req, res) => {
+ const body = req.body
+ const headers = { token: _.get(req, "user.token") } // Đính token vào header
+ let options = {
+  url: url,
+  method: "POST",
+  headers: {
+   "content-type": "application/json",
+   ...headers,
+  },
+  body: JSON.stringify(body),
+ }
+ request(options, (error, response, body) => {
+  if (body) {
+   try {
+    let bodyData = body ? JSON.parse(body) : { code: 500 }
+    if (_.get(bodyData, "code") === 1993) {
+     req.logout()
+    }
+    res.json(bodyData)
+   } catch (e) {
+    res.json({
+     code: 500,
+     message: body,
+    })
+   }
+  } else {
+   res.json({
+    code: 500,
+    message: {
+     body: "Hệ thống đang bận vui lòng thử lại sau",
+    },
+   })
+  }
+ })
+}
+export { apiPost, apiGet, authPost }
