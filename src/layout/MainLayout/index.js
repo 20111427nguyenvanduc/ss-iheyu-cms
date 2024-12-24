@@ -74,7 +74,6 @@ export default function MiniDrawer({children}) {
    <Box sx={{display: "flex", justifyContent: "space-between"}}>
     <Sidebar open={customization.opened} drawerToggle={handleDrawerToggle} />
     <Main component='main' sx={{ flexGrow: 1 }} open={customization.opened}>
-     {/* <Header open={customization.opened} drawerToggle={handleDrawerToggle}/> */}
      <Header handleLeftDrawerToggle={handleDrawerToggle} drawerOpen={customization.opened} />
      {children}
     </Main>
