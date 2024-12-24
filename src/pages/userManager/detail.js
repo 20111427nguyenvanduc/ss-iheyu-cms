@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef, Fragment } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { styled, useTheme } from "@mui/material/styles"
+import history from "../../core/history"
 import moment from "moment"
 import async from "async"
 import _ from "lodash"
@@ -169,6 +170,7 @@ const DetailUser = ({ id }) => {
   inactive({ id })
    .then((res) => {
     setLoadingSave(false)
+    history.push("/user-manager")
    })
    .catch(() => {
     setLoadingSave(false)
@@ -288,9 +290,14 @@ const DetailUser = ({ id }) => {
        </Grid>
       </Grid>
       <Box sx={{ display: "flex", gap: "16px" }}>
-       <StyledButton variant='contained' color='error' size='large' disableElevation>
-        Xóa thành viên
-       </StyledButton>
+       {userData.status ? (
+        <AlertDialogDelete description={"Bạn muốn xóa tài khoản " + userData.name + "?"} onHandle={handleInactive}>
+         <StyledButton variant='contained' color='error' size='large' disableElevation>
+          Xóa thành viên
+         </StyledButton>
+        </AlertDialogDelete>
+       ) : null}
+
        <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={updateData}>
         Lưu thông tin
        </StyledLoadingButton>

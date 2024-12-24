@@ -120,15 +120,6 @@ const Manage = () => {
            </Avatar>
           </Tooltip>
          </Link>
-         {item.status ? (
-          <Tooltip title='Xóa' placement='top'>
-           <AlertDialogDelete description={"Bạn muốn xóa tài khoản " + item.name + "?"} onClose={getList} onHandle={() => handleInactive(item._id)}>
-            <Avatar sx={{ bgcolor: "#FFE2E2", cursor: "pointer" }}>
-             <i className='icon-bold-trash' style={{ color: "#D30500" }} />
-            </Avatar>
-           </AlertDialogDelete>
-          </Tooltip>
-         ) : null}
         </Box>
        </StyledBox>,
       ])
