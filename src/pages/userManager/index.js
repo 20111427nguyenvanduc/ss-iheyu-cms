@@ -2,6 +2,7 @@
 import React, { useEffect, useState, Fragment } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { styled, useTheme } from "@mui/material/styles"
+import history from "../../core/history"
 import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
@@ -10,7 +11,6 @@ import { Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip
 import Link from "../../components/Link"
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
-// import AddGroup from "../../components/Role/AddEditPermission"
 import { list, inactive } from "../../services/user"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import LoadingBackdrop from "../../ui-component/loading/LoadingBackdrop"
@@ -24,6 +24,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 }))
 
 const Manage = () => {
+ const { pathname } = history.location
  const dispatch = useDispatch()
  const { user, configs } = useSelector((state) => state)
  const { region, regions } = configs
@@ -50,8 +51,8 @@ const Manage = () => {
  const getList = () => {
   setLoading(true)
   list({
-    textSearch,
-    ...filter
+   textSearch,
+   ...filter,
   }).then((res) => {
    if (_.get(res, "code") === 200) {
     setListData(_.get(res, "data"))
@@ -60,9 +61,9 @@ const Manage = () => {
   })
  }
 
- const handleDelete = (_id) => {
+ const handleInactive = (_id) => {
   try {
-   inactivePermission({ _id }).then((res) => {
+   inactive({ _id }).then((res) => {
     if (_.get(res, "code") === 200) {
      toastr.success("Xóa quyền thành công!")
     }
@@ -73,7 +74,7 @@ const Manage = () => {
  }
  return (
   <Fragment>
-  <LoadingBackdrop loading={loading}/>
+    <LoadingBackdrop loading={loading} />
    <Box sx={{ background: "#EEF2F6", py: 1.5, px: 2 }}>
     <Breadcrumbs separator={<i className='icon-linear-arrow-right-1' />} aria-label='breadcrumb'>
      <Link underline='hover' key='1' color='#2E3236' to='/'>
@@ -89,7 +90,6 @@ const Manage = () => {
      <Typography variant='h5' sx={{ fontSize: "22px", color: "#2E3236", fontWeight: 700 }}>
       Quản lý tài khoản
      </Typography>
-     {/* <AddGroup onClose={getList} /> */}
     </Stack>
    </Box>
    <Box sx={{ p: 2 }}>
@@ -108,51 +108,42 @@ const Manage = () => {
      <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", alignItems: "center", margin: "0 24px" }}></Box>
     </SearchHeader>
    </Box>
-   <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
+   <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}}>
     <DataTable
      tableContainerProps={{ sx: { borderRadius: 0 } }}
-     heads={["STT", "Họ và tên", "Trạng thái", "Nhóm quyền", "Trực thuộc", "Cập nhật", "Thao tác"].map((head, i) =>
+     heads={["STT", "Họ và tên", "Tên tài khoản", "SĐT", "Đơn vị", "Vai trò", "Trạng thái", "Thao tác"].map((head, i) =>
       createCell(head, { sx: { width: i == 0 ? "5%" : i == 5 ? "10%" : i == 6 ? "10%" : "auto", textAlign: "center" } }),
      )}
      rows={listData.map((item, i) => {
       return createRows([
-       <StyledBox>
-        <Box>{filter.page * filter.limit + i + 1}</Box>
+       <StyledBox>{filter.page * filter.limit + i + 1}</StyledBox>,
+       <StyledBox sx={{ justifyContent: "start", flexDirection: "row" }}>
+        <Avatar src={_.get(item, "avatar", item.name)} />
+        <Typography>{item.name}</Typography>
        </StyledBox>,
-       <StyledBox>
-        <Box>{item.name}</Box>
-       </StyledBox>,
-       //    <StyledBox>
-       //     <Box>{item.username}</Box>
-       //    </StyledBox>,
-       <StyledBox>
-        <Box>{item.active ? "Hoạt động" : "Vô hiệu"}</Box>
-       </StyledBox>,
-       <StyledBox>
-        <Box>{_.get(item, "role.name")}</Box>
-       </StyledBox>,
-       <StyledBox>
-        <Box>{_.get(item, "unit.name")}</Box>
-       </StyledBox>,
-       <StyledBox>
-        <Box>{moment(_.get(item, "updatedAt")).format("DD/MM/YYYY HH:mm")}</Box>
-       </StyledBox>,
+       <StyledBox>{item.username}</StyledBox>,
+       <StyledBox>{item.phone}</StyledBox>,
+       <StyledBox>{_.get(item, "unit.name")}</StyledBox>,
+       <StyledBox>{_.get(item, "role.name")}</StyledBox>,
+       <StyledBox>{item.status ? <Chip color='success' size='small' label='Hoạt động' /> : <Chip color='error' size='small' label='Vô hiệu' />}</StyledBox>,
        <StyledBox>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
-         {/* <AddGroup onClose={getList} detail={item}> */}
-         <Tooltip title='Chỉnh sửa' placement='top'>
-          <Avatar sx={{ bgcolor: "#DCF1FF", cursor: "pointer" }}>
-           <i className='icon-linear-edit-2' style={{ color: "#1589D8" }} />
-          </Avatar>
-         </Tooltip>
-         {/* </AddGroup> */}
-         <Tooltip title='Xóa' placement='top'>
-          <AlertDialogDelete description={"Bạn muốn xóa quyền " + item.name + "?"} onClose={getList} onHandle={() => {}}>
-           <Avatar sx={{ bgcolor: "#FFE2E2", cursor: "pointer" }}>
-            <i className='icon-bold-trash' style={{ color: "#D30500" }} />
+         <Link to={`${pathname}/${item._id}`}>
+          <Tooltip title='Chỉnh sửa' placement='top'>
+           <Avatar sx={{ bgcolor: "#DCF1FF", cursor: "pointer" }}>
+            <i className='icon-linear-edit-2' style={{ color: "#1589D8" }} />
            </Avatar>
-          </AlertDialogDelete>
-         </Tooltip>
+          </Tooltip>
+         </Link>
+         {item.status ? (
+          <Tooltip title='Xóa' placement='top'>
+           <AlertDialogDelete description={"Bạn muốn xóa tài khoản " + item.name + "?"} onClose={getList} onHandle={() => handleInactive(item._id)}>
+            <Avatar sx={{ bgcolor: "#FFE2E2", cursor: "pointer" }}>
+             <i className='icon-bold-trash' style={{ color: "#D30500" }} />
+            </Avatar>
+           </AlertDialogDelete>
+          </Tooltip>
+         ) : null}
         </Box>
        </StyledBox>,
       ])

@@ -16,6 +16,7 @@ export default {
   require("./groupPermission/detail").default,
   require("./userManager").default,
   require("./unit").default,
+  require("./userManager/detail").default,
   require("./notFound").default,
  ],
 

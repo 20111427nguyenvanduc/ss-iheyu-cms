@@ -1,8 +1,8 @@
 import * as React from "react"
-import {styled, useTheme} from "@mui/material/styles"
+import { styled, useTheme } from "@mui/material/styles"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
-import TableCell, {tableCellClasses} from "@mui/material/TableCell"
+import TableCell, { tableCellClasses } from "@mui/material/TableCell"
 import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
@@ -10,12 +10,12 @@ import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-const StyledTableContainer = styled(TableContainer)(({theme}) => ({
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
  boxShadow: "none",
  borderRadius: theme.spacing(1),
 }))
 
-const StyledTableCell = styled(TableCell)(({theme}) => ({
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
  fontSize: "14px",
  [`&.${tableCellClasses.head}`]: {
   backgroundColor: theme.palette.background.tableHead,
@@ -32,16 +32,17 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
   padding: theme.spacing(1.5),
   verticalAlign: "top",
   fontWeight: 400,
+  alignContent: "center",
  },
 }))
 
-const StyledTableRow = styled(TableRow)(({theme}) => ({
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
  "&:nth-of-type(odd)": {
   // backgroundColor: theme.palette.action.hover,
  },
 }))
 
-export default function CustomizedTables({heads = [], rows = [], tableContainerProps}) {
+export default function CustomizedTables({ heads = [], rows = [], tableContainerProps }) {
  const theme = useTheme()
  return (
   <StyledTableContainer component={Paper} {...tableContainerProps}>
@@ -91,7 +92,7 @@ export default function CustomizedTables({heads = [], rows = [], tableContainerP
  )
 }
 
-export const createCell = (children, props = {align: "center"}) => ({
+export const createCell = (children, props = { align: "center" }) => ({
  props,
  children,
 })
