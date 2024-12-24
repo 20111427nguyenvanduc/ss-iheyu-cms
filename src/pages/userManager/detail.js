@@ -19,6 +19,7 @@ import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import LoadingBackdrop from "../../ui-component/loading/LoadingBackdrop"
 import { list as listUnit } from "../../services/unit"
 import { list as listRole } from "../../services/role"
+import FilterAddPermission from "../../components/GroupPermission/FilterAddPermission"
 
 const StyledBox = styled(Box)(({ theme }) => ({
  display: "flex",
@@ -104,14 +105,7 @@ const DetailUser = ({ id }) => {
 
  const getUserInf = (cb) => {
   if (!id) {
-   return cb(null, {
-    name: "",
-    phone: "",
-    username: "",
-    password: "",
-    unit: "",
-    role: "",
-   })
+   return cb(null, {})
   }
   get({ id }).then((response) => {
    const { data } = response
@@ -217,7 +211,7 @@ const DetailUser = ({ id }) => {
          fullWidth
          placeholder='Nhập họ tên'
          variant='outlined'
-         value={userData.name}
+         value={_.get(userData, "name", "")}
          onChange={(e) => setUserData({ name: e.target.value })}
          inputProps={{ name: "name", ariallabel: "name" }}
         />
@@ -230,7 +224,7 @@ const DetailUser = ({ id }) => {
          fullWidth
          placeholder='Nhập số điện thoại'
          variant='outlined'
-         value={userData.phone}
+         value={_.get(userData, "phone", "")}
          onChange={(e) => setUserData({ phone: e.target.value })}
          inputProps={{ name: "phone", ariallabel: "phone" }}
         />
@@ -243,7 +237,7 @@ const DetailUser = ({ id }) => {
          fullWidth
          placeholder='Nhập tài khoản'
          variant='outlined'
-         value={userData.username}
+         value={_.get(userData, "username", "")}
          onChange={(e) => setUserData({ username: e.target.value })}
          inputProps={{ name: "username", ariallabel: "username" }}
         />
@@ -256,7 +250,7 @@ const DetailUser = ({ id }) => {
          fullWidth
          placeholder='Nhập mật khẩu'
          variant='outlined'
-         value={id ? "*********" : userData.password}
+         value={id ? "*********" : _.get(userData, "password", "")}
          onChange={(e) => setUserData({ password: e.target.value })}
          disabled={id ? true : false}
          inputProps={{ name: "password", ariallabel: "password" }}
@@ -267,7 +261,7 @@ const DetailUser = ({ id }) => {
          Đơn vị
         </Typography>
 
-        <StyledTextField fullWidth select placeholder='Chọn một' defaultValue={userData.unit} onChange={(e) => setUserData({ unit: e.target.value })}>
+        <StyledTextField fullWidth select placeholder='Chọn một' value={_.get(userData, "unit", "")} onChange={(e) => setUserData({ unit: e.target.value })}>
          {units.map((option) => (
           <MenuItem key={option._id.toString()} value={option._id.toString()}>
            {option.name}
@@ -280,7 +274,7 @@ const DetailUser = ({ id }) => {
          Vai trò
         </Typography>
 
-        <StyledTextField fullWidth select placeholder='Chọn một' defaultValue={userData.role} onChange={(e) => setUserData({ role: e.target.value })}>
+        <StyledTextField fullWidth select placeholder='Chọn một' value={_.get(userData, "role", "")} onChange={(e) => setUserData({ role: e.target.value })}>
          {roles.map((option) => (
           <MenuItem key={option._id.toString()} value={option._id.toString()}>
            {option.name}
@@ -306,7 +300,14 @@ const DetailUser = ({ id }) => {
     </Box>
    )}
 
-   <Box sm={{ p: 2 }}></Box>
+   <Box sx={{ p: 2 }}>
+    <FilterAddPermission
+     permissions={_.get(userData, "permissions", [])}
+     setPermissions={(newPermissions) => setUserData({ permissions: newPermissions })}
+     groupPermissions={_.get(userData, "groupPermissions", [])}
+     setGroupPermissions={(newGroup) => setUserData({ groupPermissions: newGroup })}
+    />
+   </Box>
   </Fragment>
  )
 }

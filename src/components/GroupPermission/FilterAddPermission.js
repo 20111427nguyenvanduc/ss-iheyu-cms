@@ -7,9 +7,23 @@ import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
 import {Button, Typography, Box, TextField, FormControlLabel, Checkbox, Grid} from "@mui/material"
+import {list as listGroupPermission} from "../../services/groupPermission"
 
-const FilterAddPermission = ({permissions, setPermissions, groupPermissions, setGroupPermissions, dataGroup}) => {
- // Xử lý tick/untick nhóm quyền
+const FilterAddPermission = ({permissions, setPermissions, groupPermissions, setGroupPermissions}) => {
+ const [dataGroup, setDataGroup] = useState([])
+
+ const getListGroupPermissions = () => {
+  listGroupPermission({}).then((res) => {
+   if (_.get(res, "code") === 200) {
+    setDataGroup(_.get(res, "data"))
+   }
+  })
+ }
+
+ useEffect(()=>{
+  getListGroupPermissions()
+ }, [])
+
  const handleCheckGroupPermission = (group) => {
   if (!group || !Array.isArray(group.permissions)) {
    return
