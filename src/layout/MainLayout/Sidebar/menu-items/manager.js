@@ -27,7 +27,7 @@ const dashboard = {
  //    role: [""],
    },
    {
-    id: "role",
+    id: "unit",
     title: "Quản lý đơn vị",
     type: "item",
     url: "/unit",

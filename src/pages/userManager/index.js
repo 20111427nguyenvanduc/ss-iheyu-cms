@@ -11,9 +11,9 @@ import { Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip
 import Link from "../../components/Link"
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
-import { list, inactive } from "../../services/user"
+import { list } from "../../services/user"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
-import LoadingBackdrop from "../../ui-component/loading/LoadingBackdrop"
+
 const StyledBox = styled(Box)(({ theme }) => ({
  display: "flex",
  gap: theme.spacing(1),
@@ -42,14 +42,12 @@ const Manage = () => {
  })
  const [listData, setListData] = useState([])
  const [textSearch, setTextSearch] = useState("")
- const [loading, setLoading] = useState(false)
 
  useEffect(() => {
   getList()
  }, [])
 
  const getList = () => {
-  setLoading(true)
   list({
    textSearch,
    ...filter,
@@ -57,24 +55,11 @@ const Manage = () => {
    if (_.get(res, "code") === 200) {
     setListData(_.get(res, "data"))
    }
-   setLoading(false)
   })
  }
 
- const handleInactive = (_id) => {
-  try {
-   inactive({ _id }).then((res) => {
-    if (_.get(res, "code") === 200) {
-     toastr.success("Xóa quyền thành công!")
-    }
-   })
-  } catch (error) {
-   toastr.error("Lỗi hệ thống. Vui lòng thử lại sau.")
-  }
- }
  return (
   <Fragment>
-    <LoadingBackdrop loading={loading} />
    <Box sx={{ background: "#EEF2F6", py: 1.5, px: 2 }}>
     <Breadcrumbs separator={<i className='icon-linear-arrow-right-1' />} aria-label='breadcrumb'>
      <Link underline='hover' key='1' color='#2E3236' to='/'>

@@ -40,4 +40,5 @@ app.post("/admin/user/list", UserHandle.list)
 app.post("/admin/user/create", UserHandle.create)
 app.post("/admin/user/update", UserHandle.update)
 app.post("/admin/user/inactive", UserHandle.inactive)
+app.post("/admin/user/get", UserHandle.get)
 

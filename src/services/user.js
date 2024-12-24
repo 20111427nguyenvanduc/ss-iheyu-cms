@@ -15,3 +15,6 @@ export const update = (body = {}) => {
 export const inactive = (body) => {
  return axios.post("/admin/user/inactive", body)
 }
+export const get = (body) => {
+ return axios.post("/admin/user/get", body)
+}
