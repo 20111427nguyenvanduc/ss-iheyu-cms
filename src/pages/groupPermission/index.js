@@ -10,7 +10,7 @@ import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper} from "@m
 import {Breadcrumbs, Typography, Link, Stack} from "@mui/material"
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
-import AddGroup from "../../components/groupPermission/AddGroup"
+import AddGroup from "../../components/GroupPermission/AddGroup"
 import { list } from "../../services/groupPermission"
 
 const StyledBox = styled(Box)(({theme}) => ({
