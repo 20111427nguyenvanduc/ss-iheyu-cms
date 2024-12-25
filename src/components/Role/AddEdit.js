@@ -139,7 +139,7 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
        </Typography>
        <TextField
         fullWidth
-        label='Nhập tên vai trò'
+        placeholder='Nhập tên vai trò'
         variant='outlined'
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -154,7 +154,7 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
        </Typography>
        <TextField
         fullWidth
-        label='Nhập mô tả vai trò'
+        placeholder='Nhập mô tả vai trò'
         variant='outlined'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -167,26 +167,25 @@ const AddGroup = ({children, onClose = () => {}, detail = null}) => {
        />
 
        <FilterAddPermission permissions={permissions} setPermissions={setPermissions} groupPermissions={groupPermissions} setGroupPermissions={setGroupPermissions} dataGroup={dataGroup} />
-
-       <Button
-        onClick={() => {
-         if (detail) {
-          handleUpdate()
-         } else {
-          handleCreate()
-         }
-        }}
-        fullWidth
-        variant='contained'
-        type='submit'
-        sx={{borderRadius: "12px", background: "#007CFE", fontSize: "16px", padding: "12px"}}
-       >
-        {detail ? "Cập nhật" : "Tạo quyền"}
-       </Button>
       </Box>
      </Box>
     </DialogContent>
-    <DialogActions></DialogActions>
+    <DialogActions sx={{px: 3, py: 2}}>
+     <Button
+      onClick={() => {
+       if (detail) {
+        handleUpdate()
+       } else {
+        handleCreate()
+       }
+      }}
+      variant='contained'
+      type='submit'
+      sx={{borderRadius: "12px", background: "#007CFE", fontSize: "16px", padding: "12px"}}
+     >
+      {detail ? "Cập nhật" : "Tạo vai trò"}
+     </Button>
+    </DialogActions>
    </Dialog>
   </React.Fragment>
  )
