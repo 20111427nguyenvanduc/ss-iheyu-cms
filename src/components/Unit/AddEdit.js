@@ -131,7 +131,7 @@ const AddEdit = ({children, onClose = () => {}, detail = null, listDataLevel = [
        </Typography>
        <TextField
         fullWidth
-        label='Nhập tên quyền'
+        placeholder='Nhập tên đơn vị'
         variant='outlined'
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -154,7 +154,7 @@ const AddEdit = ({children, onClose = () => {}, detail = null, listDataLevel = [
         getOptionLabel={(option) => option.name}
         inputValue={_.get(level, "name", "")}
         onInputChange={(event, newInputValue) => {}}
-        renderInput={(params) => <TextField {...params} label='Chọn thuộc cấp' />}
+        renderInput={(params) => <TextField {...params} placeholder='Chọn thuộc cấp' />}
        />
        {[2, 3].includes(_.get(level, "level")) ? (
         <Fragment>
@@ -172,7 +172,7 @@ const AddEdit = ({children, onClose = () => {}, detail = null, listDataLevel = [
           getOptionLabel={(option) => option.name}
           inputValue={_.get(parent, "name", "")}
           onInputChange={(event, newInputValue) => {}}
-          renderInput={(params) => <TextField {...params} label='Chọn đơn vị trực thuộc' />}
+          renderInput={(params) => <TextField {...params} placeholder='Chọn đơn vị trực thuộc' />}
          />
         </Fragment>
        ) : null}
