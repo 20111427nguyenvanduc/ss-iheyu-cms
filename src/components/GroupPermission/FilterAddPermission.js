@@ -1,26 +1,29 @@
 /* jslint es6 */
-import React, {useEffect, useState, Fragment} from "react"
-import {useSelector, useDispatch} from "react-redux"
-import {styled, useTheme} from "@mui/material/styles"
+import React, { useEffect, useState, Fragment } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { styled, useTheme } from "@mui/material/styles"
 import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Button, Typography, Box, TextField, FormControlLabel, Checkbox, Grid} from "@mui/material"
-import {list as listGroupPermission} from "../../services/groupPermission"
+import { Button, Typography, Box, TextField, FormControlLabel, Checkbox, Grid } from "@mui/material"
+import { list as listGroupPermission } from "../../services/groupPermission"
+import LoadingSkeleton from "../../ui-component/loading/LoadingSkeleton"
 
-const FilterAddPermission = ({permissions, setPermissions, groupPermissions, setGroupPermissions}) => {
+const FilterAddPermission = ({ permissions, setPermissions, groupPermissions, setGroupPermissions }) => {
  const [dataGroup, setDataGroup] = useState([])
+ const [loading, setLoading] = useState(true)
 
  const getListGroupPermissions = () => {
   listGroupPermission({}).then((res) => {
    if (_.get(res, "code") === 200) {
     setDataGroup(_.get(res, "data"))
    }
+   setLoading(false)
   })
  }
 
- useEffect(()=>{
+ useEffect(() => {
   getListGroupPermissions()
  }, [])
 
@@ -65,9 +68,11 @@ const FilterAddPermission = ({permissions, setPermissions, groupPermissions, set
   }
  }
 
- return (
-  <Box sx={{border: "1px solid #CCCFD3", borderRadius: "12px", width: "100%"}} p={2}>
-   <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+ return loading ? (
+  <LoadingSkeleton loading={loading} variant='rounded' width='100%' height={300} />
+ ) : (
+  <Box sx={{ border: "1px solid #CCCFD3", borderRadius: "12px", width: "100%" }} p={2}>
+   <Typography variant='p' sx={{ fontSize: "22px", color: "#2E3236", fontWeight: 700 }}>
     Danh sách các quyền
    </Typography>
    <Grid item xs={12} mt={2}>
@@ -75,16 +80,16 @@ const FilterAddPermission = ({permissions, setPermissions, groupPermissions, set
      return (
       <Box>
        <FormControlLabel
-        sx={{width: "100%", py: 1}}
+        sx={{ width: "100%", py: 1 }}
         key={group._id}
         control={<Checkbox value={group._id} onChange={() => handleCheckGroupPermission(group)} checked={groupPermissions.includes(group._id)} />}
         label={
-         <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 700}}>
+         <Typography variant='p' sx={{ fontSize: "20px", color: "#2E3236", fontWeight: 700 }}>
           {group.name}
          </Typography>
         }
        />
-       <Box sx={{flexGrow: 1}}>
+       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
          {group.permissions && group.permissions.length
           ? group.permissions.map((permission) => (
