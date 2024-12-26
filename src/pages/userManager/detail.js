@@ -185,6 +185,19 @@ const DetailUser = ({ id }) => {
    })
  }
 
+ const onChangeRole = (roleId) => {
+  let roleObj
+  roles.forEach(role => {
+    if (role._id === roleId) {
+      roleObj = role
+    }
+  });
+  setUserData({ 
+    role: roleId,
+    permissions: _.get(roleObj, 'permissions', userData.permissions || [])
+  })
+ }
+
  return (
   <Fragment>
    <Box sx={{ background: "#EEF2F6", py: 1.5, px: 2 }}>
@@ -301,7 +314,7 @@ const DetailUser = ({ id }) => {
          Vai trò
         </Typography>
 
-        <StyledTextField fullWidth select placeholder='Chọn một' value={_.get(userData, "role", "")} onChange={(e) => setUserData({ role: e.target.value })}>
+        <StyledTextField fullWidth select placeholder='Chọn một' value={_.get(userData, "role", "")} onChange={(e) => onChangeRole( e.target.value )}>
          {roles.map((option) => (
           <MenuItem key={option._id.toString()} value={option._id.toString()}>
            {option.name}

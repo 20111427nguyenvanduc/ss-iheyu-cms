@@ -8,7 +8,7 @@ import UserHandle from "./user"
 //authenticate
 app.post("/login", AuthenticateHandle.login)
 app.get("/logout", AuthenticateHandle.logout)
-app.post("/user-inf", AuthenticateHandle.userInf)
+app.post("/user-inf", UserHandle.userInf)
 
 //groupPermission
 app.post("/admin/group-permission/list", GroupPermissionHandle.list)

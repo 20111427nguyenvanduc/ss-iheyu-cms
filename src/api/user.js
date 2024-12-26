@@ -25,4 +25,8 @@ export default {
   const url = `${IHEYU_SERVICE}/api/v1.0/admin/user/get`
   authPost(url, req, res)
  },
+ userInf(req, res) {
+  const url = `${IHEYU_SERVICE}/api/v1.0/admin/get`
+  authPost(url, req, res)
+ },
 }

@@ -1,9 +1,9 @@
-import {Router} from "express"
+import { Router } from "express"
 import passport from "passport"
-import {IHEYU_SERVICE} from "../config"
+import { IHEYU_SERVICE } from "../config"
 
 const login = (req, res, next) => {
- const {lastpath, username} = req.body
+ const { lastpath, username } = req.body
  let ip = `${req.headers["x-real-ip"]} ${req.headers["x-forwarded-for"]} ${req.socket.remoteAddress} ${req.ip}`
  passport.authenticate("local", (err, user, info = {}) => {
   if (err) {
@@ -53,15 +53,7 @@ const logout = (req, res) => {
  res.redirect("/login")
 }
 
-const userInf = (req, res) => {
- res.json({
-  code: CONSTANT.CODE.SUCCESS,
-  data: req.user,
- })
-}
-
 export default {
  login,
- logout,
- userInf,
+ logout
 }
