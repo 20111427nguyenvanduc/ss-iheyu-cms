@@ -51,7 +51,7 @@ const PrimarySearchAppBar = ({
    <StyledBox>
     {!disableSearching ? (
      <Box sx={{ maxWidth: "340px" }}>
-      <SearchInput label='Tìm kiếm' type='search' autoComplete='off' fullWidth size='small' value={textSearch} onChange={(e) => onTextSearchChange(e.target.value)} />
+      <SearchInput placeholder='Tìm kiếm' type='search' autoComplete='off' fullWidth size='small' value={textSearch} onChange={(e) => onTextSearchChange(e.target.value)} />
      </Box>
     ) : null}
     <Box sx={{ flexGrow: 1, display: 'flex' }} {...wrapChildrenProps}>{children}</Box>
