@@ -4,6 +4,7 @@ import PermissionHandle from "./permission"
 import RoleHandle from "./role"
 import UnitHandle from "./unit"
 import UserHandle from "./user"
+import PositionHandle from "./position"
 
 //authenticate
 app.post("/login", AuthenticateHandle.login)
@@ -41,4 +42,11 @@ app.post("/admin/user/create", UserHandle.create)
 app.post("/admin/user/update", UserHandle.update)
 app.post("/admin/user/inactive", UserHandle.inactive)
 app.post("/admin/user/get", UserHandle.get)
+
+//position
+app.post("/admin/position/list", PositionHandle.list)
+app.post("/admin/position/create", PositionHandle.create)
+app.post("/admin/position/update", PositionHandle.update)
+app.post("/admin/position/inactive", PositionHandle.inactive)
+app.post("/admin/position/get", PositionHandle.get)
 
