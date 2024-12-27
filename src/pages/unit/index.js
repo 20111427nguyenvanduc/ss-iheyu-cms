@@ -152,8 +152,8 @@ const Manage = () => {
    <Box sx={{flexGrow: 1}} p={2}>
     <Grid container spacing={2}>
      <Grid item sm={12}>
-      <Box>
-       <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center",border: "1px solid #007CFE", width: "fit-content", padding: "12px 32px", borderRadius: "32px"}}>
+      <Box display={"flex"} justifyContent={"center"}>
+       <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center", border: "1px solid #007CFE", width: "fit-content", padding: "12px 32px", borderRadius: "32px"}}>
         <Avatar alt='Remy Sharp' src={_.get(unitCurrent, "icon")} />
         <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
          {_.get(unitCurrent, "name")}
@@ -162,128 +162,66 @@ const Manage = () => {
       </Box>
      </Grid>
      <Grid item sm={6}>
-      <Box></Box>
-     </Grid>
-     <Grid item sm={6}>
-      <Box></Box>
-     </Grid>
-    </Grid>
-   </Box>
-
-   <Box sx={{flexGrow: 1}} p={2}>
-    <Grid container spacing={2}>
-     <Grid item sm={12}>
-      <Box sx={{border: "1px solid #CCCFD3", borderRadius: "12px"}} display={"flex"} flexDirection='column' p={2}>
-       <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
-        <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
-         <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600, margin: "8px 0 16px"}}>
-          Danh sách chức vụ
-         </Typography>
-         <AddEditPosition onClose={getListPosition} unitCurrent={unitCurrent} />
-        </Stack>
+      <Box flexDirection={"column"} display={"flex"} justifyContent={"center"} alignItems={"center"} gap={2}>
+       <Stack direction='row' spacing={2} sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "18px 32px", borderRadius: "32px", background: "#F6F5FC"}}>
+        <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+         Sở ban ngành
+        </Typography>
        </Stack>
 
-       <DataTable
-        tableContainerProps={{sx: {borderRadius: "0"}}}
-        heads={["STT", "Chức vụ", "Quyền", "Thao tác"].map((head, i) => createCell(head, {sx: {width: i == 1 ? "35%" : "auto", textAlign: "center"}}))}
-        rows={listDataPosition.map((item, i) => {
-         return createRows([
-          <StyledBox>
-           <Box>{i + 1}</Box>
-          </StyledBox>,
-          <Box px={2} sx={{color: "#010810", fontSize: "18px", fontWeight: 700}}>
-           {item.name}
-          </Box>,
-          <Box flexDirection='column' sx={{display: "flex", alignItems: "center", justifyContent: "center", gap: "8px"}}>
-           <Box flexDirection='column' sx={{display: "flex", alignItems: "start", justifyContent: "center", gap: "8px"}}>
-            {[1, 2].map((group, j) => {
-             return (
-              <Typography component='p' sx={{fontSize: "16px", color: "#010810"}}>
-               {j + 1} {". "}Chỉnh sửa thao tác
-              </Typography>
-             )
-            })}
-           </Box>
-           <Typography variant='p' sx={{fontSize: "14px", color: "#007CFE", fontWeight: 400}}>
-            {"Chi tiết chức vụ >>>"}
-           </Typography>
-          </Box>,
-          <StyledBox>
-           <Link underline='hover' key='1' color='#2E3236' href={"/position/" + item._id}>
-            <Avatar sx={{bgcolor: "#DCF1FF"}}>
-             <i className='icon-linear-edit-2' style={{color: "#1589D8"}} />
-            </Avatar>
-           </Link>
-          </StyledBox>,
-         ])
-        })}
-       />
-
-       {/* <Box flexDirection='column' p={2} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-        <img src='/images/empty-role.png' style={{width: "128px"}} />
-
-        <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 400, margin: "24px 0"}}>
-         UBND Thành phố Hải Phòng chưa có chức vụ được thêm vào
-        </Typography>
-       </Box> */}
-      </Box>
-     </Grid>
-     <Grid item sm={12}>
-      <Box sx={{border: "1px solid #CCCFD3", borderRadius: "12px"}} display={"flex"} flexDirection='column' p={2}>
-       <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600, margin: "8px 0 16px"}}>
-        Danh sách đơn vị trực thuộc
-       </Typography>
-       <DataTable
-        tableContainerProps={{sx: {borderRadius: "0"}}}
-        heads={["Tên đơn vị", "Thao tác"].map((head, i) => createCell(head, {sx: {width: i == 1 ? "25%" : "auto", textAlign: "center"}}))}
-        rows={listData.map((item, i) => {
-         return createRows([
-          <Box px={2} sx={{color: "#010810", fontSize: "18px", fontWeight: 600}}>
-           {item.name}
-          </Box>,
-          <StyledBox>
-           <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", gap: "8px"}}>
-            <Tooltip title='Xem chi tiết' placement='top'>
-             <Avatar sx={{bgcolor: "#E5F1FF", cursor: "pointer"}} onClick={() => setUnitCurrent(item)}>
-              <i className='icon-bold-eye' style={{color: "#1589D8"}} />
-             </Avatar>
-            </Tooltip>
-
-            <AddEditUnit onClose={getList} unitCurrent={unitCurrent} detail={item}>
-             <Tooltip title='Chỉnh sửa' placement='top'>
-              <Avatar sx={{bgcolor: "#E5F1FF", cursor: "pointer"}}>
-               <i className='icon-bold-edit-2' style={{color: "#1589D8"}} />
-              </Avatar>
-             </Tooltip>
-            </AddEditUnit>
-            <AlertDialogDelete title='Thông báo' description={"Bạn muốn xóa đơn vị " + item.name + "?"} onClose={getList} onHandle={() => handleDelete(item._id)}>
-             <Tooltip title='Xóa' placement='top'>
-              <Avatar sx={{bgcolor: "#F3F3F3", cursor: "pointer"}}>
-               <i className='icon-bold-trash' style={{color: "#1C1E21"}} />
-              </Avatar>
-             </Tooltip>
-            </AlertDialogDelete>
-           </Box>
-          </StyledBox>,
-         ])
-        })}
-       />
+       {listData.map((item, i) => {
+        return (
+         <Box onClick={() => setUnitCurrent(item)} sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "12px 32px", borderRadius: "32px", border: "1px solid #656C75"}}>
+          <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
+           <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
+            <Avatar alt='Remy Sharp' src={_.get(unitCurrent, "icon")} />
+            <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+             {item.name}
+            </Typography>
+           </Stack>
+           <i className='icon-linear-arrow-right' style={{color: "#007CFE", fontSize: "22px"}} />
+          </Stack>
+         </Box>
+        )
+       })}
 
        <Box p={2} display={"flex"} justifyContent={"center"} alignItems={"center"}>
         <AddEditUnit onClose={getList} unitCurrent={unitCurrent} />
        </Box>
-       {/* <Box flexDirection='column' p={2} display={"flex"} justifyContent={"center"} alignItems={"center"}>
-        <img src='/images/empty-unit.png' style={{width: "128px"}} />
-
-        <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 400, margin: "24px 0"}}>
-         UBND Thành phố Hải Phòng chưa có đơn vị trực thuộc
+      </Box>
+     </Grid>
+     <Grid item sm={6}>
+      <Box flexDirection={"column"} display={"flex"} justifyContent={"center"} alignItems={"center"} gap={2}>
+       <Stack direction='row' spacing={2} sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "18px 32px", borderRadius: "32px", background: "#F6F5FC"}}>
+        <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+         Chức vụ
         </Typography>
-       </Box> */}
+       </Stack>
+
+       {listDataPosition.map((item, i) => {
+        return (
+         <Link underline='hover' key='1' color='#2E3236' href={"/position/" + item._id}>
+          <Box sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "12px 32px", borderRadius: "32px", border: "1px solid #656C75"}}>
+           <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
+            <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
+             <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+              {item.name}
+             </Typography>
+            </Stack>
+            <i className='icon-linear-arrow-right' style={{color: "#007CFE", fontSize: "22px"}} />
+           </Stack>
+          </Box>
+         </Link>
+        )
+       })}
+
+       <Box p={2} display={"flex"} justifyContent={"center"} alignItems={"center"}>
+        <AddEditPosition onClose={getListPosition} unitCurrent={unitCurrent} />
+       </Box>
       </Box>
      </Grid>
     </Grid>
    </Box>
-   <Box sx={{px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}}></Box>
   </Fragment>
  )
 }
