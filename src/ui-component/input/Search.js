@@ -26,7 +26,7 @@ const SearchInput = ({ ...others }) => {
   autoComplete="off"
   variant="outlined" 
   InputProps={{
-    endAdornment: (
+    startAdornment: (
       <InputAdornment position="end">
         <IconButton
           type="submit"

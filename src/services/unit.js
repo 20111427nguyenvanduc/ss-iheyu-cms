@@ -12,10 +12,6 @@ export const update = (body = {}) => {
  return axios.post("/admin/unit/update", body)
 }
 
-export const logout = (body = {}) => {
- return axios.post("/admin/unit/list", body)
-}
-
 export const inactive = (body) => {
  return axios.post("/admin/unit/inactive", body)
 }
