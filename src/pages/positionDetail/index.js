@@ -6,10 +6,8 @@ import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Divider, Grid, TextField, AppBar, Toolbar} from "@mui/material"
-import {Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText} from "@mui/material"
-
-import {Breadcrumbs, Typography, Link, Stack} from "@mui/material"
+import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Divider, Grid, TextField, AppBar, Toolbar, Dialog, DialogActions, DialogContent, DialogTitle, DialogContentText, Breadcrumbs, Typography, Stack} from "@mui/material"
+import Link from "../../components/Link"
 import DataTable, {createCell, createRows} from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
 import {list, update as updateGroupPermission, inactive as inactiveGroupPermission} from "../../services/groupPermission"
@@ -70,10 +68,10 @@ const EditPosition = ({id}) => {
   <Fragment>
    <Box sx={{background: "#EEF2F6", py: 1.5, px: 2}}>
     <Breadcrumbs separator={<i className='icon-linear-arrow-right-1' />} aria-label='breadcrumb'>
-     <Link underline='hover' key='1' color='#2E3236' href='/unit'>
+     <Link underline='hover' key='1' color='#2E3236' to='/unit'>
       Quản lý phòng ban
      </Link>
-     <Link underline='hover' key='2' color='#2E3236' href='/unit'>
+     <Link underline='hover' key='2' color='#2E3236' to='/unit'>
       {_.get(position, "unit.name")}
      </Link>
      <Typography key='2' sx={{color: "#007CFE"}}>
@@ -83,7 +81,7 @@ const EditPosition = ({id}) => {
    </Box>
    <Box sx={{py: 1.5, px: 2, mt: 2}}>
     <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
-     <Link underline='none' color='#2E3236' href='/group-permission'>
+     <Link underline='none' color='#2E3236' to='/unit'>
       <i className='icon-linear-arrow-left' style={{fontSize: "22px"}} />
      </Link>
 

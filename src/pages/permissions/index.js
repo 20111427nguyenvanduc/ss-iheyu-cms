@@ -106,7 +106,7 @@ const StyledBox = styled(Box)(({theme}) => ({
       </Box>
       <Box sx={{px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}}>
        <DataTable
-        tableContainerProps={{sx: {borderRadius: 0}}}
+        
         heads={["STT", "Tên quyền", "Mã Code", "Mô tả", "Cập nhật", "Thao tác"].map((head, i) =>
          createCell(head, {sx: {width: i == 0 ? "5%" : i == 4 ? "10%" : i == 5 ? "10%" : "auto", textAlign: "center"}}),
         )}

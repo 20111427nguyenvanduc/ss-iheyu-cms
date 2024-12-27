@@ -105,7 +105,6 @@ const Manage = () => {
    </Box>
    <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
     <DataTable
-     tableContainerProps={{ sx: { borderRadius: 0 } }}
      heads={["STT", "Họ và tên", "Tên tài khoản", "SĐT", "Đơn vị", "Vai trò", "Trạng thái", "Thao tác"].map((head, i) =>
       createCell(head, { sx: { width: i == 0 ? "5%" : i == 5 ? "10%" : i == 6 ? "10%" : "auto", textAlign: "center" } }),
      )}

@@ -6,8 +6,8 @@ import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip} from "@mui/material"
-import {Breadcrumbs, Typography, Link, Stack} from "@mui/material"
+import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Breadcrumbs, Typography, Stack} from "@mui/material"
+import Link from "../../components/Link"
 import DataTable, {createCell, createRows} from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
 import AddEdit from "./AddEdit"
@@ -94,7 +94,7 @@ const Manage = () => {
   <Fragment>
    <Box sx={{background: "#EEF2F6", py: 1.5, px: 2}}>
     <Breadcrumbs separator={<i className='icon-linear-arrow-right-1' />} aria-label='breadcrumb'>
-     <Link underline='hover' key='1' color='#2E3236' href='/'>
+     <Link underline='hover' key='1' color='#2E3236' to='/'>
       Trang quản trị
      </Link>
      <Typography key='2' sx={{color: "#007CFE"}}>
@@ -128,7 +128,7 @@ const Manage = () => {
    </Box>
    <Box sx={{px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}}>
     <DataTable
-     tableContainerProps={{sx: {borderRadius: 0}}}
+     
      heads={["STT", "Tên đơn vị", "Thuộc cấp", "Trực thuộc", "Cập nhật", "Thao tác"].map((head, i) =>
       createCell(head, {sx: {width: i == 0 ? "5%" : i == 5 ? "10%" : i == 4 ? "15%" : "auto", textAlign: "center"}}),
      )}

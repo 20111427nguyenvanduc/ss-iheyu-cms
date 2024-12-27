@@ -6,8 +6,8 @@ import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Grid} from "@mui/material"
-import {Breadcrumbs, Typography, Link, Stack} from "@mui/material"
+import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Grid, Breadcrumbs, Typography, Stack} from "@mui/material"
+import Link from "../../components/Link"
 import Accordion from "@mui/material/Accordion"
 import AccordionActions from "@mui/material/AccordionActions"
 import AccordionSummary from "@mui/material/AccordionSummary"
@@ -123,11 +123,11 @@ const Manage = () => {
   <Fragment>
    <Box sx={{background: "#EEF2F6", py: 1.5, px: 2}}>
     <Breadcrumbs separator={<i className='icon-linear-arrow-right-1' />} aria-label='breadcrumb'>
-     <Link underline='hover' key='1' color='#2E3236' href='/unit'>
+     <Link underline='hover' key='1' color='#2E3236' to='/unit'>
       Quản lý phòng ban
      </Link>
      {_.get(unitCurrent, "parent") ? (
-      <Link underline='hover' key='1' color='#2E3236' href='/unit'>
+      <Link underline='hover' key='1' color='#2E3236' to='/unit'>
        {_.get(unitCurrent, "parent.name")}
       </Link>
      ) : null}
@@ -139,7 +139,7 @@ const Manage = () => {
    <Box sx={{py: 1.5, px: 2, mt: 2}}>
     <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
      {_.get(unitCurrent, "parent") ? (
-      <Link underline='none' color='#2E3236' href='/unit'>
+      <Link underline='none' color='#2E3236' to='/unit'>
        <i className='icon-linear-arrow-left' style={{fontSize: "22px"}} />
       </Link>
      ) : null}

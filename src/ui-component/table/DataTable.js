@@ -1,8 +1,8 @@
 import * as React from "react"
-import {styled, useTheme} from "@mui/material/styles"
+import { styled, useTheme } from "@mui/material/styles"
 import Table from "@mui/material/Table"
 import TableBody from "@mui/material/TableBody"
-import TableCell, {tableCellClasses} from "@mui/material/TableCell"
+import TableCell, { tableCellClasses } from "@mui/material/TableCell"
 import TableContainer from "@mui/material/TableContainer"
 import TableHead from "@mui/material/TableHead"
 import TableRow from "@mui/material/TableRow"
@@ -10,17 +10,32 @@ import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 
-const StyledTableContainer = styled(TableContainer)(({theme}) => ({
+const StyledTableContainer = styled(TableContainer)(({ theme }) => ({
  boxShadow: "none",
- borderRadius: theme.spacing(1),
+ borderRadius: '16px',
+ border: `1px solid #CCCFD3`,
 }))
 
-const StyledTableCell = styled(TableCell)(({theme}) => ({
+const StyledTable = styled(Table)(({ theme }) => ({
+ boxShadow: "none",
+ wordWrap: "break-word",
+ tableLayout: "auto",
+ borderCollapse: "collapse",
+ borderStyle: "hidden",
+ "& td": {
+  border: `1px solid #CCCFD3`,
+ },
+ "& th": {
+  border: `1px solid #CCCFD3`,
+ },
+}))
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
  fontSize: "16px",
  [`&.${tableCellClasses.head}`]: {
   backgroundColor: theme.palette.background.tableHead,
   // color: theme.palette.common.black,
-  border: `1px solid #CCCFD3`,
+  // border: `1px solid #CCCFD3`,
   padding: theme.spacing(2),
   fontWeight: 700,
   color: "#007CFE",
@@ -29,7 +44,7 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
   // fontSize: '14px',
   // backgroundColor: theme.palette.common.white,
   // color: theme.palette.common.black,
-  border: `1px solid #CCCFD3`,
+  // border: `1px solid #CCCFD3`,
   padding: theme.spacing(1.5),
   verticalAlign: "top",
   fontWeight: 400,
@@ -37,23 +52,17 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
  },
 }))
 
-const StyledTableRow = styled(TableRow)(({theme}) => ({
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
  "&:nth-of-type(odd)": {
   // backgroundColor: theme.palette.action.hover,
  },
 }))
 
-export default function CustomizedTables({heads = [], rows = [], tableContainerProps}) {
+export default function CustomizedTables({ heads = [], rows = [], tableContainerProps }) {
  const theme = useTheme()
  return (
-  <StyledTableContainer component={Paper} {...tableContainerProps}>
-   <Table
-    sx={{
-     boxShadow: "none",
-     wordWrap: "break-word",
-     tableLayout: "auto",
-    }}
-   >
+  <StyledTableContainer {...tableContainerProps}>
+   <StyledTable>
     <TableHead>
      <TableRow>
       {heads.map((head, i) => (
@@ -87,12 +96,12 @@ export default function CustomizedTables({heads = [], rows = [], tableContainerP
       </StyledTableRow>
      )}
     </TableBody>
-   </Table>
+   </StyledTable>
   </StyledTableContainer>
  )
 }
 
-export const createCell = (children, props = {align: "center"}) => ({
+export const createCell = (children, props = { align: "center" }) => ({
  props,
  children,
 })
