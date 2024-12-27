@@ -1,7 +1,7 @@
 /* jslint es6 */
-import React, {useEffect, useState, Fragment} from "react"
-import {useSelector, useDispatch} from "react-redux"
-import {styled, useTheme} from "@mui/material/styles"
+import React, { useEffect, useState, Fragment } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { styled, useTheme } from "@mui/material/styles"
 import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
@@ -17,14 +17,16 @@ import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import AddGroupToPosition from "./AddGroupToPosition"
 import AddPermissionToPosition from "./AddPermissionToPosition"
 
-const FilterAddPermission = ({permissions, setPermissions, groupPermissions, setGroupPermissions}) => {
+const FilterAddPermission = ({ permissions, setPermissions, groupPermissions, setGroupPermissions }) => {
  const [dataGroup, setDataGroup] = useState([])
+ const [loading, setLoading] = useState(true)
 
  const getListGroupPermissions = () => {
   listGroupPermission({}).then((res) => {
    if (_.get(res, "code") === 200) {
     setDataGroup(_.get(res, "data"))
    }
+   setLoading(false)
   })
  }
 

@@ -16,7 +16,7 @@ import DataTable, { createCell, createRows } from "../../ui-component/table/Data
 import SearchHeader from "../../ui-component/search/SearchHeader"
 import { get, create, update, inactive } from "../../services/user"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
-import LoadingBackdrop from "../../ui-component/loading/LoadingBackdrop"
+import LoadingSkeleton from "../../ui-component/loading/LoadingSkeleton"
 import { list as listUnit } from "../../services/unit"
 import { list as listRole } from "../../services/role"
 import FilterAddPermission from "../../components/GroupPermission/FilterAddPermission"
@@ -210,11 +210,11 @@ const DetailUser = ({ id }) => {
      </Typography>
     </Stack>
    </Box>
-   {loading ? (
-    <LoadingBackdrop loading={loading} />
-   ) : (
-    <Box sx={{ p: 2 }}>
-     <Paper sx={{ p: 2, border: "1px solid #CCCFD3", borderRadius: "12px" }}>
+   <Box sx={{ p: 2 }}>
+    {loading ? (
+     <LoadingSkeleton loading={loading} variant='rounded' width="100%" height={300}/>
+    ) : (
+     <Paper sx={{ p: 2, border: "1px solid #CCCFD3", borderRadius: "12px" }} elevation={0}>
       <Typography variant='h6'>Thông tin</Typography>
       <Grid container my={2} spacing={2}>
        <Grid item xs={12} md={6} lg={3}>
@@ -256,7 +256,7 @@ const DetailUser = ({ id }) => {
          inputProps={{ name: "username", ariallabel: "username" }}
         />
        </Grid>
-       <Grid item xs={12} md={6} lg={3}>
+       {/* <Grid item xs={12} md={6} lg={3}>
         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
          Mật khẩu
         </Typography>
@@ -264,13 +264,13 @@ const DetailUser = ({ id }) => {
          fullWidth
          placeholder='Nhập mật khẩu'
          variant='outlined'
-         value={_.get(userData, '_id') ? "*********" : _.get(userData, "password", "")}
+         value={_.get(userData, "_id") ? "*********" : _.get(userData, "password", "")}
          onChange={(e) => setUserData({ password: e.target.value })}
-         disabled={_.get(userData, '_id') ? true : false}
+         disabled={_.get(userData, "_id") ? true : false}
          inputProps={{ name: "password", ariallabel: "password" }}
         />
-       </Grid>
-       <Grid item xs={12} md={6}>
+       </Grid> */}
+       <Grid item xs={12} md={6} lg={3}>
         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
          Email
         </Typography>
@@ -310,27 +310,9 @@ const DetailUser = ({ id }) => {
         </StyledTextField>
        </Grid>
       </Grid>
-      <Box sx={{ display: "flex", gap: "16px" }}>
-       {_.get(userData, 'status') ? (
-        <AlertDialogDelete description={"Bạn muốn xóa tài khoản " + userData.name + "?"} onHandle={handleInactive}>
-         <StyledButton variant='contained' color='error' size='large' disableElevation>
-          Xóa thành viên
-         </StyledButton>
-        </AlertDialogDelete>
-       ) : null}
-       {_.get(userData, '_id') ? (
-        <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={updateData}>
-         Lưu thông tin
-        </StyledLoadingButton>
-       ) : (
-        <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={createData}>
-         Tạo mới
-        </StyledLoadingButton>
-       )}
-      </Box>
      </Paper>
-    </Box>
-   )}
+    )}
+   </Box>
 
    <Box sx={{ p: 2 }}>
     <FilterAddPermission
@@ -339,6 +321,26 @@ const DetailUser = ({ id }) => {
      groupPermissions={_.get(userData, "groupPermissions", [])}
      setGroupPermissions={(newGroup) => setUserData({ groupPermissions: newGroup })}
     />
+   </Box>
+   <Box sx={{ p: 2 }}>
+    <Box sx={{ display: "flex", gap: "16px" }}>
+     {_.get(userData, "status") ? (
+      <AlertDialogDelete description={"Bạn muốn xóa tài khoản " + userData.name + "?"} onHandle={handleInactive}>
+       <StyledButton variant='contained' color='error' size='large' disableElevation>
+        Xóa thành viên
+       </StyledButton>
+      </AlertDialogDelete>
+     ) : null}
+     {_.get(userData, "_id") ? (
+      <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={updateData}>
+       Lưu thông tin
+      </StyledLoadingButton>
+     ) : (
+      <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={createData}>
+       Tạo mới
+      </StyledLoadingButton>
+     )}
+    </Box>
    </Box>
   </Fragment>
  )
