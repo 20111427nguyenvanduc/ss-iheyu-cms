@@ -3,7 +3,8 @@ import { styled, useTheme } from "@mui/material/styles"
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Collapse } from "@mui/material"
 import InboxIcon from "@mui/icons-material/MoveToInbox"
 import { list as listUnit } from "../../services/unit"
-
+import ExpandLess from "@mui/icons-material/ExpandLess"
+import ExpandMore from "@mui/icons-material/ExpandMore"
 const ListItemButtonStyled = styled(ListItemButton)(({ theme }) => ({
  borderRadius: "16px",
  border: "1px solid #F3F3F3",
@@ -28,34 +29,33 @@ const Vector = styled(Box)(({ theme }) => ({
  borderBottom: "1px solid #CCCFD3",
 }))
 
+const NestedList = ({ children, onClick = () => {}, items }) => {
+ const [open, setOpen] = React.useState(false)
 
-const NestedList = ({ children, onClick = ()=>{}, items }) => {
-  const [open, setOpen] = React.useState(false)
- 
-  const handleClick = () => {
-   onClick(item)
-   setOpen(!open)
-  }
- 
-  return (
-   <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-    <ListItemButtonStyled onClick={handleClick}>
-     <ListItemIcon>{_.get(item, 'icon')}</ListItemIcon>
-     <ListItemText primary={_.get(item, 'label')} />
-     {open ? <ExpandLess /> : <ExpandMore />}
-    </ListItemButtonStyled>
-    <Collapse in={open} timeout='auto' unmountOnExit>
-     <List disablePadding>
-      {items.map((item, i) => (
-       <ListItemStyled key={i}>
-        <Vector /> {item}
-       </ListItemStyled>
-      ))}
-     </List>
-    </Collapse>
-   </List>
-  )
+ const handleClick = () => {
+  onClick(item)
+  setOpen(!open)
  }
+
+ return (
+  <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+   <ListItemButtonStyled onClick={handleClick}>
+    <ListItemIcon>{_.get(item, "icon")}</ListItemIcon>
+    <ListItemText primary={_.get(item, "label")} />
+    {open ? <ExpandLess /> : <ExpandMore />}
+   </ListItemButtonStyled>
+   <Collapse in={open} timeout='auto' unmountOnExit>
+    <List disablePadding>
+     {items.map((item, i) => (
+      <ListItemStyled key={i}>
+       <Vector /> {item}
+      </ListItemStyled>
+     ))}
+    </List>
+   </Collapse>
+  </List>
+ )
+}
 export default function UnitSelected({ unit, setUnit }) {
  const [units, setUnits] = useState([])
 
@@ -83,13 +83,41 @@ export default function UnitSelected({ unit, setUnit }) {
  useEffect(() => {
   setUnitByParent(unit)
  }, [unit])
- console.log(units)
+//  console.log(units)
 
  return (
-  null
+  <NestedList
+   item={{
+    icon: "",
+    label: "Đơn vị",
+   }}
+   items={[
+    <NestedList
+     item={{
+      icon: "",
+      label: "Đơn vị",
+     }}
+     items={[
+      <NestedList
+       items={[
+        <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+         <ListItemButton>
+          <ListItemIcon>
+           <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary='Hết' />
+         </ListItemButton>
+        </List>,
+       ]}
+      />,
+     ]}
+    />,
+   ]}
+  />
  )
 }
-{/* <NestedList
+{
+ /* <NestedList
 item={{
  icon: "",
  label: "Đơn vị",
@@ -116,4 +144,5 @@ items={[
   ]}
  />,
 ]}
-/> */}
+/> */
+}
