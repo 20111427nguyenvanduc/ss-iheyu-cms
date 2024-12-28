@@ -25,4 +25,8 @@ export default {
   const url = `${IHEYU_SERVICE}/api/v1.0/admin/unit/list-level`
   authPost(url, req, res)
  },
+ get(req, res) {
+  const url = `${IHEYU_SERVICE}/api/v1.0/admin/unit/get`
+  authPost(url, req, res)
+ },
 }

@@ -35,6 +35,7 @@ app.post("/admin/unit/create", UnitHandle.create)
 app.post("/admin/unit/update", UnitHandle.update)
 app.post("/admin/unit/inactive", UnitHandle.inactive)
 app.post("/admin/unit/list-level", UnitHandle.listLevel)
+app.post("/admin/unit/get", UnitHandle.get)
 
 //user
 app.post("/admin/user/list", UserHandle.list)

@@ -79,7 +79,12 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
   <React.Fragment>
    {React.cloneElement(
     children || (
-     <Button variant='contained' size='large' sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}} startIcon={<i className='icon-bold-add-circle' />}>
+     <Button
+      variant='contained'
+      size='large'
+      sx={{padding:'12px 32px', background: "#00BF30", borderRadius: "12px", color: "#FFF", textTransform: "inherit", "&:hover": {backgroundColor: "#00BF30", color: "#FFF"}}}
+      startIcon={<i className='icon-linear-briefcase' />}
+     >
       Thêm chức vụ mới
      </Button>
     ),
