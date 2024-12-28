@@ -41,9 +41,9 @@ class Link extends React.Component {
  }
 
  render() {
-  const {to, children, ...props} = this.props
+  const {to, children, color = "#2E3236", ...props} = this.props
   return (
-   <a href={to} {...props} onClick={this.handleClick} style={{textDecoration: "none"}}>
+   <a href={to} {...props} onClick={this.handleClick} style={{textDecoration: "none", color: color, display: "flex", alignItems: "center"}}>
     {children}
    </a>
   )

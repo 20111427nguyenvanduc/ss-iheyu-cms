@@ -15,26 +15,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import {list as listPermission} from "../../services/permission"
 import Search from "../Shared/Search"
 
-const AddPermissionToPosition = ({children, onClose = () => {}}) => {
+const AddPermissionToPosition = ({children, onClose = () => {}, dataPermission = [], textSearch, setTextSearch, onSubmitSearch = () => {}}) => {
  const [open, setOpen] = React.useState(false)
 
- const [dataPermission, setDataGroup] = useState([])
-
  const [permissions, setPermissions] = useState([])
-
- const [textSearch, setTextSearch] = useState("")
-
- const getListPermissions = () => {
-  listPermission({name: textSearch}).then((res) => {
-   if (_.get(res, "code") === 200) {
-    setDataGroup(_.get(res, "data"))
-   }
-  })
- }
-
- useEffect(() => {
-  getListPermissions()
- }, [])
 
  const handleClickOpen = () => {
   setOpen(true)
@@ -44,28 +28,31 @@ const AddPermissionToPosition = ({children, onClose = () => {}}) => {
   setOpen(false)
  }
 
- const handleCheckPermission = (permissionId) => {
-  const isChecked = permissions.includes(permissionId)
+ const handleCheckPermission = (permission) => {
+  const isChecked = findIdInArray(permissions, _.get(permission, "_id"))
   if (isChecked) {
    // Bỏ tick nhóm quyền
-   setPermissions(permissions.filter((id) => id !== permissionId))
+   setPermissions(permissions.filter((item) => item_id !== _.get(permission, "_id")))
   } else {
    // Tick nhóm quyền
-   setPermissions([...permissions, permissionId])
+   setPermissions([...permissions, permission])
   }
+ }
+
+ const findIdInArray = (array, idToFind) => {
+  return array.some((item) => item._id === idToFind)
  }
 
  return (
   <React.Fragment>
-   <Button
-    onClick={handleClickOpen}
-    variant='contained'
-    size='large'
-    sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}
-    startIcon={<i className='icon-bold-document-text' />}
-   >
-    Thêm mới
-   </Button>
+   {React.cloneElement(
+    children || (
+     <Button variant='contained' size='large' sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}} startIcon={<i className='icon-bold-add-circle' />}>
+      Thêm mới
+     </Button>
+    ),
+    {onClick: handleClickOpen},
+   )}
    <Dialog fullWidth={true} maxWidth={"lg"} open={open} onClose={handleClose} scroll={"paper"} PaperProps={{sx: {borderRadius: "16px"}}}>
     <DialogTitle>
      <Stack direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
@@ -77,7 +64,7 @@ const AddPermissionToPosition = ({children, onClose = () => {}}) => {
        textSearch={textSearch}
        searchChange={(text) => setTextSearch(text)}
        onSubmit={() => {
-        getListPermissions()
+        onSubmitSearch()
        }}
       />
      </Stack>
@@ -94,17 +81,17 @@ const AddPermissionToPosition = ({children, onClose = () => {}}) => {
           py={0.5}
           gap={1.5}
           mt={1}
-          sx={{border: !permissions.includes(permission._id) ? "1px solid #CCCFD3" : "1px solid #007CFE", borderRadius: "12px"}}
+          sx={{border: !findIdInArray(permissions, permission._id) ? "1px solid #CCCFD3" : "1px solid #007CFE", borderRadius: "12px"}}
          >
           <Box>
-           <Stack direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
+           <Stack onChange={() => handleCheckPermission(permission)} direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
             <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
              <i className='icon-bold-cd' style={{color: "#007CFE", fontSize: "22px"}} />
              <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600}}>
               {permission.name}
              </Typography>
             </Stack>
-            <Checkbox value={permission._id} onChange={() => handleCheckPermission(permission._id)} checked={permissions.includes(permission._id)} />
+            <Checkbox value={permission._id} onChange={() => handleCheckPermission(permission)} checked={findIdInArray(permissions, permission._id)} />
            </Stack>
           </Box>
          </Box>
@@ -114,7 +101,15 @@ const AddPermissionToPosition = ({children, onClose = () => {}}) => {
      </Grid>
     </DialogContent>
     <DialogActions sx={{justifyContent: "center"}}>
-     <Button variant='contained' size='large' sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit", width: "250px"}}>
+     <Button
+      onClick={() => {
+       onClose(permissions)
+       handleClose()
+      }}
+      variant='contained'
+      size='large'
+      sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit", width: "250px"}}
+     >
       Xác nhận
      </Button>
     </DialogActions>
