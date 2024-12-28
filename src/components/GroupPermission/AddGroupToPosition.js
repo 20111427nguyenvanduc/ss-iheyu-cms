@@ -76,7 +76,7 @@ const AddGroupToPosition = ({children, onClose = () => {}, dataGroup = [], textS
         <Grid item>
          <Box display={"flex"} flexDirection='column' gap={1.5} mt={1} sx={{border: !findIdInArray(groupPermissions, group._id) ? "1px solid #CCCFD3" : "1px solid #007CFE", borderRadius: "12px"}}>
           <Box px={2} pt={1}>
-           <Stack onChange={() => handleCheckGroupPermission(group)} direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
+           <Stack onClick={() => handleCheckGroupPermission(group)} direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
             <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
              <i className='icon-bold-task-square' style={{color: "#007CFE", fontSize: "22px"}} />
              <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600}}>

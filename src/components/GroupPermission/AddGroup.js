@@ -63,7 +63,7 @@ const AddGroup = ({children, onClose = () => {}}) => {
       Thêm nhóm quyền mới{" "}
      </Typography>
     </DialogTitle>
-    <DialogContent dividers>
+    <DialogContent>
      <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px' mt={1}>
       <Box sx={{width: "100%"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
        <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
@@ -110,7 +110,6 @@ const AddGroup = ({children, onClose = () => {}}) => {
       </Box>
      </Box>
     </DialogContent>
-    <DialogActions></DialogActions>
    </Dialog>
   </React.Fragment>
  )

@@ -84,7 +84,7 @@ const AddPermissionToPosition = ({children, onClose = () => {}, dataPermission =
           sx={{border: !findIdInArray(permissions, permission._id) ? "1px solid #CCCFD3" : "1px solid #007CFE", borderRadius: "12px"}}
          >
           <Box>
-           <Stack onChange={() => handleCheckPermission(permission)} direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
+           <Stack onClick={() => handleCheckPermission(permission)} direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
             <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
              <i className='icon-bold-cd' style={{color: "#007CFE", fontSize: "22px"}} />
              <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600}}>

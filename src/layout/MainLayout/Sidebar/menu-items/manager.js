@@ -28,7 +28,7 @@ const dashboard = {
 //    },
    {
     id: "unit",
-    title: "Quản lý phòng ban",
+    title: "Quản lý đơn vị",
     type: "item",
     url: "/unit",
     icon: ManageAccountsIcon,
@@ -36,7 +36,7 @@ const dashboard = {
    },
    {
     id: "permissions",
-    title: "Quản lý quyền",
+    title: "Quản lý quyền hạn",
     type: "item",
     url: "/permissions",
     icon: ManageAccountsIcon,
