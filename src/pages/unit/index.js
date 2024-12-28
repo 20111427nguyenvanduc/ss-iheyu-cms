@@ -200,7 +200,7 @@ const Manage = () => {
 
        {listDataPosition.map((item, i) => {
         return (
-         <Link underline='hover' key='1' color='#2E3236' href={"/position/" + item._id}>
+         <Link underline='hover' key='1' color='#2E3236' to={"/position/" + item._id}>
           <Box sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "12px 32px", borderRadius: "32px", border: "1px solid #656C75"}}>
            <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
             <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>

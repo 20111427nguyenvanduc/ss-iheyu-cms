@@ -105,7 +105,7 @@ const Manage = () => {
    </Box>
    <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
     <DataTable
-     heads={["STT", "Họ và tên", "Tên tài khoản", "SĐT", "Đơn vị", "Vai trò", "Trạng thái", "Thao tác"].map((head, i) =>
+     heads={["STT", "Họ tên","SĐT", "Chức vụ", "Phòng ban", "Đơn vị", "Tài khoản", "Thao tác"].map((head, i) =>
       createCell(head, { sx: { width: i == 0 ? "5%" : i == 5 ? "10%" : i == 6 ? "10%" : "auto", textAlign: "center" } }),
      )}
      rows={listData.map((item, i) => {
@@ -115,11 +115,11 @@ const Manage = () => {
         <Avatar src={_.get(item, "avatar", item.name)} />
         <Typography>{item.name}</Typography>
        </StyledBox>,
-       <StyledBox>{item.username}</StyledBox>,
        <StyledBox>{item.phone}</StyledBox>,
        <StyledBox>{_.get(item, "unit.name")}</StyledBox>,
        <StyledBox>{_.get(item, "role.name")}</StyledBox>,
-       <StyledBox>{item.status ? <Chip color='success' size='small' label='Hoạt động' /> : <Chip color='error' size='small' label='Vô hiệu' />}</StyledBox>,
+       <StyledBox>{_.get(item, "role.name")}</StyledBox>,
+       <StyledBox>{_.get(item, "username")}</StyledBox>,
        <StyledBox>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
          <Link to={`${pathname}/${item._id}`}>

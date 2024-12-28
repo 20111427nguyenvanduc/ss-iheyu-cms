@@ -72,7 +72,7 @@ const StyledBox = styled(Box)(({theme}) => ({
      <Fragment>
       <Box sx={{background: "#EEF2F6", py: 1.5, px: 2}}>
        <Breadcrumbs separator={<i className='icon-linear-arrow-right-1' />} aria-label='breadcrumb'>
-        <Link underline='hover' key='1' color='#2E3236' href='/'>
+        <Link underline='hover' key='1' color='#2E3236' to='/'>
          Trang quản trị
         </Link>
         <Typography key='2' sx={{color: "#007CFE"}}>

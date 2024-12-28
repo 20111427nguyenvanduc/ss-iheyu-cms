@@ -120,7 +120,7 @@ const StyledBox = styled(Box)(({theme}) => ({
           </Box>,
           <StyledBox>
            <Box>
-            <Link underline='hover' key='1' color='#2E3236' href={"/group-permission/" + item._id}>
+            <Link underline='hover' key='1' color='#2E3236' to={"/group-permission/" + item._id}>
              <Avatar sx={{bgcolor: "#DCF1FF"}}>
               <i className='icon-linear-edit-2' style={{color: "#1589D8"}} />
              </Avatar>
