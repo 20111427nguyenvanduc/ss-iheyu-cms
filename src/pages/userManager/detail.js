@@ -8,53 +8,41 @@ import async from "async"
 import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import { Avatar, Box, Button, Paper, Tooltip, Breadcrumbs, Typography, Stack, Grid, TextField, MenuItem } from "@mui/material"
+import { Avatar, Box, Button, Paper, Tooltip, Breadcrumbs, Typography, Stack, Grid, TextField, MenuItem, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import LoadingButton from "@mui/lab/LoadingButton"
-import PasswordInput from "../../ui-component/input/Password"
 import Link from "../../components/Link"
+import UnitSelected from "../../components/UserManager/UnitSelected"
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
 import { get, create, update, inactive } from "../../services/user"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import LoadingSkeleton from "../../ui-component/loading/LoadingSkeleton"
+import DatePicker from "../../ui-component/datepicker/DatePicker"
 import { list as listUnit } from "../../services/unit"
 import { list as listRole } from "../../services/role"
 import FilterAddPermission from "../../components/GroupPermission/FilterAddPermission"
+import AddCircleIcon from "@mui/icons-material/AddCircle"
 import CONSTANT from "../../const"
-const StyledBox = styled(Box)(({ theme }) => ({
- display: "flex",
- gap: theme.spacing(1),
- flexWrap: "wrap",
- flexDirection: "column",
- alignItems: "center",
- justifyContent: "center",
+const StyledAddButton = styled(Button)(({ theme }) => ({
+ backgroundColor: "#E5F1FF",
+ color: "#007CFE",
+ borderRadius: "12px",
+ ":hover": {
+  backgroundColor: "#007CFE",
+  color: "#FFFFFF",
+ },
 }))
 
 const StyledButton = styled(Button)(({ theme }) => ({
  padding: "16px 32px",
- borderRadius: "16px",
+ borderRadius: "12px",
 }))
 const StyledLoadingButton = styled(LoadingButton)(({ theme }) => ({
  padding: "16px 32px",
- borderRadius: "16px",
+ borderRadius: "12px",
 }))
 
 const StyledTextField = styled(TextField)({
- "& .MuiOutlinedInput-root": {
-  borderRadius: "16px",
-  "& fieldset": {
-   borderRadius: "16px",
-  },
-  "&:hover fieldset": {
-   borderRadius: "16px",
-  },
-  "&.Mui-focused fieldset": {
-   borderRadius: "16px",
-  },
- },
-})
-
-const StyledPasswordInput = styled(PasswordInput)({
  "& .MuiOutlinedInput-root": {
   borderRadius: "16px",
   "& fieldset": {
@@ -92,6 +80,7 @@ const DetailUser = ({ id }) => {
  const { user, configs } = useSelector((state) => state)
  const [textSearch, setTextSearch] = useState("")
  const [units, setUnits] = useState([])
+ const [unitSelected, setUnitSelected] = useState([])
  const [roles, setRoles] = useState([])
  const [loading, setLoading] = useState(false)
  const [loadingSave, setLoadingSave] = useState(false)
@@ -131,14 +120,14 @@ const DetailUser = ({ id }) => {
   setLoading(true)
   async.parallel(
    {
-    units: getUnits,
-    roles: getRoles,
+    // units: getUnits,
+    // roles: getRoles,
     userData: getUserInf,
    },
    (err, objResult) => {
     setData(objResult.userData)
-    setUnits(objResult.units)
-    setRoles(objResult.roles)
+    // setUnits(objResult.units)
+    // setRoles(objResult.roles)
     setLoading(false)
    },
   )
@@ -187,14 +176,36 @@ const DetailUser = ({ id }) => {
 
  const onChangeRole = (roleId) => {
   let roleObj
-  roles.forEach(role => {
-    if (role._id === roleId) {
-      roleObj = role
-    }
-  });
-  setUserData({ 
-    role: roleId,
-    permissions: _.get(roleObj, 'permissions', userData.permissions || [])
+  roles.forEach((role) => {
+   if (role._id === roleId) {
+    roleObj = role
+   }
+  })
+  setUserData({
+   role: roleId,
+   permissions: _.get(roleObj, "permissions", userData.permissions || []),
+  })
+ }
+
+ const addCollaborate = () => {
+  let units = _.get(userData, "units", [])
+  let positions = _.get(userData, "positions", [])
+  if ((typeof _.last(units) === "object" && _.isEmpty(_.last(units))) || (typeof _.last(positions) === "object" && _.isEmpty(_.last(positions)))) {
+   return toastr.warning("Chưa điền đầy đủ công tác trước")
+  }
+  if (!_.isArray(units)) {
+   units = [{}]
+  } else {
+   units.push({})
+  }
+  if (!_.isArray(positions)) {
+   positions = [{}]
+  } else {
+   positions.push({})
+  }
+  setUserData({
+   units,
+   positions,
   })
  }
 
@@ -225,105 +236,164 @@ const DetailUser = ({ id }) => {
    </Box>
    <Box sx={{ p: 2 }}>
     {loading ? (
-     <LoadingSkeleton loading={loading} variant='rounded' width="100%" height={300}/>
+     <LoadingSkeleton loading={loading} variant='rounded' width='100%' height={300} />
     ) : (
-     <Paper sx={{ p: 2, border: "1px solid #CCCFD3", borderRadius: "12px" }} elevation={0}>
-      <Typography variant='h6'>Thông tin</Typography>
-      <Grid container my={2} spacing={2}>
-       <Grid item xs={12} md={6} lg={3}>
-        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
-         Họ tên
-        </Typography>
-        <StyledTextField
-         fullWidth
-         placeholder='Nhập họ tên'
-         variant='outlined'
-         value={_.get(userData, "name", "")}
-         onChange={(e) => setUserData({ name: e.target.value })}
-         inputProps={{ name: "name", ariallabel: "name" }}
-        />
+     <Fragment>
+      <Paper elevation={0}>
+       <Typography variant='h6'>Thông tin</Typography>
+       <Grid container my={2} spacing={2}>
+        <Grid item xs={12} md={6} lg={2}>
+         <Avatar src={_.get(userData, "avatar")} width={96} height={96} />
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+          Họ tên
+         </Typography>
+         <StyledTextField
+          fullWidth
+          placeholder='Nhập họ tên'
+          variant='outlined'
+          value={_.get(userData, "name", "")}
+          onChange={(e) => setUserData({ name: e.target.value })}
+          inputProps={{ name: "name", ariallabel: "name" }}
+         />
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+          Số điện thoại
+         </Typography>
+         <StyledTextField
+          fullWidth
+          placeholder='Nhập số điện thoại'
+          variant='outlined'
+          value={_.get(userData, "phone", "")}
+          onChange={(e) => setUserData({ phone: e.target.value })}
+          inputProps={{ name: "phone", ariallabel: "phone" }}
+         />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+          Email
+         </Typography>
+         <StyledTextField
+          fullWidth
+          placeholder='Nhập email'
+          variant='outlined'
+          value={_.get(userData, "email", "")}
+          onChange={(e) => setUserData({ email: e.target.value })}
+          inputProps={{ name: "email", ariallabel: "email" }}
+         />
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+          Tài khoản
+         </Typography>
+         <StyledTextField
+          fullWidth
+          placeholder='Nhập tài khoản'
+          variant='outlined'
+          value={_.get(userData, "username", "")}
+          onChange={(e) => setUserData({ username: e.target.value })}
+          inputProps={{ name: "username", ariallabel: "username" }}
+         />
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+          Giới tính
+         </Typography>
+         <StyledTextField
+          fullWidth
+          select
+          sx={{
+           "& .MuiSelect-select span::before": {
+            content: "'Chọn giới tính'",
+           },
+          }}
+          variant='outlined'
+          value={_.get(userData, "gender", "")}
+          onChange={(e) => setUserData({ gender: e.target.value })}
+          inputProps={{ name: "gender", ariallabel: "gender" }}
+         >
+          {[
+           { label: "Nam", code: "male" },
+           { label: "Nữ", code: "female" },
+          ].map((option) => (
+           <MenuItem key={option.code} value={option.code}>
+            {option.label}
+           </MenuItem>
+          ))}
+         </StyledTextField>
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+          Ngày sinh
+         </Typography>
+         <DatePicker placeholder='Chọn ngày sinh' value={_.get(userData, "dob", "") ? moment(_.get(userData, "dob", "")) : ""} onChange={(newDate) => setUserData({ dob: newDate })} />
+        </Grid>
+        <Grid item xs={12} md={6} lg={3}>
+         <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+          Danh mục phản ánh
+         </Typography>
+         <StyledTextField
+          fullWidth
+          select
+          sx={{
+           "& .MuiSelect-select span::before": {
+            content: "'Chọn danh mục'",
+           },
+          }}
+          variant='outlined'
+          value={_.get(userData, "categories", [])}
+          onChange={(e) => setUserData({ categories: e.target.value })}
+          inputProps={{ name: "categories", ariallabel: "categories" }}
+          SelectProps={{
+           multiple: true,
+          }}
+         >
+          {[
+           { label: "CA", code: "ca" },
+           { label: "UBND", code: "ubnd" },
+          ].map((option) => (
+           <MenuItem key={option.code} value={option.code}>
+            {option.label}
+           </MenuItem>
+          ))}
+         </StyledTextField>
+        </Grid>
        </Grid>
-       <Grid item xs={12} md={6} lg={3}>
-        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
-         Số điện thoại
-        </Typography>
-        <StyledTextField
-         fullWidth
-         placeholder='Nhập số điện thoại'
-         variant='outlined'
-         value={_.get(userData, "phone", "")}
-         onChange={(e) => setUserData({ phone: e.target.value })}
-         inputProps={{ name: "phone", ariallabel: "phone" }}
-        />
-       </Grid>
-       <Grid item xs={12} md={6} lg={3}>
-        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
-         Tài khoản
-        </Typography>
-        <StyledTextField
-         fullWidth
-         placeholder='Nhập tài khoản'
-         variant='outlined'
-         value={_.get(userData, "username", "")}
-         onChange={(e) => setUserData({ username: e.target.value })}
-         inputProps={{ name: "username", ariallabel: "username" }}
-        />
-       </Grid>
-       {/* <Grid item xs={12} md={6} lg={3}>
-        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
-         Mật khẩu
-        </Typography>
-        <StyledPasswordInput
-         fullWidth
-         placeholder='Nhập mật khẩu'
-         variant='outlined'
-         value={_.get(userData, "_id") ? "*********" : _.get(userData, "password", "")}
-         onChange={(e) => setUserData({ password: e.target.value })}
-         disabled={_.get(userData, "_id") ? true : false}
-         inputProps={{ name: "password", ariallabel: "password" }}
-        />
-       </Grid> */}
-       <Grid item xs={12} md={6} lg={3}>
-        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
-         Email
-        </Typography>
-        <StyledTextField
-         fullWidth
-         placeholder='Nhập email'
-         variant='outlined'
-         value={_.get(userData, "email", "")}
-         onChange={(e) => setUserData({ email: e.target.value })}
-         inputProps={{ name: "email", ariallabel: "email" }}
-        />
-       </Grid>
-       <Grid item xs={12} md={6}>
-        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
-         Đơn vị
-        </Typography>
+      </Paper>
+      <Paper sx={{ p: 2, border: "1px solid #CCCFD3", borderRadius: "12px" }} elevation={0}>
+       <Typography variant='h6'>Thông tin công tác</Typography>
+       <Grid container my={2} spacing={2}>
+        {_.get(userData, "units", []).map((unit, i) => (
+         <Grid item xs={12} md={6}>
+          <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+           Đơn vị
+          </Typography>
+          <UnitSelected unit={unit} setUnit={(newUnit) => setUserData({ unit: newUnit })} />
+         </Grid>
+        ))}
 
-        <StyledTextField fullWidth select placeholder='Chọn một' value={_.get(userData, "unit", "")} onChange={(e) => setUserData({ unit: e.target.value })}>
-         {units.map((option) => (
-          <MenuItem key={option._id.toString()} value={option._id.toString()}>
-           {option.name}
-          </MenuItem>
-         ))}
-        </StyledTextField>
-       </Grid>
-       <Grid item xs={12} md={6}>
-        <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
-         Vai trò
-        </Typography>
+        {_.get(userData, "positions", []).map(
+         (position, i) => (
+          <Grid item xs={12} md={6}>
+           <Typography variant='h5' sx={{ fontSize: "18px", color: "#4A4F55", fontWeight: 400, mb: 1 }}>
+            Chức vụ
+           </Typography>
+          </Grid>
+         ), // <UnitSelected unit={position} setUnit={(newPosition) => setUserData({ unit: newPosition })} />
+        )}
 
-        <StyledTextField fullWidth select placeholder='Chọn một' value={_.get(userData, "role", "")} onChange={(e) => onChangeRole( e.target.value )}>
-         {roles.map((option) => (
-          <MenuItem key={option._id.toString()} value={option._id.toString()}>
-           {option.name}
-          </MenuItem>
-         ))}
-        </StyledTextField>
+        <Grid item xs={12}>
+         <Box sx={{ display: "flex", gap: "16px", width: "100%", justifyContent: "center" }}>
+          <StyledAddButton startIcon={<AddCircleIcon />} variant='contained' color='info' onClick={addCollaborate}>
+           Thêm công tác
+          </StyledAddButton>
+         </Box>
+        </Grid>
        </Grid>
-      </Grid>
-     </Paper>
+      </Paper>
+     </Fragment>
     )}
    </Box>
 

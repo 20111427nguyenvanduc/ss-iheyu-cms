@@ -25,7 +25,7 @@ const StyledBox = styled(Box)(({ theme }) => ({
 
 const StyledButton = styled(Button)(({ theme }) => ({
  padding: "16px 32px",
- borderRadius: "16px",
+ borderRadius: "12px",
 }))
 
 const Manage = () => {
@@ -105,7 +105,7 @@ const Manage = () => {
    </Box>
    <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
     <DataTable
-     heads={["STT", "Họ tên","SĐT", "Chức vụ", "Phòng ban", "Đơn vị", "Tài khoản", "Thao tác"].map((head, i) =>
+     heads={["STT", "Họ tên", "SĐT", "Chức vụ", "Phòng ban", "Đơn vị", "Tài khoản", "Thao tác"].map((head, i) =>
       createCell(head, { sx: { width: i == 0 ? "5%" : i == 5 ? "10%" : i == 6 ? "10%" : "auto", textAlign: "center" } }),
      )}
      rows={listData.map((item, i) => {
