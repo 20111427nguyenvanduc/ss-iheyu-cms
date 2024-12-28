@@ -29,7 +29,7 @@ const Vector = styled(Box)(({ theme }) => ({
  borderBottom: "1px solid #CCCFD3",
 }))
 
-const NestedList = ({ children, onClick = () => {}, items }) => {
+const NestedList = ({ item, onClick = () => {}, items }) => {
  const [open, setOpen] = React.useState(false)
 
  const handleClick = () => {
