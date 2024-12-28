@@ -63,7 +63,7 @@ export default function MiniDrawer({children}) {
   getInitState()
  }, [])
 
- const userActive = !_.isEmpty(user) && user.active
+ const userActive = !_.isEmpty(user) && user.status
  if (!userActive) {
   return null
  }
