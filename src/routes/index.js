@@ -18,6 +18,7 @@ export default {
   require("./unit").default,
   require("./userManager/detail").default,
   require("./position/detail").default,
+  require("./unit/detail").default,
   require("./notFound").default,
  ],
 

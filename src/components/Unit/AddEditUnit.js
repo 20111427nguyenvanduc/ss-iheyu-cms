@@ -80,7 +80,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
   <React.Fragment>
    {React.cloneElement(
     children || (
-     <Button variant='contained' size='large' sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}} startIcon={<i className='icon-bold-add-circle' />}>
+     <Button variant='contained' size='large' sx={{padding: "12px 32px", background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}} startIcon={<i className='icon-bold-add-circle' />}>
       Thêm đơn vị mới
      </Button>
     ),
@@ -93,7 +93,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
       {detail ? "Sửa đơn vị" : "Thêm đơn vị mới"}
      </Typography>
      <Typography component='p' sx={{fontSize: "18px", color: "#143250", fontWeight: 400}}>
-      Trực thuộc UBND Thành phố Hải Phòng{" "}
+      Trực thuộc {_.get(unitCurrent, "name")}
      </Typography>
     </DialogTitle>
     <DialogContent>

@@ -19,3 +19,7 @@ export const inactive = (body) => {
 export const listLevel = (body) => {
  return axios.post("/admin/unit/list-level", body)
 }
+
+export const get = (body) => {
+    return axios.post("/admin/unit/get", body)
+   }
