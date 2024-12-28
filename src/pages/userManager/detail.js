@@ -398,28 +398,28 @@ const DetailUser = ({ id }) => {
    </Box>
 
    <Box sx={{ p: 2 }}>
-    <FilterAddPermission
+    {/* <FilterAddPermission
      permissions={_.get(userData, "permissions", [])}
      setPermissions={(newPermissions) => setUserData({ permissions: newPermissions })}
      groupPermissions={_.get(userData, "groupPermissions", [])}
      setGroupPermissions={(newGroup) => setUserData({ groupPermissions: newGroup })}
-    />
+    /> */}
    </Box>
    <Box sx={{ p: 2 }}>
     <Box sx={{ display: "flex", gap: "16px" }}>
      {_.get(userData, "status") ? (
       <AlertDialogDelete description={"Bạn muốn xóa tài khoản " + userData.name + "?"} onHandle={handleInactive}>
-       <StyledButton variant='contained' color='error' size='large' disableElevation>
+       <StyledButton variant='contained' color='error' disableElevation>
         Xóa thành viên
        </StyledButton>
       </AlertDialogDelete>
      ) : null}
      {_.get(userData, "_id") ? (
-      <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={updateData}>
+      <StyledLoadingButton loading={loadingSave} variant='contained' color='info' disableElevation onClick={updateData}>
        Lưu thông tin
       </StyledLoadingButton>
      ) : (
-      <StyledLoadingButton loading={loadingSave} variant='contained' color='info' size='large' disableElevation onClick={createData}>
+      <StyledLoadingButton loading={loadingSave} variant='contained' color='info' disableElevation onClick={createData}>
        Tạo mới
       </StyledLoadingButton>
      )}
