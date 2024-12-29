@@ -5,6 +5,7 @@ import RoleHandle from "./role"
 import UnitHandle from "./unit"
 import UserHandle from "./user"
 import PositionHandle from "./position"
+import CategoryHandle from "./category"
 
 //authenticate
 app.post("/login", AuthenticateHandle.login)
@@ -50,4 +51,10 @@ app.post("/admin/position/create", PositionHandle.create)
 app.post("/admin/position/update", PositionHandle.update)
 app.post("/admin/position/inactive", PositionHandle.inactive)
 app.post("/admin/position/get", PositionHandle.get)
+
+//category
+app.post("/admin/category/list", PositionHandle.list)
+app.post("/admin/category/create", PositionHandle.create)
+app.post("/admin/category/update", PositionHandle.update)
+app.post("/admin/category/inactive", PositionHandle.inactive)
 

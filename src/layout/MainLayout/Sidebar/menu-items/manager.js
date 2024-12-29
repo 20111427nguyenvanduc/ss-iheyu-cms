@@ -50,6 +50,14 @@ const dashboard = {
     icon: ManageAccountsIcon,
  //    role: [""],
    },
+   {
+    id: "category",
+    title: "Danh mục phản ánh",
+    type: "item",
+    url: "/category",
+    icon: ManageAccountsIcon,
+ //    role: [""],
+   },
  ],
 }
 
