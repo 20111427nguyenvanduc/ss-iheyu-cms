@@ -7,10 +7,10 @@ import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
 import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField, Autocomplete, InputAdornment, Chip} from "@mui/material"
-import {create as createUnit, update as updateUnit} from "../../services/unit"
+import {create as createCategory, update as updateCategory} from "../../services/category"
 import UploadImgSingle from "../tools/UploadImgSingle"
 
-const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => {
+const AddEdit = ({children, onClose = () => {}, detail = null}) => {
  const [open, setOpen] = React.useState(false)
  const [name, setName] = useState("")
  const [icon, setIcon] = useState("")
@@ -39,17 +39,17 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
 
  const handleCreate = () => {
   if (!name) {
-   toastr.warning("Nhập tên đơn vị")
+   toastr.warning("Nhập tên danh mục")
    return false
   }
 
   try {
-   createUnit({name, parent: _.get(unitCurrent, "_id"), icon}).then((res) => {
+   createCategory({name, icon}).then((res) => {
     if (_.get(res, "code") === 200) {
      handleClose()
      onClose()
      resetState()
-     toastr.success("Tạo đơn vị thành công!")
+     toastr.success("Tạo danh mục thành công!")
     }
    })
   } catch (error) {
@@ -59,17 +59,17 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
 
  const handleUpdate = () => {
   if (!name) {
-   toastr.warning("Nhập tên đơn vị")
+   toastr.warning("Nhập tên danh mục")
    return false
   }
 
   try {
-   updateUnit({_id: _.get(detail, "_id"), name, parent: _.get(unitCurrent, "_id"), icon}).then((res) => {
+   updateCategory({_id: _.get(detail, "_id"), name, icon}).then((res) => {
     if (_.get(res, "code") === 200) {
      handleClose()
      onClose()
      resetState()
-     toastr.success("Cập nhật đơn vị thành công!")
+     toastr.success("Cập nhật danh mục thành công!")
     }
    })
   } catch (error) {
@@ -82,7 +82,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
    {React.cloneElement(
     children || (
      <Button variant='contained' size='large' sx={{padding: "12px 32px", background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}} startIcon={<i className='icon-bold-add-circle' />}>
-      Thêm đơn vị mới
+      Thêm danh mục mới
      </Button>
     ),
     {onClick: handleClickOpen},
@@ -91,21 +91,21 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
    <Dialog fullWidth={true} maxWidth={"xs"} open={open} onClose={handleClose} PaperProps={{sx: {borderRadius: "16px"}}}>
     <DialogTitle>
      <Typography component='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-      {detail ? "Sửa đơn vị" : "Thêm đơn vị mới"}
+      {detail ? "Sửa danh mục" : "Thêm danh mục mới"}
      </Typography>
      <Typography component='p' sx={{fontSize: "18px", color: "#143250", fontWeight: 400}}>
-      Trực thuộc {_.get(unitCurrent, "name")}
+      Phản ánh kiến nghị
      </Typography>
     </DialogTitle>
     <DialogContent>
      <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px' mt={1}>
       <Box sx={{width: "100%"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
        <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
-        Tên đơn vị
+        Tên danh mục
        </Typography>
        <TextField
         fullWidth
-        placeholder='Nhập tên đơn vị'
+        placeholder='Nhập tên danh mục'
         variant='outlined'
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -115,7 +115,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
         }}
        />
        <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
-        Biểu tượng đơn vị
+        Biểu tượng danh mục{" "}
        </Typography>
 
        <UploadImgSingle
@@ -130,6 +130,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
         onDeleteFile={(filename) => {
          setIcon("")
         }}
+        type='category'
        >
         <Stack direction='column' spacing={2} sx={{justifyContent: "center", alignItems: "center"}}>
          <img src='/images/icon-upload.png' style={{width: "40px"}} />
@@ -152,7 +153,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
         type='submit'
         sx={{borderRadius: "12px", background: "#007CFE", fontSize: "16px", padding: "12px", textTransform: "initial"}}
        >
-        {detail ? "Cập nhật đơn vị" : " Tạo đơn vị"}
+        {detail ? "Cập nhật danh mục" : " Tạo danh mục"}
        </Button>
       </Box>
      </Box>

@@ -197,7 +197,7 @@ const Manage = ({id}) => {
           <VectorConnect />
           <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
            <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
-            <Avatar alt={item.name} src={_.get(unitCurrent, "icon")} />
+            <Avatar alt={item.name} src={_.get(item, "icon")} />
             <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
              {item.name}
             </Typography>
@@ -228,7 +228,7 @@ const Manage = ({id}) => {
            <VectorConnect />
            <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
             <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
-             <Avatar sx={{background:'#FFF'}} alt={item.name} src={_.get(unitCurrent, "icon")} />
+             <Avatar sx={{background:'#FFF'}} alt={item.name} src={""} />
              <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
               {item.name}
              </Typography>
