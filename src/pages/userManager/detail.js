@@ -11,7 +11,6 @@ import toastr from "toastr";
 import { Avatar, Box, Button, Paper, Tooltip, Breadcrumbs, Typography, Stack, Grid, TextField, MenuItem, List, ListItemButton, ListItemIcon, ListItemText, Divider, AppBar, Toolbar, InputAdornment } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Link from "../../components/Link";
-import UnitSelected from "../../components/UserManager/UnitSelected";
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable";
 import SearchHeader from "../../ui-component/search/SearchHeader";
 import { get, create, update, inactive } from "../../services/user";
@@ -40,12 +39,10 @@ const DetailUser = ({ id }) => {
   const dispatch = useDispatch();
   const { user, configs } = useSelector((state) => state);
   const [roles, setRoles] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [loadingSave, setLoadingSave] = useState(false);
   const [userData, setData] = useState({});
   const [unitsAndPositions, setUnitsAndPositions] = useState([{ unit: null, position: null }]); // Danh sách các phòng ban và chức vụ
-  const [permissions, setPermissions] = useState([]);
-  const [groupPermissions, setGroupPermissions] = useState([]);
   const setUserData = (newState) => {
     setData((oldState) => ({
       ...oldState,
@@ -62,12 +59,17 @@ const DetailUser = ({ id }) => {
       if (_.get(data, "dob")) {
         data.dob = moment(_.get(data, "dob"), "DD MM YYYY");
       }
+      let units = _.get(data, "units", []);
+      let positions = _.get(data, "positions", []);
+
+      if (!_.isEmpty(units)) {
+        setUnitsAndPositions(units.map((unit) => ({ unit, position: _.find(positions, { unit: unit._id }) })));
+      }
       cb(null, data || {});
     });
   };
 
   const initState = () => {
-    setLoading(true);
     async.parallel(
       {
         userData: getUserInf,
@@ -85,7 +87,7 @@ const DetailUser = ({ id }) => {
 
   const createData = () => {
     setLoadingSave(true);
-    create(userData)
+    create(handleDataBeforeSend(userData))
       .then((response) => {
         setLoadingSave(false);
         if (_.get(response, "code") === CONSTANT.CODE.SUCCESS) {
@@ -99,13 +101,42 @@ const DetailUser = ({ id }) => {
 
   const updateData = () => {
     setLoadingSave(true);
-    update(userData)
+    update(handleDataBeforeSend(userData))
       .then(() => {
         setLoadingSave(false);
       })
       .catch(() => {
         setLoadingSave(false);
       });
+  };
+
+  const handleDataBeforeSend = (data) => {
+    let newData = _.cloneDeep(data);
+    let permissions = _.get(data, "permissions", []);
+    let groupPermissions = _.get(data, "groupPermissions", []);
+    if (!_.isEmpty(permissions)) {
+      newData.permissions = permissions.map((permission) => permission._id);
+    }
+    if (!_.isEmpty(groupPermissions)) {
+      newData.groupPermissions = groupPermissions.map((groupPermission) => groupPermission._id);
+    }
+    console.log(unitsAndPositions);
+
+    if (!_.isEmpty(unitsAndPositions)) {
+      newData.units = [];
+      newData.positions = [];
+      unitsAndPositions.forEach((item) => {
+        let newUnitId = _.get(item, "unit._id");
+        if (newUnitId) {
+          newData.units.push(newUnitId);
+        }
+        let newPositionId = _.get(item, "position._id");
+        if (newPositionId) {
+          newData.positions.push(newPositionId);
+        }
+      });
+    }
+    return newData;
   };
 
   const handleInactive = () => {
@@ -240,21 +271,19 @@ const DetailUser = ({ id }) => {
                 </Grid>
               </Stack>
             </Paper>
-
             <Divider sx={{ borderColor: "#CCCFD3", height: "2px", margin: "24px 0" }} />
-
-            <UnitSelect unitsAndPositions={unitsAndPositions} setUnitsAndPositions={setUnitsAndPositions} permissions={permissions} setPermissions={setPermissions} groupPermissions={groupPermissions} setGroupPermissions={setGroupPermissions} />
+            <UnitSelect unitsAndPositions={unitsAndPositions} setUnitsAndPositions={setUnitsAndPositions} permissions={_.get(userData, "permissions", [])} setPermissions={(newPermissions) => setUserData({ permissions: newPermissions })} groupPermissions={_.get(userData, "groupPermissions", [])} setGroupPermissions={(newGroupPermissions) => setUserData({ groupPermissions: newGroupPermissions })} />
           </Fragment>
         )}
       </Box>
 
       <Box sx={{ p: 2 }}>
-        <FilterAddPermission permissions={permissions} setPermissions={setPermissions} groupPermissions={groupPermissions} setGroupPermissions={setGroupPermissions} />
+        <FilterAddPermission permissions={_.get(userData, "permissions", [])} setPermissions={(newPermissions) => setUserData({ permissions: newPermissions })} groupPermissions={_.get(userData, "groupPermissions", [])} setGroupPermissions={(newGroupPermissions) => setUserData({ groupPermissions: newGroupPermissions })} />
       </Box>
       <AppBar position="sticky" color="primary" sx={{ top: "auto", bottom: 0, boxShadow: "0px -5px 4px 0px #7E7E7E26", background: "#FFF" }}>
         <Toolbar sx={{ gap: 2, p: 2 }}>
           <Button
-            onClick={_.get(userData, "_id") ? createData : updateData}
+            onClick={_.get(userData, "_id") ? updateData : createData}
             variant="contained"
             size="large"
             sx={{

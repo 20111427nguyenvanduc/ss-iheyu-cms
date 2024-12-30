@@ -5,6 +5,7 @@ import { Autocomplete } from "@mui/material";
 import { list as listUnit } from "../../services/unit";
 import { list as listPosition } from "../../services/position";
 import _ from "lodash";
+import async from "async";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const StyledButtonImg = styled(Avatar)({
@@ -39,11 +40,12 @@ const StyledButtonAdd = styled(LoadingButton)({
 const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUpdatePermissionsAndGroups }) => {
   const [departments, setDepartments] = useState([]); // Danh sách các cấp
   const [selectedDepartments, setSelectedDepartments] = useState([]); // Lựa chọn hiện tại
+  const [isLoading, setIsLoading] = useState(false); // Trạng thái tải dữ liệu
   const [loading, setLoading] = useState(false); // Trạng thái tải dữ liệu
   const [listDataPosition, setListDataPosition] = useState([]); // Danh sách vị trí của phòng ban được chọn
 
   useEffect(() => {
-    getParentCurrent();
+    getParentCurrent(unit);
   }, []);
 
   useEffect(() => {
@@ -54,21 +56,32 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
     }
   }, [unit]);
 
-  const getParentCurrent = () => {
-    setLoading(true);
-    listUnit({})
-      .then((res) => {
-        if (_.get(res, "code") === 200) {
-          const data = _.get(res, "data", []);
-          setDepartments([data]); // Khởi tạo danh sách cấp đầu tiên
-        }
-      })
-      .catch((error) => {
-        console.error("Lỗi khi tải danh sách cấp gốc:", error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+  const getParentCurrent = (firstUnit) => {
+    const newSelectedDepartments = _.get(firstUnit, "parentPath", []).concat(firstUnit);
+    const newDepartments = [];
+    const initDepartment = _.isEmpty(firstUnit) ? [{}] : newSelectedDepartments;
+    async.waterfall(
+      initDepartment.map((unitSelected) => (next) => {
+        listUnit({ parent: _.get(unitSelected, "_id") })
+          .then((res) => {
+            if (_.get(res, "code") === 200) {
+              const data = _.get(res, "data", []);
+              newDepartments.push(data); // Thêm vào danh sách
+            }
+          })
+          .catch((error) => {
+            console.error("Lỗi khi tải danh sách cấp gốc:", error);
+          })
+          .finally(() => {
+            next();
+          });
+      }),
+      (err) => {
+        setDepartments(newDepartments);
+        setSelectedDepartments(newSelectedDepartments);
+        setIsLoading(true);
+      }
+    );
   };
 
   const fetchChildDepartments = (parentId, levelIndex) => {
@@ -92,8 +105,8 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
       });
   };
 
-  const getListPosition = (unitId) => {
-    listPosition({ unit: unitId })
+  const getListPosition = (unitObj) => {
+    listPosition({ unit: _.get(unitObj, "_id") })
       .then((res) => {
         if (_.get(res, "code") === 200) {
           const data = _.get(res, "data", []);
@@ -114,13 +127,13 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
     setSelectedDepartments(newSelectedDepartments);
 
     // Cập nhật phòng ban cuối cùng
-    setUnit(_.get(value, "_id", ""));
+    setUnit(value);
   };
 
   const handlePositionChange = (value) => {
     const newPermissions = _.get(value, "permissions", []);
     const newGroupPermissions = _.get(value, "groupPermissions", []);
-    setPosition(_.get(value, "_id", "")); // Cập nhật chức vụ
+    setPosition(value); // Cập nhật chức vụ
     handleUpdatePermissionsAndGroups(newPermissions, newGroupPermissions);
   };
 
@@ -161,11 +174,11 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
 
   const renderLocationSelect = () => (
     <Box mt={2}>
-      <Autocomplete options={listDataPosition} getOptionLabel={(option) => _.get(option, "name", "Chưa rõ")} value={listDataPosition.find((pos) => _.get(pos, "_id") === position) || null} onChange={(e, value) => handlePositionChange(value)} noOptionsText="Không có dữ liệu" sx={{ width: "100%" }} renderInput={(params) => <TextField {...params} placeholder="Chọn chức vụ" variant="outlined" />} />
+      <Autocomplete options={listDataPosition} getOptionLabel={(option) => _.get(option, "name", "Chưa rõ")} value={position || null} onChange={(e, value) => handlePositionChange(value)} noOptionsText="Không có dữ liệu" sx={{ width: "100%" }} renderInput={(params) => <TextField {...params} placeholder="Chọn chức vụ" variant="outlined" />} />
     </Box>
   );
 
-  return (
+  return isLoading ? (
     <Grid container columnSpacing={6} mt={1}>
       <Grid item xs={6}>
         <Typography variant="h6" sx={{ fontSize: "18px", color: "#010810" }}>
@@ -181,7 +194,7 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
         {renderLocationSelect()}
       </Grid>
     </Grid>
-  );
+  ) : null;
 };
 
 export default RecursiveSelectDynamic;
