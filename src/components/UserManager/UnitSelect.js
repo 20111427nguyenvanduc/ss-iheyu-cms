@@ -1,9 +1,8 @@
-import React, {useState} from "react"
-import {Box, Button, Typography, Alert} from "@mui/material"
+import React, {Fragment, useState} from "react"
+import {Box, Button, Typography, Alert, Paper, Grid} from "@mui/material"
 import RecursiveSelectDynamic from "./RecursiveSelectDynamic"
 
-const ParentComponent = () => {
- const [unitsAndPositions, setUnitsAndPositions] = useState([{unit: null, position: null}]) // Danh sách các phòng ban và chức vụ
+const ParentComponent = ({unitsAndPositions, setUnitsAndPositions, permissions, setPermissions, groupPermissions, setGroupPermissions}) => {
  const [error, setError] = useState(null) // Trạng thái lỗi
 
  // Thêm một bộ mới
@@ -12,9 +11,26 @@ const ParentComponent = () => {
   setUnitsAndPositions([...unitsAndPositions, {unit: null, position: null}])
  }
 
- // Kiểm tra trùng lặp cặp phòng ban và chức vụ
- const isDuplicate = (index, unit, position) => {
-  return unitsAndPositions.some((item, i) => i !== index && item.unit === unit && item.position === position)
+ // Kiểm tra và thêm `permissions` hoặc `groupPermissions`
+ const handleUpdatePermissionsAndGroups = (newPermissions, newGroupPermissions) => {
+  // Thêm `permissions` nếu chưa tồn tại
+  const updatedPermissions = [...permissions]
+  newPermissions.forEach((perm) => {
+   if (!updatedPermissions.some((p) => p._id === perm._id)) {
+    updatedPermissions.push(perm)
+   }
+  })
+
+  // Thêm `groupPermissions` nếu chưa tồn tại
+  const updatedGroupPermissions = [...groupPermissions]
+  newGroupPermissions.forEach((groupPerm) => {
+   if (!updatedGroupPermissions.some((gp) => gp._id === groupPerm._id)) {
+    updatedGroupPermissions.push(groupPerm)
+   }
+  })
+
+  setPermissions(updatedPermissions)
+  setGroupPermissions(updatedGroupPermissions)
  }
 
  // Cập nhật phòng ban và chức vụ
@@ -24,48 +40,67 @@ const ParentComponent = () => {
   const updatedList = [...unitsAndPositions]
   updatedList[index][key] = value
 
-  // Nếu đã có đủ `unit` và `position`, kiểm tra trùng lặp
-  const {unit, position} = updatedList[index]
-  if (unit && position && isDuplicate(index, unit, position)) {
-   setError(`Phòng ban "${unit}" và chức vụ "${position}" đã tồn tại!`)
-   return
-  }
-
   setUnitsAndPositions(updatedList)
  }
 
  return (
-  <Box>
-   <Typography variant='h5' gutterBottom>
-    Quản lý Phòng Ban và Chức Vụ
-   </Typography>
-
+  <Fragment>
+   {/* Hiển thị lỗi nếu có */}
    {error && (
     <Box mb={2}>
      <Alert severity='error'>{error}</Alert>
     </Box>
    )}
 
-   {/* Hiển thị các RecursiveSelectDynamic */}
+   {/* Hiển thị danh sách công tác */}
    {unitsAndPositions.map((item, index) => (
-    <Box key={index} mt={2} border='1px solid #ddd' borderRadius='8px' p={2}>
-     <Typography variant='h6'>Phòng ban và chức vụ {index + 1}</Typography>
-     <RecursiveSelectDynamic unit={item.unit} position={item.position} setUnit={(value) => handleUpdate(index, "unit", value)} setPosition={(value) => handleUpdate(index, "position", value)} />
-     <Box mt={1}>
-      <Typography>
-       Phòng ban: {item.unit || "Chưa chọn"} | Chức vụ: {item.position || "Chưa chọn"}
-      </Typography>
-     </Box>
-    </Box>
+    <Paper key={index} sx={{p: 2, border: "1px solid #CCCFD3", borderRadius: "12px", mb: 2}} elevation={0}>
+     <Typography variant='h5' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
+      Thông tin công tác
+     </Typography>
+     <Grid container spacing={2} mt={1}>
+      <RecursiveSelectDynamic
+       unit={item.unit}
+       position={item.position}
+       setUnit={(value) => handleUpdate(index, "unit", value)}
+       setPosition={(value) => handleUpdate(index, "position", value)}
+       handleUpdatePermissionsAndGroups={handleUpdatePermissionsAndGroups}
+      />
+     </Grid>
+    </Paper>
    ))}
 
-   {/* Nút thêm mới */}
-   <Box mt={4}>
-    <Button variant='contained' color='primary' onClick={handleAdd}>
-     Thêm Phòng Ban và Chức Vụ
-    </Button>
-   </Box>
-  </Box>
+   {/* Nút thêm công tác */}
+   <Grid item xs={12} mt={2}>
+    <Box
+     sx={{
+      display: "flex",
+      gap: "16px",
+      width: "100%",
+      justifyContent: "center",
+     }}
+    >
+     <Button
+      onClick={handleAdd}
+      variant='contained'
+      size='large'
+      sx={{
+       background: "#E5F1FF",
+       borderRadius: "12px",
+       textTransform: "inherit",
+       color: "#007CFE",
+       "&:hover": {
+        backgroundColor: "#E5F1FF",
+        color: "#007CFE",
+       },
+      }}
+      startIcon={<i className='icon-bold-add-circle' style={{color: "#007CFE"}} />}
+     >
+      Thêm đơn vị công tác
+     </Button>
+    </Box>
+   </Grid>
+  </Fragment>
  )
 }
 

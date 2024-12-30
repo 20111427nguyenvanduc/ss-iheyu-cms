@@ -94,24 +94,24 @@ const Manage = () => {
    <Box p={2}>
     <Box sx={{border: "1px solid #A1A7AE", borderRadius: "16px"}} p={2}>
      <Grid container spacing={2}>
-      {[1, 2, 3, 4, 5, 6].map((item, i) => {
+      {listData.map((item, i) => {
        {
         return (
          <Grid item sm={6}>
           <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center", border: "1px solid #CCCFD3", padding: "8px 12px", borderRadius: "16px"}}>
            <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
-            <img src='/images/icon-cate.png' style={{width: "20px"}} />
+            <img src={item.icon} style={{width: "20px"}} />
             <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600}}>
-             An ninh trật tự
+             {item.name}
             </Typography>
            </Stack>
 
            <Stack direction='row' spacing={2} sx={{justifyContent: "flex-end", alignItems: "center"}}>
-            <Typography variant='p' sx={{fontSize: "14px", color: "#00BF30", fontWeight: 500}}>
-             Đang hoạt động
+            <Typography variant='p' sx={{fontSize: "14px", color: item.status === 1 ? "#00BF30" : "#1C1E21", fontWeight: 500}}>
+             {item.status === 1 ? "Đang hoạt động" : "Đang ẩn"}
             </Typography>
-            <Switch defaultChecked/>
-            <AddEdit onClose={getList}>
+            <Switch defaultChecked />
+            <AddEdit onClose={getList} detail={item}>
              <Avatar sx={{bgcolor: "#DCF1FF", cursor: "pointer"}}>
               <i className='icon-linear-edit-2' style={{color: "#1589D8"}} />
              </Avatar>
