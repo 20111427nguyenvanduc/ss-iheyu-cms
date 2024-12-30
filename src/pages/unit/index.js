@@ -168,8 +168,7 @@ const Manage = ({id}) => {
       <Box display={"flex"} justifyContent={"center"}>
        <Stack
         direction='row'
-        spacing={2}
-        sx={{justifyContent: "flex-start", alignItems: "center", border: "1px solid #007CFE", width: "fit-content", padding: "12px 32px", borderRadius: "32px", position: "relative"}}
+        sx={{justifyContent: "flex-start", alignItems: "center", border: "1px solid #007CFE", width: "fit-content", padding: "12px 32px", gap: 2, borderRadius: "32px", position: "relative"}}
        >
         <VectorLeft />
         <Avatar alt='Remy Sharp' src={_.get(unitCurrent, "icon")} />

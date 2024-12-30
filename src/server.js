@@ -33,8 +33,8 @@ global.ms = require("ms")
 global.mongoConnections = require("./connections/mongo")
 global.CONSTANT = CONSTANT
 mongoose.Promise = global.Promise
-global.navigator = global.navigator || {}
-global.navigator.userAgent = global.navigator.userAgent || "all"
+// global.navigator = global.navigator || {}
+// global.navigator.userAgent = global.navigator.userAgent || "all"
 global.redisClient = redis.createClient(REDIS)
 
 fs.readdirSync(`${__dirname}/data`).forEach((file) => {

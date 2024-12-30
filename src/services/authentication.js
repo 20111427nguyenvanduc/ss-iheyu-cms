@@ -19,3 +19,11 @@ export const logout = (body = {}) => {
 export const getUserInf = (body) => {
  return axios.post("/user-inf", body)
 }
+
+export const forgotPasswordSendOtp = (body) => {
+ return axios.post("/forgot-password/send-otp", body)
+}
+
+export const forgotPasswordCheckOtp = (body) => {
+ return axios.post("/forgot-password/check-otp", body)
+}

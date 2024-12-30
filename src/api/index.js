@@ -11,6 +11,8 @@ import CategoryHandle from "./category"
 app.post("/login", AuthenticateHandle.login)
 app.get("/logout", AuthenticateHandle.logout)
 app.post("/user-inf", UserHandle.userInf)
+app.post("/forgot-password/send-otp", UserHandle.sendOTPForgotPassword)
+app.post("/forgot-password/check-otp", UserHandle.checkOTPForgotPassword)
 
 //groupPermission
 app.post("/admin/group-permission/list", GroupPermissionHandle.list)
@@ -57,4 +59,3 @@ app.post("/admin/category/list", PositionHandle.list)
 app.post("/admin/category/create", PositionHandle.create)
 app.post("/admin/category/update", PositionHandle.update)
 app.post("/admin/category/inactive", PositionHandle.inactive)
-

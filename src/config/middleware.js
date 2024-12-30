@@ -7,12 +7,12 @@ app.use((req, res, next) => {
   return next()
  }
 
- if (!req.isAuthenticated() && req.originalUrl.indexOf("/login") < 0) {
-  if (req.method === "POST") {
-   return res.json({code: 1993})
-  }
-  return res.redirect("/login")
- }
+//  if (!req.isAuthenticated() && req.originalUrl.indexOf("/login") < 0) {
+//   if (req.method === "POST") {
+//    return res.json({code: 1993})
+//   }
+//   return res.redirect("/login")
+//  }
 
  if (req.isAuthenticated() && req.user && !req.user.status) {
   req.logout()

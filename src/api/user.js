@@ -29,4 +29,12 @@ export default {
   const url = `${IHEYU_SERVICE}/api/v1.0/admin/get`
   authPost(url, req, res)
  },
+ sendOTPForgotPassword(req, res) {
+  const url = `${IHEYU_SERVICE}/api/v1.0/admin/send-otp`
+  authPost(url, req, res)
+ },
+ checkOTPForgotPassword(req, res) {
+  const url = `${IHEYU_SERVICE}/api/v1.0/admin/change-password-otp`
+  authPost(url, req, res)
+ },
 }

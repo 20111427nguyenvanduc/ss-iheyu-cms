@@ -1,5 +1,6 @@
 import React from "react"
 import history from "../../core/history"
+import { ButtonBase } from "@mui/material"
 
 function isLeftClickEvent(event) {
  return event.button === 0
@@ -41,11 +42,11 @@ class Link extends React.Component {
  }
 
  render() {
-  const {to, children, color = "#2E3236", ...props} = this.props
+  const { to, children, color, sx, ...props } = this.props
   return (
-   <a href={to} {...props} onClick={this.handleClick} style={{textDecoration: "none", color: color, display: "flex", alignItems: "center"}}>
+   <ButtonBase component="a" href={to} {...props} onClick={this.handleClick} sx={{ textDecoration: "none", display: "flex", alignItems: "center", color, ...sx }}>
     {children}
-   </a>
+   </ButtonBase>
   )
  }
 }
