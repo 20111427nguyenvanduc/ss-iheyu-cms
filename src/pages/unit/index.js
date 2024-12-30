@@ -175,6 +175,9 @@ const Manage = ({id}) => {
         <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
          {_.get(unitCurrent, "name")}
         </Typography>
+        <AddEditUnit onClose={getList} unitCurrent={unitCurrent} detail={unitCurrent}>
+         <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "22px", cursor: "pointer"}} />
+        </AddEditUnit>
         <VectorRight />
        </Stack>
       </Box>
@@ -183,14 +186,14 @@ const Manage = ({id}) => {
       <Box flexDirection={"column"} display={"flex"} justifyContent={"center"} alignItems={"center"} gap={2}>
        <Stack direction='row' spacing={2} sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "18px 32px", borderRadius: "32px", background: "#F6F5FC"}}>
         <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-         Sở ban ngành
+         Đơn vị trực thuộc
         </Typography>
        </Stack>
 
        {listData.map((item, i) => {
         return (
          <Box
-          onClick={() => setUnitCurrent(item)}
+          //   onClick={() => setUnitCurrent(item)}
           sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "12px 32px", borderRadius: "32px", border: "1px solid #656C75", position: "relative"}}
          >
           <VectorConnect />
@@ -201,7 +204,14 @@ const Manage = ({id}) => {
              {item.name}
             </Typography>
            </Stack>
-           <i className='icon-linear-arrow-right-1' style={{color: "#007CFE", fontSize: "22px"}} />
+           <Stack direction='row' spacing={2} sx={{justifyContent: "flex-end", alignItems: "center", cursor: "pointer"}}>
+            <Link to={"/unit/" + _.get(item, "_id")}>
+             <i className='icon-bold-eye' style={{color: "#007CFE", fontSize: "22px"}} />
+            </Link>
+            <AddEditUnit onClose={getList} unitCurrent={unitCurrent} detail={item}>
+             <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "22px", cursor: "pointer"}} />
+            </AddEditUnit>
+           </Stack>
           </Stack>
          </Box>
         )
@@ -216,7 +226,7 @@ const Manage = ({id}) => {
       <Box flexDirection={"column"} display={"flex"} justifyContent={"center"} alignItems={"center"} gap={2}>
        <Stack direction='row' spacing={2} sx={{justifyContent: "center", alignItems: "center", width: "500px", padding: "18px 32px", borderRadius: "32px", background: "#F6F5FC"}}>
         <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-         Chức vụ
+         Các chức vụ
         </Typography>
        </Stack>
 
@@ -227,7 +237,7 @@ const Manage = ({id}) => {
            <VectorConnect />
            <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
             <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
-             <Avatar sx={{background:'#FFF'}} alt={item.name} src={""} />
+             <Avatar sx={{background: "#FFF"}} alt={item.name} src={""} />
              <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
               {item.name}
              </Typography>

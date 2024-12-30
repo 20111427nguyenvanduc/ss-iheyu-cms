@@ -23,6 +23,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
 
  const setStateData = () => {
   setName(_.get(detail, "name"))
+  setIcon(_.get(detail, "icon"))
  }
 
  const handleClickOpen = () => {
@@ -74,6 +75,20 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
    })
   } catch (error) {
    toastr.error("Lỗi hệ thống. Vui lòng thử lại sau.")
+  }
+ }
+
+ const compareData = () => {
+  if (detail) {
+   if (name !== _.get(detail, "name") || icon !== _.get(detail, "icon")) {
+    return false
+   }
+   return true
+  } else {
+   if (!name || !icon) {
+    return true
+   }
+   return false
   }
  }
 
@@ -147,6 +162,7 @@ const AddEdit = ({children, onClose = () => {}, unitCurrent, detail = null}) => 
           handleCreate()
          }
         }}
+        disabled={compareData()}
         fullWidth
         variant='contained'
         type='submit'

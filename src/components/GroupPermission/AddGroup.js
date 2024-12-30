@@ -71,11 +71,10 @@ const AddGroup = ({children, onClose = () => {}}) => {
        </Typography>
        <TextField
         fullWidth
-        label='Nhập tên nhóm quyền'
+        placeholder='Nhập tên nhóm quyền'
         variant='outlined'
         value={name}
         onChange={(e) => setName(e.target.value)}
-        inputProps={{name: "name", ariallabel: "name"}}
         InputProps={{
          sx: {borderRadius: "16px"},
         }}
@@ -85,7 +84,7 @@ const AddGroup = ({children, onClose = () => {}}) => {
        </Typography>
        <TextField
         fullWidth
-        label='Mô tả nhóm quyền'
+        placeholder='Mô tả nhóm quyền'
         variant='outlined'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -100,10 +99,21 @@ const AddGroup = ({children, onClose = () => {}}) => {
         onClick={() => {
          handleCreate()
         }}
+        disabled={!name || !description}
         fullWidth
         variant='contained'
         type='submit'
-        sx={{borderRadius: "12px", background: "#007CFE", fontSize: "16px", padding: "12px"}}
+        sx={{
+         borderRadius: "12px",
+         background: "#007CFE",
+         fontSize: "16px",
+         padding: "12px",
+         textTransform: "initial",
+         "&.Mui-disabled": {
+          backgroundColor: "#A1A7AE",
+          color: "#FFF",
+         },
+        }}
        >
         Tạo nhóm quyền
        </Button>

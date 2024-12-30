@@ -1,9 +1,9 @@
 import React from "react"
-import { useSelector } from "react-redux"
+import {useSelector} from "react-redux"
 
 // material-ui
-import { styled, useTheme } from "@mui/material/styles"
-import { Box, Collapse, List, ListItemIcon, ListItemText, Typography, ListItemButton, Menu, Popover } from "@mui/material"
+import {styled, useTheme} from "@mui/material/styles"
+import {Box, Collapse, List, ListItemIcon, ListItemText, Typography, ListItemButton, Menu, Popover} from "@mui/material"
 
 // project imports
 import NavItem from "../NavItem"
@@ -15,7 +15,7 @@ import IconChevronDown from "@mui/icons-material/ExpandMore"
 import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 // style constant
 
-const CollapseWrap = styled(List)(({ theme }) => ({
+const CollapseWrap = styled(List)(({theme}) => ({
  position: "relative",
  "&:after": {
   content: "''",
@@ -29,13 +29,13 @@ const CollapseWrap = styled(List)(({ theme }) => ({
  },
 }))
 
-const PopoverWrap = styled(Popover)(({ theme }) => ({}))
+const PopoverWrap = styled(Popover)(({theme}) => ({}))
 
 // ===========================|| SIDEBAR MENU LIST COLLAPSE ITEMS ||=========================== //
 
-const NavCollapse = ({ menu, level, drawerOpen }) => {
+const NavCollapse = ({menu, level, drawerOpen}) => {
  const theme = useTheme()
- const { user, customization } = useSelector((state) => state)
+ const {user, customization} = useSelector((state) => state)
  const padding = 8
  const [open, setOpen] = React.useState(false)
  const [selected, setSelected] = React.useState(null)
@@ -107,6 +107,7 @@ const NavCollapse = ({ menu, level, drawerOpen }) => {
  )
 
  const checkRole = () => {
+  return true
   const roles = menu.children ? menu.children.map((item) => item.role).flat(1) : []
   if (_.isEmpty(roles)) {
    return true
@@ -115,7 +116,7 @@ const NavCollapse = ({ menu, level, drawerOpen }) => {
    return false
   }
   return roles ? roles.some((rol) => user.roles[rol]) : false
- } 
+ }
  if (!checkRole()) {
   return null
  }
@@ -147,7 +148,7 @@ const NavCollapse = ({ menu, level, drawerOpen }) => {
      {menuIcon}
     </ListItemIcon>
     <ListItemText
-     sx={{ ml: 1, flexGrow: 1, display: drawerOpen ? "block" : "none" }}
+     sx={{ml: 1, flexGrow: 1, display: drawerOpen ? "block" : "none"}}
      primary={<Typography color='inherit'>{menu.title}</Typography>}
      secondary={
       menu.caption && (

@@ -87,6 +87,23 @@ const AddEdit = ({children, onClose = () => {}, detail = null}) => {
   }
  }
 
+ const compareOldNew = () => {
+  if (detail) {
+   if (name != _.get(detail, "name")) {
+    return false
+   }
+   if (icon != _.get(detail, "icon")) {
+    return false
+   }
+   return true
+  } else {
+   if (!name || !icon) {
+    return true
+   }
+   return false
+  }
+ }
+
  return (
   <React.Fragment>
    {React.cloneElement(
@@ -140,7 +157,6 @@ const AddEdit = ({children, onClose = () => {}, detail = null}) => {
         onDeleteFile={(filename) => {
          setIcon("")
         }}
-        type='category'
        >
         <Stack direction='column' spacing={2} sx={{justifyContent: "center", alignItems: "center"}}>
          <img src='/images/icon-upload.png' style={{width: "40px"}} />
@@ -151,6 +167,7 @@ const AddEdit = ({children, onClose = () => {}, detail = null}) => {
         </Stack>
        </UploadImgSingle>
        <Button
+        disabled={compareOldNew()}
         onClick={() => {
          if (detail) {
           handleUpdate()

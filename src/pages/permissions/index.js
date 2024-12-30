@@ -76,8 +76,11 @@ const Manage = () => {
      <Link underline='hover' key='1' color='#2E3236' to='/'>
       Trang quản trị
      </Link>
-     <Typography key='2' sx={{color: "#007CFE"}}>
+     <Link underline='hover' key='1' color='#2E3236' to='/'>
       Quản lý quyền hạn
+     </Link>
+     <Typography key='2' sx={{color: "#007CFE"}}>
+      Mô tả quyền hạn
      </Typography>
     </Breadcrumbs>
    </Box>
@@ -85,12 +88,12 @@ const Manage = () => {
     <Stack direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
      <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
       <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-       Danh sách quyển hạn
+       Mô tả quyền hạn{" "}
       </Typography>
       <AddGroup onClose={getList} />
      </Stack>
      <Search
-      placeholder={"Tìm quyền"}
+      placeholder={"Tìm kiếm quyền hệ thống"}
       textSearch={textSearch}
       searchChange={(text) => setTextSearch(text)}
       onSubmit={() => {
@@ -101,7 +104,7 @@ const Manage = () => {
    </Box>
    <Box sx={{px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}} mt={2}>
     <DataTable
-     heads={["STT", "Tên quyền", "Mã Code", "Mô tả", "Cập nhật", "Thao tác"].map((head, i) =>
+     heads={["STT", "Tên quyền hạn", "Danh mục quyền", "Mô tả", "Ngày tạo", "Trạng thái", "Thao tác"].map((head, i) =>
       createCell(head, {sx: {width: i == 0 ? "5%" : i == 4 ? "10%" : i == 5 ? "10%" : "auto", textAlign: "center"}}),
      )}
      rows={listData.map((item, i) => {
@@ -113,13 +116,21 @@ const Manage = () => {
         <Box>{item.name}</Box>
        </StyledBox>,
        <StyledBox>
-        <Box>{item.code}</Box>
+        <Box>{_.get(item,'categoryPermission.name')}</Box>
        </StyledBox>,
        <StyledBox>
         <Box>{item.description}</Box>
        </StyledBox>,
        <StyledBox>
         <Box>{moment(_.get(item, "updatedAt")).format("DD/MM/YYYY HH:mm")}</Box>
+       </StyledBox>,
+       <StyledBox>
+        <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", gap: "12px"}}>
+         <span style={{width: "6px", height: "6px", borderRadius: "50%", background: "#00BF30", display: "flex"}}></span>
+         <Typography variant='p' sx={{fontSize: "16px", color: "#00BF30", fontWeight: 400}}>
+          {item.status ? "Đang hoạt động" : "Đã tắt"}
+         </Typography>
+        </Box>
        </StyledBox>,
        <StyledBox>
         <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", gap: "8px"}}>
@@ -130,13 +141,6 @@ const Manage = () => {
            </Avatar>
           </Tooltip>
          </AddGroup>
-         {/* <Tooltip title='Xóa' placement='top'>
-             <AlertDialogDelete title='Thông báo' description={"Bạn muốn xóa quyền " + item.name + "?"} onClose={getList} onHandle={() => handleDelete(item._id)}>
-              <Avatar sx={{bgcolor: "#FFE2E2", cursor: "pointer"}}>
-               <i className='icon-bold-trash' style={{color: "#D30500"}} />
-              </Avatar>
-             </AlertDialogDelete>
-            </Tooltip> */}
         </Box>
        </StyledBox>,
       ])
