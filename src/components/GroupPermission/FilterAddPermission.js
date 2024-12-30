@@ -97,7 +97,7 @@ const FilterAddPermission = ({permissions = [], setPermissions, groupPermissions
       <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
        Nhóm quyền
       </Typography>
-      <AddGroupToPosition onClose={confirmAddGroup} dataGroup={dataGroup} textSearch={textSearchGroup} setTextSearch={setTextSearchGroup} onSubmitSearch={getListGroupPermissions}>
+      <AddGroupToPosition  groupPermissionsCurrent={groupPermissions} onClose={confirmAddGroup} dataGroup={dataGroup} textSearch={textSearchGroup} setTextSearch={setTextSearchGroup} onSubmitSearch={getListGroupPermissions}>
        <Button
         variant='contained'
         size='large'
@@ -202,6 +202,7 @@ const FilterAddPermission = ({permissions = [], setPermissions, groupPermissions
       </Typography>
 
       <AddPermissionToPosition
+       permissionsCurrent={permissions}
        onClose={confirmAddPermission}
        dataPermission={dataPermission}
        textSearch={textSearchPermission}

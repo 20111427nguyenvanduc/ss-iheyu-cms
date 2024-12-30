@@ -132,6 +132,13 @@ const EditGroup = ({id}) => {
   }
  }
 
+ const areArraysEqualById = (array1, array2) => {
+  const ids1 = array1.map((item) => item._id).sort() // Lấy danh sách _id và sắp xếp
+  const ids2 = array2.map((item) => item._id).sort() // Lấy danh sách _id và sắp xếp
+  // So sánh từng phần tử trong mảng _id
+  return ids1.length === ids2.length && ids1.every((id, index) => id === ids2[index])
+ }
+
  return (
   <Fragment>
    <Box sx={{background: "#EEF2F6", py: 1.5, px: 2}}>
@@ -140,7 +147,7 @@ const EditGroup = ({id}) => {
       Trang quản trị
      </Link>
      <Link underline='hover' key='2' color='#2E3236' to='/group-permission'>
-      Nhóm quyền
+      Quản lý quyền hạn
      </Link>
      <Typography key='2' sx={{color: "#007CFE"}}>
       Chi tiết nhóm quyền
@@ -157,7 +164,7 @@ const EditGroup = ({id}) => {
        Chi tiết nhóm quyền
       </Typography>
       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 600}}>
-       Chi tiết nhóm quyền
+       {_.get(detailData, "name")}
       </Typography>
      </Stack>
     </Stack>
@@ -165,7 +172,7 @@ const EditGroup = ({id}) => {
    <Divider />
 
    <Box sx={{flexGrow: 1}} p={4}>
-    <Grid container spacing={2} sx={{border: "1px solid #CCCFD3", borderRadius: "12px"}} p={2}>
+    <Grid container spacing={2} sx={{border: "1px solid #CCCFD3", borderRadius: "12px"}} p={1}>
      <Grid item xs={12}>
       <Typography variant='p' sx={{fontSize: "24px", color: "#2E3236", fontWeight: 700}}>
        Thông tin nhóm quyền{" "}
@@ -178,7 +185,7 @@ const EditGroup = ({id}) => {
        </Typography>
        <TextField
         fullWidth
-        label='Nhập tên nhóm quyền'
+        placeholder='Nhập tên nhóm quyền'
         variant='outlined'
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -196,7 +203,7 @@ const EditGroup = ({id}) => {
        </Typography>
        <TextField
         fullWidth
-        label='Nhập mô tả nhóm quyền'
+        placeholder='Nhập mô tả nhóm quyền'
         variant='outlined'
         value={description}
         onChange={(e) => setDescription(e.target.value)}
@@ -212,14 +219,27 @@ const EditGroup = ({id}) => {
     </Grid>
    </Box>
 
-   <Box sx={{flexGrow: 1}} p={4}>
+   <Box sx={{flexGrow: 1}} p={2}>
     <FilterAddPermissionToGroup permissions={permissions} setPermissions={setPermissions} />
    </Box>
 
    <AppBar position='sticky' color='primary' sx={{top: "auto", bottom: 0, boxShadow: "0px -5px 4px 0px #7E7E7E26", background: "#FFF"}}>
     <Toolbar sx={{gap: 2}}>
      <AlertDialogDelete title='Thông báo' description={"Bạn muốn xóa nhóm quyền " + name + "?"} onClose={getList} onHandle={() => handleInactivePermissionGrpup()}>
-      <Button variant='contained' size='large' color='error' sx={{borderRadius: "12px", textTransform: "inherit"}}>
+      <Button
+       variant='contained'
+       size='large'
+       sx={{
+        width: "15%",
+        background: "#FFE2E2",
+        textTransform: "inherit",
+        color: "#D30500",
+        "&:hover": {
+         backgroundColor: "#FFE2E2",
+         color: "#D30500",
+        },
+       }}
+      >
        Xóa nhóm quyền
       </Button>
      </AlertDialogDelete>
@@ -227,9 +247,10 @@ const EditGroup = ({id}) => {
       onClick={() => {
        handleUpdate()
       }}
+      disabled={areArraysEqualById(permissions, _.get(detailData, "permissions", []))}
       variant='contained'
       size='large'
-      sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}
+      sx={{width: "15%", background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}
       startIcon={<i className='icon-bold-document-text' />}
      >
       Lưu thông tin

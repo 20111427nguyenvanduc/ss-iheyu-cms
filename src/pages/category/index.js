@@ -15,6 +15,64 @@ import {list, inactive as inactive} from "../../services/category"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import Search from "../../components/Shared/Search"
 
+const IOSSwitch = styled((props) => <Switch focusVisibleClassName='.Mui-focusVisible' disableRipple {...props} />)(({theme}) => ({
+ width: 42,
+ height: 26,
+ padding: 0,
+ "& .MuiSwitch-switchBase": {
+  padding: 0,
+  margin: 2,
+  transitionDuration: "300ms",
+  "&.Mui-checked": {
+   transform: "translateX(16px)",
+   color: "#fff",
+   "& + .MuiSwitch-track": {
+    backgroundColor: "#65C466",
+    opacity: 1,
+    border: 0,
+    ...theme.applyStyles("dark", {
+     backgroundColor: "#00BF30",
+    }),
+   },
+   "&.Mui-disabled + .MuiSwitch-track": {
+    opacity: 0.5,
+   },
+  },
+  "&.Mui-focusVisible .MuiSwitch-thumb": {
+   color: "#33cf4d",
+   border: "6px solid #fff",
+  },
+  "&.Mui-disabled .MuiSwitch-thumb": {
+   color: theme.palette.grey[100],
+   ...theme.applyStyles("dark", {
+    color: theme.palette.grey[600],
+   }),
+  },
+  "&.Mui-disabled + .MuiSwitch-track": {
+   opacity: 0.7,
+   ...theme.applyStyles("dark", {
+    opacity: 0.3,
+   }),
+  },
+ },
+ "& .MuiSwitch-thumb": {
+  boxSizing: "border-box",
+  width: 22,
+  height: 22,
+ },
+ "& .MuiSwitch-track": {
+  borderRadius: 26 / 2,
+  backgroundColor: "#E9E9EA",
+  opacity: 1,
+  transition: theme.transitions.create(["background-color"], {
+   duration: 500,
+  }),
+  ...theme.applyStyles("dark", {
+   backgroundColor: "#39393D",
+  }),
+ },
+}))
+
 const StyledBox = styled(Box)(({theme}) => ({
  display: "flex",
  gap: theme.spacing(1),
@@ -58,11 +116,18 @@ const Manage = () => {
   })
  }
 
+ const handleChange = (event, item) => {
+  const newChecked = event.target.checked
+  if (!newChecked) {
+   handleDelete(item._id)
+  }
+ }
+
  const handleDelete = (_id) => {
   try {
    inactivePermission({_id}).then((res) => {
     if (_.get(res, "code") === 200) {
-     toastr.success("Xóa quyền thành công!")
+     toastr.success(" quyền thành công!")
     }
    })
   } catch (error) {
@@ -81,49 +146,76 @@ const Manage = () => {
      </Typography>
     </Breadcrumbs>
    </Box>
+
    <Box sx={{py: 1.5, px: 2, mt: 2}}>
     <Stack direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
      <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
       <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-       Danh mục phản ánh{" "}
+       Danh mục phản ánh
       </Typography>
       <AddEdit onClose={getList} />
      </Stack>
+     <Search
+      placeholder={"Tìm kiếm danh mục"}
+      textSearch={textSearch}
+      searchChange={(text) => setTextSearch(text)}
+      onSubmit={() => {
+       getList()
+      }}
+     />
     </Stack>
    </Box>
-   <Box p={2}>
-    <Box sx={{border: "1px solid #A1A7AE", borderRadius: "16px"}} p={2}>
-     <Grid container spacing={2}>
-      {listData.map((item, i) => {
-       {
-        return (
-         <Grid item sm={6}>
-          <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center", border: "1px solid #CCCFD3", padding: "8px 12px", borderRadius: "16px"}}>
-           <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
-            <img src={item.icon} style={{width: "20px"}} />
-            <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600}}>
-             {item.name}
-            </Typography>
-           </Stack>
-
-           <Stack direction='row' spacing={2} sx={{justifyContent: "flex-end", alignItems: "center"}}>
-            <Typography variant='p' sx={{fontSize: "14px", color: item.status === 1 ? "#00BF30" : "#1C1E21", fontWeight: 500}}>
-             {item.status === 1 ? "Đang hoạt động" : "Đang ẩn"}
-            </Typography>
-            <Switch defaultChecked />
-            <AddEdit onClose={getList} detail={item}>
-             <Avatar sx={{bgcolor: "#DCF1FF", cursor: "pointer"}}>
-              <i className='icon-linear-edit-2' style={{color: "#1589D8"}} />
-             </Avatar>
-            </AddEdit>
-           </Stack>
-          </Stack>
-         </Grid>
-        )
-       }
-      })}
-     </Grid>
-    </Box>
+   <Box sx={{px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}} mt={2}>
+    <DataTable
+     heads={["STT", "Biểu tượng", "Tên danh mục", "Ngày tạo", "Trạng thái", "Bật/ tắt", "Thao tác"].map((head, i) =>
+      createCell(head, {sx: {width: i == 0 ? "5%" : i == 1 ? "10%" : i == 5 ? "10%" : "auto", textAlign: "center"}}),
+     )}
+     rows={listData.map((item, i) => {
+      return createRows([
+       <StyledBox>
+        <Box>{i + 1}</Box>
+       </StyledBox>,
+       <StyledBox>
+        <Box>
+         {" "}
+         <img src={item.icon} style={{width: "20px"}} />
+        </Box>
+       </StyledBox>,
+       <StyledBox>
+        <Box>
+         <Typography variant='p' sx={{fontSize: "20px", color: "#2E3236", fontWeight: 600}}>
+          {item.name}
+         </Typography>
+        </Box>
+       </StyledBox>,
+       <StyledBox>
+        <Box>{moment(_.get(item, "updatedAt")).format("DD/MM/YYYY HH:mm")}</Box>
+       </StyledBox>,
+       <StyledBox>
+        <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", gap: "12px"}}>
+         <span style={{width: "6px", height: "6px", borderRadius: "50%", background: "#00BF30", display: "flex"}}></span>
+         <Typography variant='p' sx={{fontSize: "16px", color: "#00BF30", fontWeight: 400}}>
+          {item.status ? "Đang hoạt động" : "Đã tắt"}
+         </Typography>
+        </Box>
+       </StyledBox>,
+       <StyledBox>
+        <FormControlLabel control={<IOSSwitch sx={{m: 1}} checked={item.status} onChange={(e) => handleChange(e, item)} />} />
+       </StyledBox>,
+       <StyledBox>
+        <Box sx={{display: "flex", alignItems: "center", justifyContent: "center", gap: "8px"}}>
+         <AddEdit onClose={getList} detail={item}>
+          <Tooltip title='Chỉnh sửa' placement='top'>
+           <Avatar sx={{bgcolor: "#DCF1FF", cursor: "pointer"}}>
+            <i className='icon-linear-edit-2' style={{color: "#1589D8"}} />
+           </Avatar>
+          </Tooltip>
+         </AddEdit>
+        </Box>
+       </StyledBox>,
+      ])
+     })}
+    />
    </Box>
   </Fragment>
  )

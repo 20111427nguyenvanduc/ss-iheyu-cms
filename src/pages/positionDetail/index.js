@@ -110,6 +110,15 @@ const EditPosition = ({id}) => {
    toastr.error("Lỗi hệ thống. Vui lòng thử lại sau.")
   }
  }
+
+ const areArraysEqualById = (array1, array2) => {
+  const ids1 = array1.map((item) => item._id).sort() // Lấy danh sách _id và sắp xếp
+  const ids2 = array2.map((item) => item._id).sort() // Lấy danh sách _id và sắp xếp
+
+  // So sánh từng phần tử trong mảng _id
+  return ids1.length === ids2.length && ids1.every((id, index) => id === ids2[index])
+ }
+
  return (
   <Fragment>
    <Box sx={{background: "#EEF2F6", py: 1.5, px: 2}}>
@@ -176,6 +185,7 @@ const EditPosition = ({id}) => {
        variant='contained'
        size='large'
        sx={{
+        width: "15%",
         padding: "12px 32px",
         background: "#FFE2E2",
         borderRadius: "12px",
@@ -190,16 +200,17 @@ const EditPosition = ({id}) => {
      </AlertDialogDelete>
 
      <Button
+      disabled={areArraysEqualById(permissions, _.get(position, "permissions", []))}
       onClick={handleUpdatePosition}
       variant='contained'
       size='large'
       sx={{
+       width: "15%",
        padding: "12px  32px",
        background: "#007CFE",
        borderRadius: "12px",
        textTransform: "inherit",
        color: "#FFF",
-
        "&:hover": {backgroundColor: "#007CFE", color: "#FFF"},
       }}
      >
