@@ -55,15 +55,8 @@ app.post("/admin/position/inactive", PositionHandle.inactive)
 app.post("/admin/position/get", PositionHandle.get)
 
 //category
-<<<<<<< Updated upstream
-app.post("/admin/category/list", PositionHandle.list)
-app.post("/admin/category/create", PositionHandle.create)
-app.post("/admin/category/update", PositionHandle.update)
-app.post("/admin/category/inactive", PositionHandle.inactive)
-=======
 app.post("/admin/category/list", CategoryHandle.list)
 app.post("/admin/category/create", CategoryHandle.create)
 app.post("/admin/category/update", CategoryHandle.update)
 app.post("/admin/category/inactive", CategoryHandle.inactive)
 
->>>>>>> Stashed changes
