@@ -15,10 +15,14 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { list as listGroupPermission } from "../../services/groupPermission";
 import Search from "../Shared/Search";
 
-const AddGroupToPosition = ({ children, onClose = () => {}, dataGroup = [], textSearch, setTextSearch, onSubmitSearch = () => {} }) => {
+const AddGroupToPosition = ({ children, groupPermissionsCurrent, onClose = () => {}, dataGroup = [], textSearch, setTextSearch, onSubmitSearch = () => {} }) => {
   const [open, setOpen] = React.useState(false);
 
   const [groupPermissions, setGroupPermissions] = useState([]);
+
+  useEffect(() => {
+    setGroupPermissions(groupPermissionsCurrent);
+  }, [groupPermissionsCurrent]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,6 +45,14 @@ const AddGroupToPosition = ({ children, onClose = () => {}, dataGroup = [], text
 
   const findIdInArray = (array, idToFind) => {
     return array.some((item) => item._id === idToFind);
+  };
+
+  const areArraysEqualById = (array1, array2) => {
+    const ids1 = array1.map((item) => item._id).sort(); // Lấy danh sách _id và sắp xếp
+    const ids2 = array2.map((item) => item._id).sort(); // Lấy danh sách _id và sắp xếp
+
+    // So sánh từng phần tử trong mảng _id
+    return ids1.length === ids2.length && ids1.every((id, index) => id === ids2[index]);
   };
 
   return (
@@ -109,6 +121,7 @@ const AddGroupToPosition = ({ children, onClose = () => {}, dataGroup = [], text
         </DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           <Button
+            disabled={areArraysEqualById(groupPermissions, groupPermissionsCurrent)}
             onClick={() => {
               onClose(groupPermissions);
               handleClose();

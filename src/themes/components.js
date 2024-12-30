@@ -3,22 +3,27 @@ export default function themeTypography(theme) {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: "8px",
+          borderRadius: "12px",
           boxShadow: "none",
+          textTransform: "none",
+          "&.Mui-disabled": {
+            backgroundColor: "#A1A7AE",
+            color: "#FFF",
+          },
         },
       },
     },
     MuiButtonBase: {
       styleOverrides: {
         root: {
-          borderRadius: "8px",
+          borderRadius: "12px",
         },
       },
     },
     MuiButtonGroup: {
       styleOverrides: {
         root: {
-          borderRadius: "8px",
+          borderRadius: "12px",
         },
       },
     },

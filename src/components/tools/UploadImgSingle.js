@@ -71,23 +71,46 @@ const UpdloadImg = ({children, folder = "iheyu-hp", imageUrl, onUploadSuccess = 
       <input type='file' accept='image/*' style={{display: "none"}} onChange={onChangeImg} ref={inputRef} />
      </Stack>
     ) : (
-     <Box sx={{borderRadius: "16px", border: "1px dashed #007CFE", background: "#E5F1FF", width: "100%"}} p={2}>
+     <Box sx={{width: "100%"}}>
       <Stack direction='row' spacing={2} sx={{justifyContent: "space-between", alignItems: "center"}}>
-       <Avatar src={image} sx={{width: "70px", height: "70px"}} />
-       <Stack direction='row' spacing={2} sx={{justifyContent: "center", alignItems: "center"}}>
-        <Avatar
-         sx={{bgcolor: "#FFF"}}
-         onClick={() => {
-          console.log("haha", inputRef)
+       <Box
+        sx={{
+         position: "relative", // Đặt Box là relative để định vị biểu tượng xóa bên trong
+         borderRadius: "16px",
+         border: "1px dashed #007CFE",
+         background: "#E5F1FF",
+         padding: "16px",
+        }}
+       >
+        {/* Biểu tượng xóa */}
+        <i
+         onClick={() => deleteImg(image)}
+         className='icon-bold-close-circle'
+         style={{
+          position: "absolute", // Định vị tuyệt đối
+          top: "-8px", // Cách trên cùng 8px
+          right: "-8px", // Cách bên phải 8px
+          color: "#656C75",
+          cursor: "pointer",
+          fontSize: "20px", // Kích thước biểu tượng
+         }}
+        />
+        {/* Hình ảnh */}
+        <Avatar src={image} sx={{width: "70px", height: "70px"}} />
+       </Box>
 
+       <Stack direction='row' spacing={2} sx={{justifyContent: "center", alignItems: "center"}}>
+        <Button
+         onClick={() => {
           if (inputRef && inputRef.current) inputRef.current.click()
          }}
+         variant='contained'
+         size='large'
+         sx={{width: "160px", background: "#E5F1FF", borderRadius: "12px", textTransform: "inherit", color: "#007CFE", "&:hover": {backgroundColor: "#E5F1FF", color: "#007CFE"}}}
+         startIcon={<i className='icon-bold-edit-2' style={{color: "#007CFE"}} />}
         >
-         <i className='icon-bold-edit-2' style={{color: "#1589D8"}} />
-        </Avatar>
-        <Avatar onClick={() => deleteImg(image)} sx={{bgcolor: "#FFE2E2", cursor: "pointer"}}>
-         <i className='icon-bold-trash' style={{color: "#D30500"}} />
-        </Avatar>
+         Chọn lại ảnh
+        </Button>
        </Stack>
       </Stack>
       <input type='file' accept='image/*' style={{display: "none"}} onChange={onChangeImg} ref={inputRef} />
