@@ -350,7 +350,7 @@ const serverConfig = {
     __dirname: false,
   },
 
-  devtool: isDebug ? 'cheap-module-source-map' : 'source-map',
+  devtool: false,// isDebug ? 'eval' : false,
 };
 
 export default [clientConfig, serverConfig];

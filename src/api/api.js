@@ -62,9 +62,8 @@ const apiGet = (url, body, cb, headers) => {
 
 const authPost = (url, req, res) => {
  const body = req.body
-    const headers = { token: _.get(req, "user.token") } // Đính token vào header
-    console.log("hahatoken",_.get(req, "user.token"));
-    
+ const headers = { token: _.get(req, "user.token") } // Đính token vào heade
+
  let options = {
   url: url,
   method: "POST",

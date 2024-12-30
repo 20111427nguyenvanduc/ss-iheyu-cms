@@ -7,36 +7,6 @@ import { login } from "../../services/authentication"
 import history from "../../core/history"
 import Link from "../../components/Link"
 
-const StyledTextField = styled(TextField)({
- "& .MuiOutlinedInput-root": {
-  borderRadius: "16px",
-  "& fieldset": {
-   borderRadius: "16px",
-  },
-  "&:hover fieldset": {
-   borderRadius: "16px",
-  },
-  "&.Mui-focused fieldset": {
-   borderRadius: "16px",
-  },
- },
-})
-
-const StyledPassword = styled(PasswordInput)({
- "& .MuiOutlinedInput-root": {
-  borderRadius: "16px",
-  "& fieldset": {
-   borderRadius: "16px",
-  },
-  "&:hover fieldset": {
-   borderRadius: "16px",
-  },
-  "&.Mui-focused fieldset": {
-   borderRadius: "16px",
-  },
- },
-})
-
 const Login = (props) => {
  const [username, setUsername] = useState("")
  const [password, setPassword] = useState("")
@@ -89,7 +59,7 @@ const Login = (props) => {
            <Typography variant='h5' sx={{ fontSize: "16px", color: "#021E38", fontWeight: 500 }}>
             Tên đăng nhập
            </Typography>
-           <StyledTextField
+           <TextField
             fullWidth
             placeholder='Nhập tên đăng nhập'
             variant='outlined'
@@ -101,7 +71,7 @@ const Login = (props) => {
            <Typography variant='h5' sx={{ fontSize: "16px", color: "#021E38", fontWeight: 500 }}>
             Mật khẩu
            </Typography>
-           <StyledPassword
+           <PasswordInput
             fullWidth
             placeholder='Nhập mật khẩu'
             variant='outlined'
