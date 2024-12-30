@@ -23,6 +23,7 @@ const AddEdit = ({children, onClose = () => {}, detail = null}) => {
 
  const setStateData = () => {
   setName(_.get(detail, "name"))
+  setIcon(_.get(detail, "icon"))
  }
 
  const handleClickOpen = () => {
@@ -35,11 +36,16 @@ const AddEdit = ({children, onClose = () => {}, detail = null}) => {
 
  const resetState = () => {
   setName("")
+  setIcon("")
  }
 
  const handleCreate = () => {
   if (!name) {
    toastr.warning("Nhập tên danh mục")
+   return false
+  }
+  if (!icon) {
+   toastr.warning("Tải ảnh danh mục")
    return false
   }
 
@@ -60,6 +66,10 @@ const AddEdit = ({children, onClose = () => {}, detail = null}) => {
  const handleUpdate = () => {
   if (!name) {
    toastr.warning("Nhập tên danh mục")
+   return false
+  }
+  if (!icon) {
+   toastr.warning("Tải ảnh danh mục")
    return false
   }
 

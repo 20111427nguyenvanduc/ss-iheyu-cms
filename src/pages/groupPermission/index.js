@@ -64,6 +64,9 @@ const Manage = () => {
      <Link underline='hover' to='/'>
       Trang quản trị
      </Link>
+     <Link underline='hover' to='/'>
+      Quản lý quyền hạn
+     </Link>
      <Typography key='2' sx={{color: "#007CFE"}}>
       Quản lý nhóm quyền
      </Typography>
@@ -78,7 +81,7 @@ const Manage = () => {
       <AddGroup onClose={getList} />
      </Stack>
      <Search
-      placeholder={"Tìm nhóm quyền"}
+      placeholder={"Tìm kiếm quyền hệ thống"}
       textSearch={textSearch}
       searchChange={(text) => setTextSearch(text)}
       onSubmit={() => {
@@ -87,11 +90,10 @@ const Manage = () => {
      />
     </Stack>
    </Box>
-   <Box sx={{p: 2}}>
-   </Box>
+   <Box sx={{p: 2}}></Box>
    <Box sx={{px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}}>
     <DataTable
-     heads={["STT", "Quyền hệ thống", "Mô tả", "Quyền", "Thao tác"].map((head, i) => createCell(head, {sx: {width: i == 0 ? "5%" : i == 1 ? "20%" : i == 4 ? "10%" : "auto", textAlign: "center"}}))}
+     heads={["STT", "Tên nhóm quyền", "Mô tả", "Quyền", "Thao tác"].map((head, i) => createCell(head, {sx: {width: i == 0 ? "5%" : i == 1 ? "20%" : i == 4 ? "10%" : "auto", textAlign: "center"}}))}
      rows={listData.map((item, i) => {
       return createRows([
        <StyledBox>
