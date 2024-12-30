@@ -9,36 +9,6 @@ import history from "../../core/history"
 import Link from "../../components/Link"
 import Alert from "../../ui-component/dialog/Alert"
 
-const StyledTextField = styled(TextField)({
- "& .MuiOutlinedInput-root": {
-  borderRadius: "16px",
-  "& fieldset": {
-   borderRadius: "16px",
-  },
-  "&:hover fieldset": {
-   borderRadius: "16px",
-  },
-  "&.Mui-focused fieldset": {
-   borderRadius: "16px",
-  },
- },
-})
-
-const StyledPassword = styled(PasswordInput)({
- "& .MuiOutlinedInput-root": {
-  borderRadius: "16px",
-  "& fieldset": {
-   borderRadius: "16px",
-  },
-  "&:hover fieldset": {
-   borderRadius: "16px",
-  },
-  "&.Mui-focused fieldset": {
-   borderRadius: "16px",
-  },
- },
-})
-
 let countTimer = setInterval(() => {}, 1000)
 
 const ForgotPassword = (props) => {
@@ -151,7 +121,7 @@ const ForgotPassword = (props) => {
             <Typography variant='h5' sx={{ fontSize: "16px", color: "#021E38", fontWeight: 500 }}>
              Tên đăng nhập
             </Typography>
-            <StyledTextField
+            <TextField
              fullWidth
              placeholder='Nhập tên đăng nhập'
              variant='outlined'
@@ -180,7 +150,7 @@ const ForgotPassword = (props) => {
             <Typography variant='h5' sx={{ fontSize: "16px", color: "#2E3236", fontWeight: 400, marginBottom: "4px" }}>
              Nhập mã xác thực vừa gửi đến số {_.get(userInf, "phone")}
             </Typography>
-            <StyledTextField
+            <TextField
              fullWidth
              placeholder='Nhập mã xác thực'
              variant='outlined'
@@ -209,7 +179,7 @@ const ForgotPassword = (props) => {
             <Typography variant='h5' sx={{ fontSize: "16px", color: "#021E38", fontWeight: 500 }}>
              Mật khẩu mới
             </Typography>
-            <StyledPassword
+            <PasswordInput
              fullWidth
              placeholder='Nhập mật khẩu mới'
              variant='outlined'
@@ -220,7 +190,7 @@ const ForgotPassword = (props) => {
             <Typography variant='h5' sx={{ fontSize: "16px", color: "#021E38", fontWeight: 500 }}>
              Nhập lại mật khẩu mới{" "}
             </Typography>
-            <StyledPassword
+            <PasswordInput
              fullWidth
              placeholder='Nhập lại mật khẩu mới'
              variant='outlined'
