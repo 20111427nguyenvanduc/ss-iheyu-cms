@@ -1,7 +1,5 @@
-
-
-import webpack from 'webpack';
-import webpackConfig from './webpack.config';
+import webpack from "webpack";
+import webpackConfig from "../webpack.config";
 
 /**
  * Creates application bundles from the source files.
