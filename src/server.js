@@ -15,11 +15,11 @@ import passport from "passport";
 import router from "./router";
 import CONSTANT from "./const";
 import multipart from "connect-multiparty";
-
+const cors = require("cors");
 const redis = require("redis");
 // import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
 import chunks from "./chunk-manifest.json"; // eslint-disable-line import/no-unresolved
-import config from "./config";
+import { port, REDIS } from "./config";
 global.multipartMiddleware = multipart();
 
 process.on("unhandledRejection", (reason, p) => {
@@ -39,13 +39,13 @@ global.async = require("async");
 global.axios = require("axios");
 global.ms = require("ms");
 global.passport = passport;
-global.config = config;
 global.CONSTANT = CONSTANT;
 
 //
 // If you are using proxy from external machine, you can set TRUST_PROXY env
 // Default is to trust proxy headers only from loopback interface.
 // -----------------------------------------------------------------------------
+app.use(cors());
 app.set("trust proxy");
 //
 // Register Node.js middleware
@@ -56,9 +56,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 let RedisStore = require("connect-redis")(session);
-let redisClient = redis.createClient(config.REDIS);
+let redisClient = redis.createClient(REDIS);
 redisClient.on("ready", (err) => {
-  console.info(`[REDIS-${config.REDIS.host}] - READY`);
+  console.info(`[REDIS-${REDIS.host}] - READY`);
   setInterval(() => {
     redisClient.ping((err, data) => {
       if (err) console.error("Redis keepalive error", err);
@@ -181,8 +181,8 @@ app.use((err, req, res, next) => {
 // Launch the server
 // -----------------------------------------------------------------------------
 if (!module.hot) {
-  app.listen(config.port, () => {
-    console.info(`The server is running at http://localhost:${config.port}/`);
+  app.listen(port, () => {
+    console.info(`The server is running at http://localhost:${port}/`);
   });
 }
 
