@@ -28,7 +28,6 @@ global._ = require("lodash");
 global.async = require("async");
 global.axios = require("axios");
 global.ms = require("ms");
-global.mongoConnections = require("./connections/mongo");
 global.CONSTANT = CONSTANT;
 global.redisClient = redis.createClient(REDIS);
 //

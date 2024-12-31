@@ -5,7 +5,7 @@ import webpackHotMiddleware from "webpack-hot-middleware";
 import WriteFilePlugin from "write-file-webpack-plugin";
 import run from "./run";
 import runServer from "./runServer";
-import webpackConfig from "../webpack.config";
+import webpackConfig from "./webpack.config";
 import clean from "./clean";
 import copy from "./copy";
 

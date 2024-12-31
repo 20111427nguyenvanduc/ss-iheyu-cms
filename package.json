@@ -13,7 +13,6 @@
     "not ie < 9"
   ],
   "dependencies": {
-    "@dabeng/react-orgchart": "^1.0.3",
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@fontsource/roboto": "4.5.8",
@@ -114,7 +113,6 @@
     "postcss-selector-not": "2.0.0",
     "postcss-url": "5.1.2",
     "raw-loader": "0.5.1",
-    "react-addons-test-utils": "15.6.2",
     "react-deep-force-update": "2.0.1",
     "react-hot-loader": "3.0.0-beta.6",
     "rimraf": "2.5.4",
