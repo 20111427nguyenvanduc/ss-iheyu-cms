@@ -42,7 +42,7 @@ export default function FilterOptions() {
 
   return (
     <React.Fragment>
-      <Button aria-label="Bộ lọc" variant="outlined" startIcon={<FilterAltIcon />}>
+      <Button aria-label="Bộ lọc" variant="outlined" onClick={toggleDrawer} startIcon={<FilterAltIcon />}>
         Bộ lọc nâng cao
       </Button>
       <Drawer anchor="left" open={isOpen} onClose={toggleDrawer}>
