@@ -123,7 +123,9 @@ const Manage = () => {
   }
  }
 
- const handleDelete = (_id) => {
+    const handleDelete = (_id) => {
+     console.log('haha',_id);
+     
   try {
    inactivePermission({_id}).then((res) => {
     if (_.get(res, "code") === 200) {

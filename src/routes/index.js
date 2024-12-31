@@ -20,6 +20,8 @@ export default {
   require("./position/detail").default,
   require("./unit/detail").default,
   require("./category").default,
+  require("./petition").default,
+  require("./petition/process").default,
   require("./notFound").default,
  ],
 

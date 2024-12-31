@@ -1,26 +1,26 @@
 import React from "react"
 import history from "../../../../../core/history"
 import Link from "../../../../../components/Link"
-import { useDispatch, useSelector } from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 
 // material-ui
-import { styled, useTheme } from "@mui/material/styles"
-import { Avatar, Chip, ListItemIcon, ListItemText, Typography, useMediaQuery, ListItemButton } from "@mui/material"
+import {styled, useTheme} from "@mui/material/styles"
+import {Avatar, Chip, ListItemIcon, ListItemText, Typography, useMediaQuery, ListItemButton} from "@mui/material"
 
 // project imports
-import { MENU_OPEN, SET_MENU } from "../../../../../store/actions"
+import {MENU_OPEN, SET_MENU} from "../../../../../store/actions"
 
 // assets
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"
 
 // style constant
-const ListIcon = styled(ListItemIcon)(({ theme }) => ({
+const ListIcon = styled(ListItemIcon)(({theme}) => ({
  minWidth: "18px",
  marginTop: "auto",
  marginBottom: "auto",
 }))
 
-const SubMenuCaption = styled(Typography)(({ theme }) => ({
+const SubMenuCaption = styled(Typography)(({theme}) => ({
  ...theme.typography.subMenuCaption,
 }))
 
@@ -33,18 +33,18 @@ function isModifiedEvent(event) {
 }
 // ===========================|| SIDEBAR MENU LIST ITEMS ||=========================== //
 
-const NavItem = ({ item, level, drawerOpen, handleCloseMenu }) => {
+const NavItem = ({item, level, drawerOpen, handleCloseMenu}) => {
  const dispatch = useDispatch()
- const { customization, user } = useSelector((state) => state)
+ const {customization, user} = useSelector((state) => state)
  const matchesSM = useMediaQuery((theme) => theme.breakpoints.down("md"))
  const padding = 8
 
  const Icon = item.icon
  const itemIcon = item.icon ? (
   typeof Icon === "string" ? (
-   <img src={Icon} width='20px' height='20px' />
+   <img src={Icon} width='24px' height='24px' />
   ) : (
-   <Icon stroke={1.5} size='20px' />
+   <Icon stroke={1.5} size='24px' />
   )
  ) : (
   <FiberManualRecordIcon
@@ -74,7 +74,7 @@ const NavItem = ({ item, level, drawerOpen, handleCloseMenu }) => {
   localStorage.setItem("last-link", to)
   history.push(to)
   // dispatch({ type: MENU_OPEN, id });
-  if (matchesSM) dispatch({ type: SET_MENU, opened: false })
+  if (matchesSM) dispatch({type: SET_MENU, opened: false})
   if (handleCloseMenu) handleCloseMenu()
  }
 
@@ -97,12 +97,12 @@ const NavItem = ({ item, level, drawerOpen, handleCloseMenu }) => {
    href={item.url}
    disabled={item.disabled}
    sx={{
-    marginBottom: "5px",
+    // marginBottom: "5px",
     paddingTop: `${padding}px`,
     paddingBottom: `${padding}px`,
     paddingRight: `${padding}px`,
     paddingLeft: `${drawerOpen ? level * padding : padding}px`,
-    borderRadius: `${customization.borderRadius}px`,
+    // borderRadius: `${customization.borderRadius}px`,
     alignItems: "flex-start",
     justifyContent: "center",
     backgroundColor: isActived ? "rgba(20, 161, 255, 0.15)" : level > 1 ? "transparent !important" : "inherit",
@@ -113,8 +113,12 @@ const NavItem = ({ item, level, drawerOpen, handleCloseMenu }) => {
   >
    <ListIcon>{itemIcon}</ListIcon>
    <ListItemText
-    sx={{ ml: 1, flexGrow: 1, display: drawerOpen ? "block" : "none" }}
-    primary={<Typography color='inherit'>{item.title}</Typography>}
+    sx={{ml: 1, flexGrow: 1, display: drawerOpen ? "block" : "none"}}
+    primary={
+     <Typography color='inherit' sx={{fontSize: "16px"}}>
+      {item.title}
+     </Typography>
+    }
     secondary={
      item.caption && (
       <SubMenuCaption variant='caption' display='block' gutterBottom>

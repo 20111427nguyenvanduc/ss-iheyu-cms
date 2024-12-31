@@ -16,17 +16,17 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight"
 // style constant
 
 const CollapseWrap = styled(List)(({theme}) => ({
- position: "relative",
- "&:after": {
-  content: "''",
-  position: "absolute",
-  left: "10px",
-  top: 0,
-  height: "100%",
-  width: "1px",
-  opacity: 1,
-  background: theme.palette.primary.light,
- },
+ //  position: "relative",
+ //  "&:after": {
+ //   content: "''",
+ //   position: "absolute",
+ //   left: "10px",
+ //   top: 0,
+ //   height: "100%",
+ //   width: "1px",
+ //   opacity: 1,
+ //   background: theme.palette.primary.light,
+ //  },
 }))
 
 const PopoverWrap = styled(Popover)(({theme}) => ({}))
@@ -92,9 +92,9 @@ const NavCollapse = ({menu, level, drawerOpen}) => {
  const Icon = menu.icon
  const menuIcon = menu.icon ? (
   typeof Icon === "string" ? (
-   <img src={Icon} width='20px' height='20px' />
+   <img src={Icon} width='24px' height='24px' />
   ) : (
-   <Icon stroke={1.5} size='20px' />
+   <Icon stroke={1.5} size='24px' />
   )
  ) : (
   <FiberManualRecordIcon
@@ -125,12 +125,12 @@ const NavCollapse = ({menu, level, drawerOpen}) => {
   <React.Fragment>
    <ListItemButton
     sx={{
-     marginBottom: "5px",
+     //  marginBottom: "5px",
      paddingTop: `${padding}px`,
      paddingBottom: `${padding}px`,
      paddingRight: `${padding}px`,
      paddingLeft: `${drawerOpen ? level * padding : padding}px`,
-     borderRadius: `${customization.borderRadius}px`,
+     //  borderRadius: `${customization.borderRadius}px`,
      alignItems: "flex-start",
      justifyContent: "center",
      backgroundColor: level > 1 ? "transparent !important" : "inherit",
@@ -149,7 +149,11 @@ const NavCollapse = ({menu, level, drawerOpen}) => {
     </ListItemIcon>
     <ListItemText
      sx={{ml: 1, flexGrow: 1, display: drawerOpen ? "block" : "none"}}
-     primary={<Typography color='inherit'>{menu.title}</Typography>}
+     primary={
+      <Typography sx={{fontSize: "16px"}} color='inherit'>
+       {menu.title}
+      </Typography>
+     }
      secondary={
       menu.caption && (
        <Typography variant='caption' display='block' gutterBottom>

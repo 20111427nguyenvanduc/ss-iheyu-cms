@@ -3,6 +3,7 @@ export default function themeTypography(theme) {
     MuiButton: {
       styleOverrides: {
         root: {
+          fontSize: '16px',
           borderRadius: "12px",
           boxShadow: "none",
           textTransform: "none",
