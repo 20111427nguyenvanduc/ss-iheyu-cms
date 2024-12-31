@@ -48,6 +48,7 @@ app.post("/admin/user/create", UserHandle.create)
 app.post("/admin/user/update", UserHandle.update)
 app.post("/admin/user/inactive", UserHandle.inactive)
 app.post("/admin/user/get", UserHandle.get)
+app.post("/admin/user/grant-permisstion", UserHandle.grantPermisstion)
 
 //position
 app.post("/admin/position/list", PositionHandle.list)

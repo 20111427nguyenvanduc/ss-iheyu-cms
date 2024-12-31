@@ -13,7 +13,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Link from "../../components/Link";
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable";
 import SearchHeader from "../../ui-component/search/SearchHeader";
-import { get, create, update, inactive } from "../../services/user";
+import { get, create, update, inactive, grantPermisstion } from "../../services/user";
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog";
 import LoadingSkeleton from "../../ui-component/loading/LoadingSkeleton";
 import DatePicker from "../../ui-component/datepicker/DatePicker";
@@ -87,25 +87,29 @@ const DetailUser = ({ id }) => {
 
   const createData = () => {
     setLoadingSave(true);
-    create(handleDataBeforeSend(userData))
+    let data = handleDataBeforeSend(userData);
+    create(data)
       .then((response) => {
-        setLoadingSave(false);
         if (_.get(response, "code") === CONSTANT.CODE.SUCCESS) {
+          grantPermisstion(data);
           history.push(`/user-manager/${_.get(response, "data")}`);
         }
       })
-      .catch(() => {
+      .finally(() => {
         setLoadingSave(false);
       });
   };
 
   const updateData = () => {
     setLoadingSave(true);
-    update(handleDataBeforeSend(userData))
+    let data = handleDataBeforeSend(userData);
+    update(data)
       .then(() => {
-        setLoadingSave(false);
+        if (_.get(response, "code") === CONSTANT.CODE.SUCCESS) {
+          grantPermisstion(data);
+        }
       })
-      .catch(() => {
+      .finally(() => {
         setLoadingSave(false);
       });
   };

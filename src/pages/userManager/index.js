@@ -10,9 +10,9 @@ import toastr from "toastr";
 import { Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Breadcrumbs, Typography, Stack } from "@mui/material";
 import Link from "../../components/Link";
 import DataTable, { createCell, createRows } from "../../ui-component/table/DataTable";
-import SearchHeader from "../../ui-component/search/SearchHeader";
 import { list } from "../../services/user";
 import Search from "../../components/Shared/Search";
+import FilterOptions from "../../components/UserManager/FilterOptions";
 
 const StyledBox = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -33,7 +33,6 @@ const Manage = () => {
   const dispatch = useDispatch();
   const { user, configs } = useSelector((state) => state);
   const { region, regions } = configs;
-  const setFilter = (newState) => {};
   const [filter, updatedFilter] = useState({
     page: 0,
     limit: 20,
@@ -45,9 +44,12 @@ const Manage = () => {
     sortBy: "-updatedAt",
     filterTime24h: false,
   });
+  const setFilter = (newState) => {
+    updatedFilter((oldState) => ({ ...oldState, ...newState }));
+  };
+
   const [listData, setListData] = useState([]);
   const [textSearch, setTextSearch] = useState("");
-
   useEffect(() => {
     getList();
   }, []);
@@ -86,6 +88,9 @@ const Manage = () => {
               Thêm thành viên mới
             </Button>
           </Link>
+        </Stack>
+        <Stack justifyContent="space-between" gap={1} fullWidth mt={2} direction="row">
+          <FilterOptions {...filter} setFilter={setFilter} />
           <Search
             placeholder={"Tìm kiếm"}
             textSearch={textSearch}
@@ -96,8 +101,7 @@ const Manage = () => {
           />
         </Stack>
       </Box>
-      <Box sx={{ p: 2 }}></Box>
-      <Box sx={{ px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
+      <Box sx={{ p: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center" }}>
         <DataTable
           heads={["STT", "Thông tin thành viên", "Email", "Giới tính", "Chức vụ", "Đơn vị", "Phòng ban", "Thao tác"].map((head, i) => createCell(head, { sx: { width: i == 0 ? "5%" : i == 5 ? "10%" : i == 6 ? "10%" : "auto", textAlign: "center" } }))}
           rows={listData.map((item, i) => {

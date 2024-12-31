@@ -1,14 +1,14 @@
-import React from "react"
-import Login from "../../pages/login"
+import React from "react";
+import Component from "../../pages/login";
 
-const title = "Đăng nhập"
+const title = "Đăng nhập";
+const chunks = ["login"];
 
-export default {
- path: "/login",
- action() {
+function action(props) {
   return {
-   title,
-   component: <Login title={title} />,
-  }
- },
+    title,
+    chunks,
+    component: <Component {...props} />,
+  };
 }
+export default action;

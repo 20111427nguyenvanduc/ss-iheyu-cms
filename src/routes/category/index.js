@@ -1,14 +1,11 @@
-import React from "react"
-import Component from "../../pages/category"
+import React from "react";
+import Component from "../../pages/category";
 
-const title = "Danh mục phản ánh"
-
-export default {
- path: ["/category"],
- action(props) {
+function action(props) {
   return {
-   title,
-   component: <Component {...props} />,
-  }
- },
+    title: "Danh mục phản ánh",
+    chunks: ["category"],
+    component: <Component {...props} />,
+  };
 }
+export default action;
