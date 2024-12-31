@@ -1,5 +1,4 @@
 /* jslint es6 */
-import fs from "fs";
 import _ from "lodash";
 import { IHEYU_SERVICE } from "../config.js";
 import { authPost } from "./api";

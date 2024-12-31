@@ -1,14 +1,13 @@
-import React from "react"
-import ErrorPage from "../../pages/error"
 
-export default {
- path: "/error",
- action({ error }) {
+
+import React from 'react';
+import ErrorPage from './ErrorPage';
+
+function action() {
   return {
-   title: error.name,
-   description: error.message,
-   component: <ErrorPage error={error} />,
-   status: error.status || 500,
-  }
- },
+    title: 'Demo Error',
+    component: <ErrorPage />,
+  };
 }
+
+export default action;

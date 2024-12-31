@@ -1,5 +1,7 @@
-import webpack from "webpack";
-import webpackConfig from "./webpack.config";
+
+
+import webpack from 'webpack';
+import webpackConfig from './webpack.config';
 
 /**
  * Creates application bundles from the source files.
@@ -11,7 +13,11 @@ function bundle() {
         return reject(err);
       }
 
-      console.log(stats.toString(webpackConfig[0].stats));
+      console.info(stats.toString(webpackConfig[0].stats));
+      if (stats.hasErrors()) {
+        return reject(new Error('Webpack compilation errors'));
+      }
+
       return resolve();
     });
   });

@@ -1,32 +1,48 @@
-import React, {useState} from "react"
-import GroupPermissionDetail from "../pages/groupPermissionDetail"
-
 /* eslint-disable global-require */
+
 // The top-level (parent) route
-export default {
- path: "/",
+const routes = {
+  path: "",
 
- children: [
-  require("./login").default,
-  require("./forgotPassword").default,
-  require("./home").default,
-  require("./permissions").default,
-  require("./role").default,
-  require("./groupPermission").default,
-  require("./groupPermission/detail").default,
-  require("./userManager").default,
-  require("./unit").default,
-  require("./userManager/detail").default,
-  require("./position/detail").default,
-  require("./unit/detail").default,
-  require("./category").default,
-  require("./notFound").default,
- ],
+  // Keep in mind, routes are evaluated in order
+  children: [
+    // {
+    //   path: ['/category','/order-history/:id'],
+    //   load: () => import(/* webpackChunkName: 'category' */ './category'),
+    // },
 
- async action({next}) {
-  const route = await next()
-  route.title = `${route.title} | IHeyU`
-  route.description = route.description || ""
-  return route
- },
+    {
+      path: ["/category"],
+      load: () => import(/* webpackChunkName: 'category' */ "./category"),
+    },
+    {
+      path: "/login",
+      load: () => import(/* webpackChunkName: 'login' */ "./login"),
+    },
+    {
+      path: "(.*)",
+      load: () => import(/* webpackChunkName: 'not-found' */ "./not-found"),
+    },
+  ],
+
+  async action({ next }) {
+    // Execute each child route until one of them return the result
+    const route = await next();
+
+    // Provide default values for title, description etc.
+    route.title = `${route.title || "Untitled Page"} - HeyU`;
+    route.description = route.description || "";
+
+    return route;
+  },
+};
+
+// The error page is available by permanent url for development mode
+if (__DEV__) {
+  routes.children.unshift({
+    path: "/error",
+    action: require("./error").default,
+  });
 }
+
+export default routes;
