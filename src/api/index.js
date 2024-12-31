@@ -7,6 +7,7 @@ import UserHandle from "./user"
 import PositionHandle from "./position"
 import CategoryHandle from "./category"
 import CategoryPermissionHandle from "./categoryPermission"
+import PetitionHandle from "./petition"
 
 //authenticate
 app.post("/login", AuthenticateHandle.login)
@@ -64,4 +65,12 @@ app.post("/admin/category/inactive", CategoryHandle.inactive)
 
 //category-permission
 app.post("/admin/category-permission/list", CategoryPermissionHandle.list)
+
+//petition
+app.post("/petition/create", PetitionHandle.create)
+app.post("/petition/list", PetitionHandle.list)
+app.post("/petition/list-category", PetitionHandle.listCategory)
+app.post("/petition/list-community", PetitionHandle.listCommunity)
+app.post("/petition/update", PetitionHandle.update)
+app.post("/petition/get", PetitionHandle.get)
 

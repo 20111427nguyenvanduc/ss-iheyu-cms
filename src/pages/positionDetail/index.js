@@ -200,7 +200,7 @@ const EditPosition = ({id}) => {
      </AlertDialogDelete>
 
      <Button
-      disabled={areArraysEqualById(permissions, _.get(position, "permissions", []))}
+      disabled={areArraysEqualById(permissions, _.get(position, "permissions", [])) && areArraysEqualById(groupPermissions, _.get(position, "groupPermissions", []))}
       onClick={handleUpdatePosition}
       variant='contained'
       size='large'
