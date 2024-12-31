@@ -15,7 +15,7 @@ import passport from "passport";
 import router from "./router";
 import CONSTANT from "./const";
 import multipart from "connect-multiparty";
-const cors = require("cors");
+// const cors = require("cors");
 const redis = require("redis");
 // import assets from './asset-manifest.json'; // eslint-disable-line import/no-unresolved
 import chunks from "./chunk-manifest.json"; // eslint-disable-line import/no-unresolved
@@ -45,7 +45,7 @@ global.CONSTANT = CONSTANT;
 // If you are using proxy from external machine, you can set TRUST_PROXY env
 // Default is to trust proxy headers only from loopback interface.
 // -----------------------------------------------------------------------------
-app.use(cors());
+// app.use(cors());
 app.set("trust proxy");
 //
 // Register Node.js middleware

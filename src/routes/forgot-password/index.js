@@ -1,8 +1,8 @@
 import React from "react";
-import Component from "../../pages/permissions";
+import Component from "../../pages/forgotPassword";
 
-const title = "Quyền chức năng";
-const chunks = ["permissions"];
+const title = "Quên mật khẩu";
+const chunks = ["forgot-password"];
 
 function action(props) {
   return {
