@@ -120,7 +120,6 @@ const DetailUser = ({ id }) => {
     if (!_.isEmpty(groupPermissions)) {
       newData.groupPermissions = groupPermissions.map((groupPermission) => groupPermission._id);
     }
-    console.log(unitsAndPositions);
 
     if (!_.isEmpty(unitsAndPositions)) {
       newData.units = [];
