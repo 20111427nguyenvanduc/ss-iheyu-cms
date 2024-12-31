@@ -1,8 +1,8 @@
 import React from "react";
-import Component from "../../pages/permissions";
+import Component from "../../pages/groupPermissionDetail";
 
-const title = "Quyền chức năng";
-const chunks = ["permissions"];
+const title = "Nhóm quyền";
+const chunks = ["group-permission-detail"];
 
 function action(props) {
   return {

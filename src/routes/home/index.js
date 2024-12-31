@@ -1,14 +1,14 @@
-import React from "react"
-import Component from "../../pages/home"
+import React from "react";
+import Component from "../../pages/home";
 
-const title = "Trang chủ"
+const title = "Trang chủ";
+const chunks = ["home"];
 
-export default {
- path: ["/", "/home"],
- action(props) {
+function action(props) {
   return {
-   title,
-   component: <Component {...props} />,
-  }
- },
+    title,
+    chunks,
+    component: <Component {...props} />,
+  };
 }
+export default action;

@@ -3,7 +3,7 @@ export default function themeTypography(theme) {
     MuiButton: {
       styleOverrides: {
         root: {
-          fontSize: '16px',
+          fontSize: "16px",
           borderRadius: "12px",
           boxShadow: "none",
           textTransform: "none",
@@ -27,9 +27,6 @@ export default function themeTypography(theme) {
           "&.Mui-focused fieldset": {
             borderRadius: "16px",
           },
-          "&:-webkit-autofill": {
-            borderRadius: "16px",
-          },
         },
       },
     },
@@ -51,9 +48,6 @@ export default function themeTypography(theme) {
             borderRadius: "16px",
           },
           "&.Mui-focused fieldset": {
-            borderRadius: "16px",
-          },
-          "&:-webkit-autofill": {
             borderRadius: "16px",
           },
         },

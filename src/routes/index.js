@@ -6,11 +6,10 @@ const routes = {
 
   // Keep in mind, routes are evaluated in order
   children: [
-    // {
-    //   path: ['/category','/order-history/:id'],
-    //   load: () => import(/* webpackChunkName: 'category' */ './category'),
-    // },
-
+    {
+      path: "/home",
+      load: () => import(/* webpackChunkName: 'home' */ "./home"),
+    },
     {
       path: ["/category"],
       load: () => import(/* webpackChunkName: 'category' */ "./category"),
@@ -18,6 +17,22 @@ const routes = {
     {
       path: "/login",
       load: () => import(/* webpackChunkName: 'login' */ "./login"),
+    },
+    {
+      path: "/forgot-password",
+      load: () => import(/* webpackChunkName: 'forgot-password' */ "./forgot-password"),
+    },
+    {
+      path: "/group-permission/:id",
+      load: () => import(/* webpackChunkName: 'group-permission-detail' */ "./group-permission/detail"),
+    },
+    {
+      path: "/group-permission",
+      load: () => import(/* webpackChunkName: 'group-permission' */ "./group-permission"),
+    },
+    {
+      path: "/permissions",
+      load: () => import(/* webpackChunkName: 'permissions' */ "./permissions"),
     },
     {
       path: "(.*)",
