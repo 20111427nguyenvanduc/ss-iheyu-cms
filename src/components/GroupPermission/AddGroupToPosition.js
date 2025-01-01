@@ -6,7 +6,20 @@ import moment from "moment";
 import _ from "lodash";
 import ms from "ms";
 import toastr from "toastr";
-import { Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField, Grid, Checkbox, Divider } from "@mui/material";
+import {
+  Button,
+  Typography,
+  Dialog,
+  Stack,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Box,
+  TextField,
+  Grid,
+  Checkbox,
+  Divider,
+} from "@mui/material";
 import Accordion from "@mui/material/Accordion";
 import AccordionActions from "@mui/material/AccordionActions";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -15,7 +28,15 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { list as listGroupPermission } from "../../services/groupPermission";
 import Search from "../Shared/Search";
 
-const AddGroupToPosition = ({ children, groupPermissionsCurrent, onClose = () => {}, dataGroup = [], textSearch, setTextSearch, onSubmitSearch = () => {} }) => {
+const AddGroupToPosition = ({
+  children,
+  groupPermissionsCurrent,
+  onClose = () => {},
+  dataGroup = [],
+  textSearch,
+  setTextSearch,
+  onSubmitSearch = () => {},
+}) => {
   const [open, setOpen] = React.useState(false);
 
   const [groupPermissions, setGroupPermissions] = useState([]);
@@ -59,15 +80,31 @@ const AddGroupToPosition = ({ children, groupPermissionsCurrent, onClose = () =>
     <React.Fragment>
       {React.cloneElement(
         children || (
-          <Button variant="contained" size="large" sx={{ background: "#007CFE", borderRadius: "12px", textTransform: "inherit" }} startIcon={<i className="icon-bold-add-circle" />}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{ background: "#007CFE", borderRadius: "12px", textTransform: "inherit" }}
+            startIcon={<i className="icon-bold-add-circle" />}
+          >
             Thêm mới
           </Button>
         ),
         { onClick: handleClickOpen }
       )}
-      <Dialog fullWidth={true} maxWidth={"lg"} open={open} onClose={handleClose} scroll={"paper"} PaperProps={{ sx: { borderRadius: "16px" } }}>
+      <Dialog
+        fullWidth={true}
+        maxWidth={"lg"}
+        open={open}
+        onClose={handleClose}
+        scroll={"paper"}
+        PaperProps={{ sx: { borderRadius: "16px" } }}
+      >
         <DialogTitle>
-          <Stack direction="row" spacing={6} sx={{ justifyContent: "space-between", alignItems: "center" }}>
+          <Stack
+            direction="row"
+            spacing={6}
+            sx={{ justifyContent: "space-between", alignItems: "center" }}
+          >
             <Typography variant="p" sx={{ fontSize: "22px", color: "#2E3236", fontWeight: 700 }}>
               Danh sách nhóm quyền
             </Typography>
@@ -85,17 +122,47 @@ const AddGroupToPosition = ({ children, groupPermissionsCurrent, onClose = () =>
           <Grid container spacing={2}>
             {dataGroup.map((group, i) => {
               return (
-                <Grid item>
-                  <Box display={"flex"} flexDirection="column" gap={1.5} mt={1} sx={{ border: !findIdInArray(groupPermissions, group._id) ? "1px solid #CCCFD3" : "1px solid #007CFE", borderRadius: "12px" }}>
+                <Grid item key={i}>
+                  <Box
+                    display={"flex"}
+                    flexDirection="column"
+                    gap={1.5}
+                    mt={1}
+                    sx={{
+                      border: !findIdInArray(groupPermissions, group._id)
+                        ? "1px solid #CCCFD3"
+                        : "1px solid #007CFE",
+                      borderRadius: "12px",
+                    }}
+                  >
                     <Box px={2} pt={1}>
-                      <Stack onClick={() => handleCheckGroupPermission(group)} direction="row" spacing={6} sx={{ justifyContent: "space-between", alignItems: "center" }}>
-                        <Stack direction="row" spacing={2} sx={{ justifyContent: "flex-start", alignItems: "center" }}>
-                          <i className="icon-bold-task-square" style={{ color: "#007CFE", fontSize: "22px" }} />
-                          <Typography variant="p" sx={{ fontSize: "20px", color: "#2E3236", fontWeight: 600 }}>
+                      <Stack
+                        onClick={() => handleCheckGroupPermission(group)}
+                        direction="row"
+                        spacing={6}
+                        sx={{ justifyContent: "space-between", alignItems: "center" }}
+                      >
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          sx={{ justifyContent: "flex-start", alignItems: "center" }}
+                        >
+                          <i
+                            className="icon-bold-task-square"
+                            style={{ color: "#007CFE", fontSize: "22px" }}
+                          />
+                          <Typography
+                            variant="p"
+                            sx={{ fontSize: "20px", color: "#2E3236", fontWeight: 600 }}
+                          >
                             {group.name}
                           </Typography>
                         </Stack>
-                        <Checkbox value={group._id} onChange={() => handleCheckGroupPermission(group)} checked={findIdInArray(groupPermissions, group._id)} />
+                        <Checkbox
+                          value={group._id}
+                          onChange={() => handleCheckGroupPermission(group)}
+                          checked={findIdInArray(groupPermissions, group._id)}
+                        />
                       </Stack>
                     </Box>
 
@@ -104,10 +171,17 @@ const AddGroupToPosition = ({ children, groupPermissionsCurrent, onClose = () =>
                       {group.permissions && group.permissions.length
                         ? _.get(group, "permissions", []).map((group, i) => {
                             return (
-                              <Stack direction="row" spacing={2} sx={{ justifyContent: "flex-start", alignItems: "center", gap: 2 }}>
+                              <Stack
+                                direction="row"
+                                spacing={2}
+                                sx={{ justifyContent: "flex-start", alignItems: "center", gap: 2 }}
+                              >
                                 <i className="icon-bold-cd" style={{ color: "#656C75" }} />
                                 {group.name}
-                                <Typography component="p" sx={{ fontSize: "16px", color: "#010810" }}></Typography>
+                                <Typography
+                                  component="p"
+                                  sx={{ fontSize: "16px", color: "#010810" }}
+                                ></Typography>
                               </Stack>
                             );
                           })
@@ -128,7 +202,12 @@ const AddGroupToPosition = ({ children, groupPermissionsCurrent, onClose = () =>
             }}
             variant="contained"
             size="large"
-            sx={{ background: "#007CFE", borderRadius: "12px", textTransform: "inherit", width: "250px" }}
+            sx={{
+              background: "#007CFE",
+              borderRadius: "12px",
+              textTransform: "inherit",
+              width: "250px",
+            }}
           >
             Xác nhận
           </Button>

@@ -9,10 +9,10 @@ import async from "async";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const StyledButtonImg = styled(Avatar)({
-  backgroundColor: "#FFF",
+  backgroundColor: "transparent",
   cursor: "pointer",
   position: "absolute",
-  right: "-40px",
+  right: "-32px",
 });
 
 const Vector = styled(Box)(({ theme }) => ({
@@ -37,7 +37,16 @@ const StyledButtonAdd = styled(LoadingButton)({
   },
 });
 
-const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUpdatePermissionsAndGroups }) => {
+const RecursiveSelectDynamic = ({
+  unit,
+  position,
+  setUnit,
+  setPosition,
+  handleUpdatePermissionsAndGroups,
+  GridItemProps,
+  GridProps,
+  ...props
+}) => {
   const [departments, setDepartments] = useState([]); // Danh sách các cấp
   const [selectedDepartments, setSelectedDepartments] = useState([]); // Lựa chọn hiện tại
   const [isLoading, setIsLoading] = useState(false); // Trạng thái tải dữ liệu
@@ -145,9 +154,26 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
 
   const renderSelects = () =>
     departments.map((departmentList, level) => (
-      <Box key={level} mt={2} display="flex" alignItems="center" position="relative" ml={1.5 * level}>
+      <Box
+        key={level}
+        mb={2}
+        display="flex"
+        alignItems="center"
+        position="relative"
+        ml={1.5 * level}
+      >
         {level ? <Vector /> : null}
-        <Autocomplete options={departmentList} getOptionLabel={(option) => _.get(option, "name", "Chưa rõ")} value={_.get(selectedDepartments, `[${level}]`, null)} onChange={(e, value) => handleSelectChange(value, level)} noOptionsText="Không có dữ liệu" sx={{ width: "100%" }} renderInput={(params) => <TextField {...params} placeholder="Chọn đơn vị trực thuộc" variant="outlined" />} />
+        <Autocomplete
+          options={departmentList}
+          getOptionLabel={(option) => _.get(option, "name", "Chưa rõ")}
+          value={_.get(selectedDepartments, `[${level}]`, null)}
+          onChange={(e, value) => handleSelectChange(value, level)}
+          noOptionsText="Không có dữ liệu"
+          sx={{ width: "100%" }}
+          renderInput={(params) => (
+            <TextField {...params} placeholder="Chọn đơn vị trực thuộc" variant="outlined" />
+          )}
+        />
         {/* Nút Xóa: Hiển thị ở `Autocomplete` cuối cùng, nhưng không phải ở cấp đầu tiên */}
         {level > 0 && level === _.get(departments, "length", 0) - 1 && (
           <StyledButtonImg onClick={() => handleDelete(level)}>
@@ -158,13 +184,27 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
     ));
 
   const renderAddButton = () => {
-    const isLastSelectedValid = _.get(selectedDepartments, "length", 0) > 0 && _.get(selectedDepartments[selectedDepartments.length - 1], "_id", "");
+    const isLastSelectedValid =
+      _.get(selectedDepartments, "length", 0) > 0 &&
+      _.get(selectedDepartments[selectedDepartments.length - 1], "_id", "");
 
     return (
       isLastSelectedValid && (
-        <Box mt={2} ml={departments.length * 1.5} sx={{ position: "relative", width: "100%" }}>
+        <Box mb={2} ml={departments.length * 1.5} sx={{ position: "relative", width: "100%" }}>
           <Vector sx={{ height: "38px" }} />
-          <StyledButtonAdd onClick={() => fetchChildDepartments(_.get(selectedDepartments[selectedDepartments.length - 1], "_id", ""), _.get(selectedDepartments, "length", 0) - 1)} variant="contained" size="large" disabled={loading} loading={loading} startIcon={<i className="icon-bold-add-circle" style={{ color: "#007CFE" }} />}>
+          <StyledButtonAdd
+            onClick={() =>
+              fetchChildDepartments(
+                _.get(selectedDepartments[selectedDepartments.length - 1], "_id", ""),
+                _.get(selectedDepartments, "length", 0) - 1
+              )
+            }
+            variant="contained"
+            size="large"
+            disabled={loading}
+            loading={loading}
+            startIcon={<i className="icon-bold-add-circle" style={{ color: "#007CFE" }} />}
+          >
             Thêm đơn vị trực thuộc
           </StyledButtonAdd>
         </Box>
@@ -173,22 +213,32 @@ const RecursiveSelectDynamic = ({ unit, position, setUnit, setPosition, handleUp
   };
 
   const renderLocationSelect = () => (
-    <Box mt={2}>
-      <Autocomplete options={listDataPosition} getOptionLabel={(option) => _.get(option, "name", "Chưa rõ")} value={position || null} onChange={(e, value) => handlePositionChange(value)} noOptionsText="Không có dữ liệu" sx={{ width: "100%" }} renderInput={(params) => <TextField {...params} placeholder="Chọn chức vụ" variant="outlined" />} />
+    <Box>
+      <Autocomplete
+        options={listDataPosition}
+        getOptionLabel={(option) => _.get(option, "name", "Chưa rõ")}
+        value={position || null}
+        onChange={(e, value) => handlePositionChange(value)}
+        noOptionsText="Không có dữ liệu"
+        sx={{ width: "100%" }}
+        renderInput={(params) => (
+          <TextField {...params} placeholder="Chọn chức vụ" variant="outlined" />
+        )}
+      />
     </Box>
   );
 
   return isLoading ? (
-    <Grid container columnSpacing={6} mt={1}>
-      <Grid item xs={6}>
-        <Typography variant="h6" sx={{ fontSize: "18px", color: "#010810" }}>
+    <Grid container columnSpacing={4} mt={1} {...GridProps}>
+      <Grid item xs={6} {...GridItemProps}>
+        <Typography variant="h5" sx={{ fontSize: "18px", fontWeight: 400, mb: 1 }}>
           Đơn vị
         </Typography>
         {renderSelects()}
         {renderAddButton()}
       </Grid>
-      <Grid item xs={6}>
-        <Typography variant="h6" sx={{ fontSize: "18px", color: "#010810" }}>
+      <Grid item xs={6} {...GridItemProps}>
+        <Typography variant="h5" sx={{ fontSize: "18px", fontWeight: 400, mb: 1 }}>
           Chức vụ
         </Typography>
         {renderLocationSelect()}
