@@ -18,6 +18,9 @@ import ItemList from "../../components/Petition/ItemList"
 import Detail from "../../components/Petition/Detail"
 import Timeline from "../../components/Petition/TimeLine"
 import Pagination from "@mui/material/Pagination"
+import Reject from "../../components/Petition/Reject"
+import EditResult from "../../components/Petition/EditResult"
+import DrawerSearch from "../../components/Petition/DrawerSearch"
 
 const StyledBox = styled(Box)(({theme}) => ({
  display: "flex",
@@ -34,6 +37,20 @@ const Manage = () => {
  const {region, regions} = configs
  const [textSearch, setTextSearch] = useState("")
  const [status, setStatus] = useState("")
+
+ const [filter, updatedFilter] = useState({
+  page: 0,
+  limit: 10,
+  active: "",
+  isFilter: false,
+  unit: "",
+  position: "",
+  sort: 1,
+  gender: "",
+ })
+ const setFilter = (newState) => {
+  updatedFilter((oldState) => ({...oldState, ...newState}))
+ }
 
  const listStatus = [
   {name: "Tất cả", icon: "", value: "", total: ""},
@@ -62,12 +79,13 @@ const Manage = () => {
     </Breadcrumbs>
    </Box>
 
-   <Box sx={{py: 1.5, px: 2, mt: 2}}>
+   <Box sx={{px: 2, mt: 1}}>
     <Stack direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
      <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
       <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
        Danh sách phản ánh{" "}
       </Typography>
+      <DrawerSearch filter={filter} setFilter={setFilter} />
      </Stack>
      <Search
       placeholder={"Tìm kiếm phản ánh"}
@@ -120,10 +138,33 @@ const Manage = () => {
           gap: 1,
           cursor: "pointer",
           flexShrink: 0, // Ngăn các phần tử co lại
+          position: "relative", // Đặt relative để chấm đỏ được định vị dựa trên Box này
          }}
          onClick={() => setStatus(item.value)}
         >
-         {item.icon ? <i className={item.icon} style={{color: item.value === status ? "#007CFE" : "#4A4F55"}} /> : null}
+         {i === 3 ? (
+          <Box
+           sx={{
+            position: "absolute",
+            top: "5px", // Đặt chấm đỏ ở góc trên
+            right: "5px", // Đặt chấm đỏ ở góc phải
+            transform: "translate(50%, -50%)", // Căn chỉnh chấm đỏ ra ngoài một chút
+            width: "16px",
+            height: "16px",
+            backgroundColor: "#D30500",
+            borderRadius: "50%", // Tạo hình tròn
+           }}
+          ></Box>
+         ) : null}
+
+         {item.icon ? (
+          <i
+           className={item.icon}
+           style={{
+            color: item.value === status ? "#007CFE" : "#4A4F55",
+           }}
+          />
+         ) : null}
          <Typography
           variant='p'
           sx={{
@@ -186,9 +227,7 @@ const Manage = () => {
    </Box>
    <AppBar position='sticky' color='primary' sx={{top: "auto", bottom: 0, boxShadow: "0px -5px 4px 0px #7E7E7E26", background: "#FFF"}}>
     <Box sx={{p: 2, display: "flex", justifyContent: "space-between", alignItems: "start", gap: 2}}>
-     <Box sx={{width: "35%", textAlign: "center"}}>
-      <Pagination count={10} color='primary' />
-     </Box>
+     <Box sx={{width: "35%", textAlign: "center"}}>{/* <Pagination count={10} color='primary' /> */}</Box>
 
      <Box
       sx={{
@@ -196,29 +235,33 @@ const Manage = () => {
        display: "flex",
        alignItems: "center",
        justifyContent: "end",
+       gap: 2,
       }}
      >
-      <Button
-       variant='contained'
-       size='large'
-       sx={{
-        width: "15%",
-        background: "#FFE2E2",
-        textTransform: "inherit",
-        color: "#D30500",
-        "&:hover": {
-         backgroundColor: "#FFE2E2",
+      <Reject>
+       <Button
+        variant='contained'
+        size='large'
+        sx={{
+         width: "180px",
+         background: "#FFE2E2",
+         textTransform: "inherit",
          color: "#D30500",
-        },
-       }}
-      >
-       Từ chối phản ánh
-      </Button>
+         "&:hover": {
+          backgroundColor: "#FFE2E2",
+          color: "#D30500",
+         },
+        }}
+       >
+        Từ chối phản ánh
+       </Button>
+      </Reject>
+
       <Button
        variant='contained'
        size='large'
        sx={{
-        width: "15%",
+        width: "180px",
         background: "#FFF",
         textTransform: "inherit",
         color: "#007CFE",
@@ -235,7 +278,7 @@ const Manage = () => {
        variant='contained'
        size='large'
        sx={{
-        width: "15%",
+        width: "180px",
         background: "#E5F1FF",
         textTransform: "inherit",
         color: "#007CFE",
@@ -247,9 +290,11 @@ const Manage = () => {
       >
        Phân phối xử lý
       </Button>
-      <Button onClick={() => {}} variant='contained' size='large' sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}>
-       Tiếp nhận xử lý
-      </Button>
+      <EditResult>
+       <Button onClick={() => {}} variant='contained' size='large' sx={{width: "180px", background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}>
+        Tiếp nhận xử lý
+       </Button>
+      </EditResult>
      </Box>
     </Box>
    </AppBar>
