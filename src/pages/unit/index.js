@@ -77,6 +77,8 @@ const Manage = ({id}) => {
 
  const [listDataPosition, setListDataPosition] = useState([])
 
+
+
  useEffect(() => {
   if (id) {
    getDetailUnit()

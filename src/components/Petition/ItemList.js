@@ -12,25 +12,11 @@ const ItemList = ({children, index, onClose = () => {}}) => {
     border: index === 0 ? "1px solid #007CFE" : "none",
     borderRadius: "8px",
     display: "flex",
-    position: "relative", // Đặt position relative để định vị ảnh chồng
    }}
    p={2}
    flexDirection={"column"}
    gap={1}
   >
-   {/* Hình ảnh chồng lên trên bên phải */}
-   <img
-    src='/images/polygon.png'
-    alt='polygon'
-    style={{
-     position: "absolute",
-     top: "50%", // Căn giữa theo chiều dọc
-     right: "-16px", // Đẩy ảnh ra ngoài bên phải
-     transform: "translateY(-50%)", // Dịch chuyển lên nửa chiều cao
-     width: "16px",
-    }}
-   />
-
    <Box sx={{justifyContent: "space-between", alignItems: "center", display: "flex"}}>
     <Typography variant='p' sx={{fontSize: "18px", color: "#007CFE", fontWeight: 600}}>
      #PAKN.20241212.0012

@@ -8,7 +8,7 @@ function action(props) {
   return {
     title,
     chunks,
-    component: <Component {...props} />,
+    component: <Component {...props} id={_.get(props, "params.id")}/>,
   };
 }
 export default action;

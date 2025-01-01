@@ -1,14 +1,13 @@
-import React from "react"
+import React from "react";
 import Component from "../../pages/userManager"
 
-const title = "Quản lý tài khoản"
-
-export default {
- path: ["/user-manager"],
- action(props) {
+function action(props) {
   return {
-   title,
-   component: <Component {...props} />,
-  }
- },
+    title: "Danh sách cán bộ",
+    chunks: ["user-manager"],
+    component: <Component {...props} />,
+  };
 }
+export default action;
+
+

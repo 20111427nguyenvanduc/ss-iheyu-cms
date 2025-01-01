@@ -6,7 +6,7 @@ import moment from "moment"
 import _, {map} from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Breadcrumbs, Typography, Stack, Switch, Grid, Divider} from "@mui/material"
+import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Breadcrumbs, Typography, Stack, Switch, Grid, Divider, AppBar, Toolbar} from "@mui/material"
 import Link from "../../components/Link/Link"
 import DataTable, {createCell, createRows} from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
@@ -17,6 +17,7 @@ import Search from "../../components/Shared/Search"
 import ItemList from "../../components/Petition/ItemList"
 import Detail from "../../components/Petition/Detail"
 import Timeline from "../../components/Petition/TimeLine"
+import Pagination from "@mui/material/Pagination"
 
 const StyledBox = styled(Box)(({theme}) => ({
  display: "flex",
@@ -162,7 +163,19 @@ const Manage = () => {
       <ItemList index={i} />
      ))}
     </Box>
-    <Box sx={{background: "#FFF", border: "1px solid #007CFE", borderRadius: "8px", width: "64%", display: "flex", justifyContent: "space-between", alignItems: "start"}}>
+    <Box
+     sx={{
+      background: "#FFF",
+      border: "1px solid #007CFE",
+      borderRadius: "8px",
+      width: "64%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "start",
+      height: "600px",
+      overflowY: "auto",
+     }}
+    >
      <Box sx={{width: "70%", borderRight: "1px solid #CCCFD3"}}>
       <Detail />
      </Box>
@@ -171,6 +184,75 @@ const Manage = () => {
      </Box>
     </Box>
    </Box>
+   <AppBar position='sticky' color='primary' sx={{top: "auto", bottom: 0, boxShadow: "0px -5px 4px 0px #7E7E7E26", background: "#FFF"}}>
+    <Box sx={{p: 2, display: "flex", justifyContent: "space-between", alignItems: "start", gap: 2}}>
+     <Box sx={{width: "35%", textAlign: "center"}}>
+      <Pagination count={10} color='primary' />
+     </Box>
+
+     <Box
+      sx={{
+       width: "64%",
+       display: "flex",
+       alignItems: "center",
+       justifyContent: "end",
+      }}
+     >
+      <Button
+       variant='contained'
+       size='large'
+       sx={{
+        width: "15%",
+        background: "#FFE2E2",
+        textTransform: "inherit",
+        color: "#D30500",
+        "&:hover": {
+         backgroundColor: "#FFE2E2",
+         color: "#D30500",
+        },
+       }}
+      >
+       Từ chối phản ánh
+      </Button>
+      <Button
+       variant='contained'
+       size='large'
+       sx={{
+        width: "15%",
+        background: "#FFF",
+        textTransform: "inherit",
+        color: "#007CFE",
+        border: "1px solid #007CFE",
+        "&:hover": {
+         backgroundColor: "#FFF",
+         color: "#007CFE",
+        },
+       }}
+      >
+       Báo trùng
+      </Button>
+      <Button
+       variant='contained'
+       size='large'
+       sx={{
+        width: "15%",
+        background: "#E5F1FF",
+        textTransform: "inherit",
+        color: "#007CFE",
+        "&:hover": {
+         backgroundColor: "#E5F1FF",
+         color: "#007CFE",
+        },
+       }}
+      >
+       Phân phối xử lý
+      </Button>
+      <Button onClick={() => {}} variant='contained' size='large' sx={{background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}>
+       Tiếp nhận xử lý
+      </Button>
+     </Box>
+    </Box>
+   </AppBar>
   </Fragment>
  )
 }
