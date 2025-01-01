@@ -22,14 +22,17 @@ const MenuDivider = styled(Typography)(({ theme }) => ({
   marginBottom: "10px",
 }));
 
-const WrapMenu = styled(List, { shouldForwardProp: (prop) => prop !== "open" })(({ theme, open }) => ({
-  padding: open ? "12px" : "8px",
-  [theme.breakpoints.down("sm")]: {
-    ...(!open && {
-      display: `none`,
-    }),
-  },
-}));
+const WrapMenu = styled(List, { shouldForwardProp: (prop) => prop !== "open" })(
+  ({ theme, open }) => ({
+    // padding: open ? "0px" : "0px",
+    padding: "0px",
+    [theme.breakpoints.down("sm")]: {
+      ...(!open && {
+        display: `none`,
+      }),
+    },
+  })
+);
 
 // ===========================|| SIDEBAR MENU LIST GROUP ||=========================== //
 
@@ -82,7 +85,13 @@ const NavGroup = ({ item, drawerOpen }) => {
         open={drawerOpen}
         subheader={
           item.title && (
-            <MenuCaption sx={{ display: drawerOpen ? "block" : "none" }} open={drawerOpen} variant="caption" display="block" gutterBottom>
+            <MenuCaption
+              sx={{ display: drawerOpen ? "block" : "none" }}
+              open={drawerOpen}
+              variant="caption"
+              display="block"
+              gutterBottom
+            >
               {item.title}
               {item.caption && (
                 <SubMenuCaption variant="caption" display="block" gutterBottom>
