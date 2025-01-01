@@ -53,5 +53,12 @@ export default function themeTypography(theme) {
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: "16px", // Thêm border radius cho hộp thoại
+        },
+      },
+    },
   };
 }

@@ -2,6 +2,8 @@ import * as React from "react"
 import {Box, Typography} from "@mui/material"
 import ImageList from "@mui/material/ImageList"
 import ImageListItem from "@mui/material/ImageListItem"
+import EditCategory from "./EditCategory"
+import EditPriority from "./EditPriority"
 
 export default function Info() {
  const itemData = [
@@ -19,7 +21,7 @@ export default function Info() {
   },
  ]
  return (
-  <Box sx={{width: "100%", display:'flex'}} flexDirection={"column"} gap={1.5}>
+  <Box sx={{width: "100%", display: "flex"}} flexDirection={"column"} gap={1.5}>
    <Box sx={{display: "flex", justifyContent: "start", alignItems: "center", gap: 2}}>
     <img src='/images/icon-arrow-right.png' style={{height: "11px"}} />
     <Typography variant='p' sx={{fontSize: "16px", color: "#2E3236", fontWeight: 400}}>
@@ -46,7 +48,9 @@ export default function Info() {
      <Typography variant='p' sx={{fontSize: "16px", color: "#2E3236", fontWeight: 400}}>
       An ninh trật tự
      </Typography>
-     <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "20px"}} />
+     <EditCategory>
+      <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "20px", cursor: "pointer"}} />
+     </EditCategory>
     </Box>
    </Box>
 
@@ -57,7 +61,9 @@ export default function Info() {
     </Typography>
     <Box sx={{justifyContent: "start", alignItems: "center", display: "flex", gap: 1}}>
      <img src='/images/priority/priority-1.png' style={{width: "16px"}} />
-     <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "20px"}} />
+     <EditPriority>
+      <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "20px", cursor: "pointer"}} />
+     </EditPriority>
     </Box>
    </Box>
    <Box sx={{display: "flex", justifyContent: "start", alignItems: "center", gap: 2}}>
