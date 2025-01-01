@@ -1,14 +1,12 @@
-import React from "react"
+import React from "react";
 import Component from "../../pages/petition"
 
-const title = "Danh sách phản ánh"
-
-export default {
- path: ["/petition"],
- action(props) {
+function action(props) {
   return {
-   title,
-   component: <Component {...props} />,
-  }
- },
+    title: "Danh sách phản ánh",
+    chunks: ["petition"],
+    component: <Component {...props} />,
+  };
 }
+export default action;
+

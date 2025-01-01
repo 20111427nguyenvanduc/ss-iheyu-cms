@@ -19,7 +19,7 @@ export default function Info() {
   },
  ]
  return (
-  <Box sx={{width: "100%"}}>
+  <Box sx={{width: "100%", display:'flex'}} flexDirection={"column"} gap={1.5}>
    <Box sx={{display: "flex", justifyContent: "start", alignItems: "center", gap: 2}}>
     <img src='/images/icon-arrow-right.png' style={{height: "11px"}} />
     <Typography variant='p' sx={{fontSize: "16px", color: "#2E3236", fontWeight: 400}}>

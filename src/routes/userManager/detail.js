@@ -1,15 +1,15 @@
-import React from "react"
+import React from "react";
 import Component from "../../pages/userManager/detail"
 
-const title = "Hồ sơ tài khoản"
+const title = "Hồ sơ tài khoản";
+const chunks = ["user-manager-detail"];
 
-export default {
- path: "/user-manager/:id",
- action({ params }) {
-  const { id } = params
+function action(props) {
   return {
-   title,
-   component: <Component id={id} />,
-  }
- },
+    title,
+    chunks,
+    component: <Component {...props}  id={_.get(props, "params.id")}/>,
+  };
 }
+export default action;
+

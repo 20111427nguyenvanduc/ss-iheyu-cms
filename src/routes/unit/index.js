@@ -1,14 +1,13 @@
-import React from "react"
+import React from "react";
 import Component from "../../pages/unit"
 
-const title = "Quản lý đơn vị"
-
-export default {
- path: ["/unit"],
- action(props) {
+function action(props) {
   return {
-   title,
-   component: <Component {...props} />,
-  }
- },
+    title: "Quản lý đơn vị",
+    chunks: ["unit"],
+    component: <Component {...props} />,
+  };
 }
+export default action;
+
+

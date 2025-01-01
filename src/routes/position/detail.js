@@ -1,15 +1,16 @@
-import React from "react"
-import PostionDetail from "../../pages/positionDetail"
+import React from "react";
+import Component from "../../pages/positionDetail"
 
 const title = "Chi tiết chức vụ"
+const chunks = ["position-detail"];
 
-export default {
- path: "/position/:id",
- action({ params }) {
-  const { id } = params
+function action(props) {
   return {
-   title: `Chi tiết chức vụ`,
-   component: <PostionDetail id={id} />,
-  }
- },
+    title,
+    chunks,
+    component: <Component {...props}  id={_.get(props, "params.id")}/>,
+  };
 }
+export default action;
+
+
