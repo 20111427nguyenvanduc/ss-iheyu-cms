@@ -13,7 +13,7 @@ export default function Html({ title, description, styles = [], scripts = [], ap
         <meta name="description" content={description} />
         <link rel="icon" href="/images/logo.png" />
         {/* <link href="/css/bootstrap.min.css" rel="stylesheet" /> */}
-        {/* <link href="/css/style.css" rel="stylesheet" /> */}
+        <link href="/css/style.css" rel="stylesheet" />
         <link href="/css/toastr/toastr.min.css" rel="stylesheet" />
         <link href="/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <link href="/penguin-icon/bold/style.css" rel="stylesheet" />

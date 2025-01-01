@@ -59,7 +59,7 @@ axios.interceptors.response.use(
           toastr.error(_.get(message, "body"), _.get(message, "head"));
           break;
         case 1993:
-        //  document.location.href = "/login"
+          document.location.href = "/login";
         default:
           toastr.info(_.get(message, "body"), _.get(message, "head"));
           break;
