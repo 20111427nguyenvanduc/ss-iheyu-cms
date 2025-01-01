@@ -22,6 +22,7 @@
     "@mui/material": "5.11.8",
     "@mui/styled-engine-sc": "5.11.0",
     "@mui/x-date-pickers": "5.0.20",
+    "@tinymce/tinymce-react": "2.5.0",
     "async": "^2.1.4",
     "autosuggest-highlight": "3.3.4",
     "axios": "^0.15.3",

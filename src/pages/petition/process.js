@@ -6,7 +6,7 @@ import moment from "moment"
 import _, {map} from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Breadcrumbs, Typography, Stack, Switch, Grid, Divider} from "@mui/material"
+import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Breadcrumbs, Typography, Stack, Switch, Grid, Divider, AppBar, Toolbar} from "@mui/material"
 import Link from "../../components/Link/Link"
 import DataTable, {createCell, createRows} from "../../ui-component/table/DataTable"
 import SearchHeader from "../../ui-component/search/SearchHeader"
@@ -14,6 +14,12 @@ import AddEdit from "../../components/Category/AddEdit"
 import {list, inactive as inactive} from "../../services/category"
 import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import Search from "../../components/Shared/Search"
+import ItemList from "../../components/Petition/ItemList"
+import Detail from "../../components/Petition/Detail"
+import Timeline from "../../components/Petition/TimeLine"
+import Pagination from "@mui/material/Pagination"
+import Reject from "../../components/Petition/Reject"
+import EditResult from "../../components/Petition/EditResult"
 
 const StyledBox = styled(Box)(({theme}) => ({
  display: "flex",
@@ -33,14 +39,11 @@ const Manage = () => {
 
  const listStatus = [
   {name: "Tất cả", icon: "", value: "", total: ""},
-  {name: "Chờ xử lý", icon: "icon-bold-clock", value: 1, total: 10},
-  {name: "Đang xử lý", icon: "icon-bold-clock", value: 2, total: 10},
-  {name: "Sắp đến hạn", icon: "icon-bold-clock", value: 3, total: 10},
-  {name: "Chờ bổ sung thông tin", icon: "icon-bold-clock", value: 4, total: 10},
-  {name: "Chờ phê duyệt", icon: "icon-bold-clock", value: 5, total: 10},
+  {name: "Đang xử lý", icon: "icon-bold-clock", value: 1, total: 10},
+  {name: "Sắp đến hạn", icon: "icon-bold-clock", value: 2, total: 10},
+  {name: "Chờ xử lý", icon: "icon-bold-clock", value: 3, total: 10},
+  {name: "Chờ duyệt kết quả", icon: "icon-bold-clock", value: 4, total: 10},
   {name: "Đã xử lý", icon: "icon-bold-verify", value: 6, total: 10},
-  {name: "Phản ánh trùng", icon: "icon-bold-verify", value: 6, total: 10},
-  {name: "Từ chối tiếp nhận", icon: "icon-bold-verify", value: 6, total: 10},
  ]
 
  useEffect(() => {}, [])
@@ -58,11 +61,11 @@ const Manage = () => {
     </Breadcrumbs>
    </Box>
 
-   <Box sx={{py: 1.5, px: 2, mt: 2}}>
+   <Box sx={{px: 2, mt: 1}}>
     <Stack direction='row' spacing={6} sx={{justifyContent: "space-between", alignItems: "center"}}>
      <Stack direction='row' spacing={2} sx={{justifyContent: "flex-start", alignItems: "center"}}>
       <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-       Xử lý phản ánh{" "}
+       Xử lý phản ánh
       </Typography>
      </Stack>
      <Search
@@ -153,7 +156,106 @@ const Manage = () => {
     <Divider sx={{borderColor: "#CCCFD3", margin: "16px 0", height: "2px"}} />
    </Box>
 
-   <Box sx={{px: 2, display: "flex", flexDirection: "column", gap: 1, justifyContent: "center", alignItems: "center"}} mt={2}></Box>
+   <Box sx={{px: 2, display: "flex", justifyContent: "space-between", alignItems: "start", gap: 2}}>
+    <Box sx={{background: "#F6F5FC", border: "1px solid #CCCFD3", borderRadius: "8px", width: "35%", display: "flex", height: "600px", overflowY: "auto"}} flexDirection={"column"} gap={2}>
+     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, i) => (
+      <ItemList index={i} />
+     ))}
+    </Box>
+    <Box
+     sx={{
+      background: "#FFF",
+      border: "1px solid #007CFE",
+      borderRadius: "8px",
+      width: "64%",
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "start",
+      height: "600px",
+      overflowY: "auto",
+     }}
+    >
+     <Box sx={{width: "70%", borderRight: "1px solid #CCCFD3"}}>
+      <Detail />
+     </Box>
+     <Box sx={{width: "30%"}}>
+      <Timeline />
+     </Box>
+    </Box>
+   </Box>
+   <AppBar position='sticky' color='primary' sx={{top: "auto", bottom: 0, boxShadow: "0px -5px 4px 0px #7E7E7E26", background: "#FFF"}}>
+    <Box sx={{p: 2, display: "flex", justifyContent: "space-between", alignItems: "start", gap: 2}}>
+     <Box sx={{width: "35%", textAlign: "center"}}>{/* <Pagination count={10} color='primary' /> */}</Box>
+
+     <Box
+      sx={{
+       width: "64%",
+       display: "flex",
+       alignItems: "center",
+       justifyContent: "end",
+       gap: 2,
+      }}
+     >
+      <Reject>
+       <Button
+        variant='contained'
+        size='large'
+        sx={{
+         width: "180px",
+         background: "#FFE2E2",
+         textTransform: "inherit",
+         color: "#D30500",
+         "&:hover": {
+          backgroundColor: "#FFE2E2",
+          color: "#D30500",
+         },
+        }}
+       >
+        Từ chối phản ánh
+       </Button>
+      </Reject>
+
+      <Button
+       variant='contained'
+       size='large'
+       sx={{
+        width: "180px",
+        background: "#FFF",
+        textTransform: "inherit",
+        color: "#007CFE",
+        border: "1px solid #007CFE",
+        "&:hover": {
+         backgroundColor: "#FFF",
+         color: "#007CFE",
+        },
+       }}
+      >
+       Báo trùng
+      </Button>
+      <Button
+       variant='contained'
+       size='large'
+       sx={{
+        width: "180px",
+        background: "#E5F1FF",
+        textTransform: "inherit",
+        color: "#007CFE",
+        "&:hover": {
+         backgroundColor: "#E5F1FF",
+         color: "#007CFE",
+        },
+       }}
+      >
+       Phân phối xử lý
+      </Button>
+      <EditResult>
+       <Button onClick={() => {}} variant='contained' size='large' sx={{width: "180px", background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}>
+        Tiếp nhận xử lý
+       </Button>
+      </EditResult>
+     </Box>
+    </Box>
+   </AppBar>
   </Fragment>
  )
 }
