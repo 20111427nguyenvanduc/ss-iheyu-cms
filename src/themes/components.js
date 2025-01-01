@@ -17,15 +17,15 @@ export default function themeTypography(theme) {
     MuiButtonBase: {
       styleOverrides: {
         root: {
-          borderRadius: "16px",
+          borderRadius: "12px",
           "& fieldset": {
-            borderRadius: "16px",
+            borderRadius: "12px",
           },
           "&:hover fieldset": {
-            borderRadius: "16px",
+            borderRadius: "12px",
           },
           "&.Mui-focused fieldset": {
-            borderRadius: "16px",
+            borderRadius: "12px",
           },
         },
       },
@@ -39,6 +39,7 @@ export default function themeTypography(theme) {
     },
     MuiTextField: {
       styleOverrides: {
+        borderRadius: "16px",
         root: {
           borderRadius: "16px",
           "& fieldset": {
