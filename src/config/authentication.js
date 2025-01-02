@@ -27,17 +27,8 @@ passport.use(
   })
 );
 
-passport.serializeUser((user, done) => done(null, { user }));
+passport.serializeUser((user, done) => done(null, user));
 
-passport.deserializeUser(({ user }, done) => {
-  //  const url = `${IHEYU_SERVICE}/api/v1.0/admin/get`
-  //  apiPost(url, {}, (err, result) => {
-  //   const data = _.get(result, "data")
-  //   if (!data.token) {
-  //     data.token = user.token
-  //   }
+passport.deserializeUser((user, done) => {
   return done(null, user);
-  //  },{
-  //     token: user.token
-  //  })
 });

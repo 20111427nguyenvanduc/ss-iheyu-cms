@@ -1,19 +1,20 @@
 import axios from "./axios";
 import { MEDIA_URL } from "../config";
-//
-// const fs = require('fs');
+
 export const uploadFile = (body = {}) => {
   const formData = new FormData();
-  formData.append("folder", body.folder || "hey-care");
+  formData.append("folder", body.folder || "iHaiPhong");
   formData.append("resize", "true");
   formData.append("fileUpload", body.file, body.filename);
-  return axios.post(MEDIA_URL + "/api/v1.0/upload-single", formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  var config = {
+    method: "post",
+    url: "/media/upload-single",
+    headers: { "Content-Type": "multipart/form-data" },
+    data: formData,
+  };
+  return axios(config);
 };
 
 export const deleteFile = (body = {}) => {
-  return axios.post(`${MEDIA_URL}/api/v1.0/decline-file`, body);
+  return axios.post(`/media/delete-file`, body);
 };
