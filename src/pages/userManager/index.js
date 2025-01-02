@@ -114,7 +114,7 @@ const Manage = () => {
             </Button>
           </Link>
         </Stack>
-        <Stack justifyContent="space-between" gap={1} fullWidth mt={2} direction="row">
+        <Stack justifyContent="space-between" gap={1} mt={2} direction="row">
           <FilterOptions filter={filter} setFilter={setFilter} />
           <Search
             placeholder={"Tìm kiếm"}

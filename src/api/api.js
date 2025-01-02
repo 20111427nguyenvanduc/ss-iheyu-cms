@@ -47,7 +47,7 @@ const authPost = (url, req, res) => {
   };
   request(options, (error, response, body) => {
     try {
-      let bodyData = typeof body !== "object" ? JSON.parse(body) : body;
+      let bodyData = typeof body !== "object" ? JSON.parse(body) : body ? body : { code: 300 };
       if (_.get(bodyData, "code") === 1993) {
         req.logout();
       }
@@ -68,7 +68,7 @@ const postFromData = (url, req, res) => {
   let file = _.get(req, "files.fileUpload.path", "");
   let formData = {
     ...req.body,
-    folder: req.body.folder || "iheyu",
+    folder: req.body.folder || "test2",
     fileUpload: {
       value: fs.readFileSync(file),
       options: {
@@ -92,7 +92,7 @@ const postFromData = (url, req, res) => {
 
   request(options, (error, response, body) => {
     try {
-      let bodyData = typeof body !== "object" ? JSON.parse(body) : body;
+      let bodyData = typeof body !== "object" ? JSON.parse(body) : body ? body : { code: 300 };
       if (_.get(bodyData, "code") === 1993) {
         req.logout();
       }

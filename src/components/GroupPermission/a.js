@@ -6,11 +6,24 @@ import moment from "moment";
 import _ from "lodash";
 import ms from "ms";
 import toastr from "toastr";
-import { Button, Typography, Box, TextField, FormControlLabel, Checkbox, Grid } from "@mui/material";
+import {
+  Button,
+  Typography,
+  Box,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Grid,
+} from "@mui/material";
 import { list as listGroupPermission } from "../../services/groupPermission";
 import LoadingSkeleton from "../../ui-component/loading/LoadingSkeleton";
 
-const FilterAddPermission = ({ permissions, setPermissions, groupPermissions, setGroupPermissions }) => {
+const FilterAddPermission = ({
+  permissions,
+  setPermissions,
+  groupPermissions,
+  setGroupPermissions,
+}) => {
   const [dataGroup, setDataGroup] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -82,9 +95,18 @@ const FilterAddPermission = ({ permissions, setPermissions, groupPermissions, se
               <FormControlLabel
                 sx={{ width: "100%", py: 1 }}
                 key={group._id}
-                control={<Checkbox value={group._id} onChange={() => handleCheckGroupPermission(group)} checked={groupPermissions.includes(group._id)} />}
+                control={
+                  <Checkbox
+                    value={group._id}
+                    onChange={() => handleCheckGroupPermission(group)}
+                    checked={groupPermissions.includes(group._id)}
+                  />
+                }
                 label={
-                  <Typography variant="p" sx={{ fontSize: "20px", color: "#2E3236", fontWeight: 700 }}>
+                  <Typography
+                    variant="p"
+                    sx={{ fontSize: "20px", color: "#2E3236", fontWeight: 700 }}
+                  >
                     {group.name}
                   </Typography>
                 }
@@ -92,9 +114,19 @@ const FilterAddPermission = ({ permissions, setPermissions, groupPermissions, se
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                   {group.permissions && group.permissions.length
-                    ? group.permissions.map((permission, i) => (
-                        <Grid item xs={3} key={i}>
-                          <FormControlLabel key={permission.id} control={<Checkbox value={permission._id} onChange={() => handleCheckPermission(permission._id, group)} checked={permissions.includes(permission._id)} />} label={permission.name} />
+                    ? group.permissions.map((permission, index) => (
+                        <Grid item xs={3} key={index}>
+                          <FormControlLabel
+                            key={permission.id}
+                            control={
+                              <Checkbox
+                                value={permission._id}
+                                onChange={() => handleCheckPermission(permission._id, group)}
+                                checked={permissions.includes(permission._id)}
+                              />
+                            }
+                            label={permission.name}
+                          />
                         </Grid>
                       ))
                     : null}

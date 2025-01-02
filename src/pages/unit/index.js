@@ -100,7 +100,7 @@ const Manage = ({ id }) => {
   const [unitCurrent, setUnitCurrent] = useState(null);
 
   const [listDataPosition, setListDataPosition] = useState([]);
-
+  //Đoạn này đang làm memory leak cần xử lý bằng 1 func async
   useEffect(() => {
     if (id) {
       getDetailUnit();
@@ -115,6 +115,7 @@ const Manage = ({ id }) => {
       getListPosition();
     }
   }, [unitCurrent]);
+  //Đoạn này đang làm memory leak
 
   const getParentCurrent = () => {
     list({}).then((res) => {
@@ -259,7 +260,7 @@ const Manage = ({ id }) => {
               {listData.map((item, i) => {
                 return (
                   <Box
-                    //   onClick={() => setUnitCurrent(item)}
+                    key={i}
                     sx={{
                       justifyContent: "center",
                       alignItems: "center",
@@ -342,7 +343,7 @@ const Manage = ({ id }) => {
 
               {listDataPosition.map((item, i) => {
                 return (
-                  <Link underline="hover" key="1" color="#2E3236" to={"/position/" + item._id}>
+                  <Link underline="hover" key={i} color="#2E3236" to={"/position/" + item._id}>
                     <Box
                       sx={{
                         justifyContent: "center",

@@ -1,9 +1,8 @@
 import axios from "./axios";
-import { MEDIA_URL } from "../config";
 
 export const uploadFile = (body = {}) => {
   const formData = new FormData();
-  formData.append("folder", body.folder || "iHaiPhong");
+  formData.append("folder", body.folder || "test2");
   formData.append("resize", "true");
   formData.append("fileUpload", body.file, body.filename);
   var config = {

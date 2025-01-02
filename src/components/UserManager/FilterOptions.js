@@ -214,7 +214,7 @@ export default function FilterOptions({ filter, setFilter }) {
             Bộ lọc tìm kiếm
           </Typography>{" "}
           <IconButton onClick={toggleDrawer}>
-            <CloseIcon onClick={toggleDrawer} />
+            <CloseIcon />
           </IconButton>
         </Box>
         <Divider />

@@ -147,6 +147,7 @@ const AddPermissionToPosition = ({
         <DialogContent dividers>
           {listCategoryPermission.map((cat, index) => (
             <Box
+              key={index}
               sx={{ background: "#F6F5FC", padding: "16px", borderRadius: "16px" }}
               mt={index ? 2 : 1}
             >

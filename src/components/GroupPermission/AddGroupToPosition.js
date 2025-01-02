@@ -172,6 +172,7 @@ const AddGroupToPosition = ({
                         ? _.get(group, "permissions", []).map((group, i) => {
                             return (
                               <Stack
+                                key={i}
                                 direction="row"
                                 spacing={2}
                                 sx={{ justifyContent: "flex-start", alignItems: "center", gap: 2 }}

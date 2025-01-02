@@ -275,7 +275,7 @@ const Manage = () => {
                   control={
                     <IOSSwitch
                       sx={{ m: 1 }}
-                      checked={item.status}
+                      checked={item.status ? true : false}
                       onChange={(e) => handleChange(e, item)}
                     />
                   }
