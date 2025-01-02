@@ -37,7 +37,8 @@ const config = {
     filename: isDebug ? "[name].js" : "[name].[chunkhash:8].js",
     chunkFilename: isDebug ? "[name].chunk.js" : "[name].[chunkhash:8].chunk.js",
     // Point sourcemap entries to original disk location (format as URL on Windows)
-    devtoolModuleFilenameTemplate: (info) => path.resolve(info.absoluteResourcePath).replace(/\\/g, "/"),
+    devtoolModuleFilenameTemplate: (info) =>
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, "/"),
   },
 
   resolve: {
@@ -304,7 +305,13 @@ const clientConfig = {
           const fileFilter = (file) => !file.endsWith(".map");
           const addPath = (file) => manifest.getPublicPath(file);
           const chunkFiles = stats.compilation.chunkGroups.reduce((acc, c) => {
-            acc[c.name] = [...(acc[c.name] || []), ...c.chunks.reduce((files, cc) => [...files, ...cc.files.filter(fileFilter).map(addPath)], [])];
+            acc[c.name] = [
+              ...(acc[c.name] || []),
+              ...c.chunks.reduce(
+                (files, cc) => [...files, ...cc.files.filter(fileFilter).map(addPath)],
+                []
+              ),
+            ];
             return acc;
           }, Object.create(null));
           fs.writeFileSync(chunkFileName, JSON.stringify(chunkFiles, null, 2));
@@ -406,7 +413,11 @@ const serverConfig = {
       }
 
       // Override paths to static assets
-      if (rule.loader === "file-loader" || rule.loader === "url-loader" || rule.loader === "svg-url-loader") {
+      if (
+        rule.loader === "file-loader" ||
+        rule.loader === "url-loader" ||
+        rule.loader === "svg-url-loader"
+      ) {
         return {
           ...rule,
           options: {

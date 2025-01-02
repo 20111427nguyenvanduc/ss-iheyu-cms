@@ -9,6 +9,7 @@ import CategoryHandle from "./category";
 import CategoryPermissionHandle from "./categoryPermission";
 import PetitionHandle from "./petition";
 import MediaHandle from "./media";
+import ServicesHandle from "./services";
 
 //authenticate
 app.post("/login", AuthenticateHandle.login);
@@ -68,13 +69,18 @@ app.post("/admin/category/inactive", CategoryHandle.inactive);
 app.post("/admin/category-permission/list", CategoryPermissionHandle.list);
 
 //petition
-app.post("/petition/create", PetitionHandle.create);
-app.post("/petition/list", PetitionHandle.list);
-app.post("/petition/list-category", PetitionHandle.listCategory);
-app.post("/petition/list-community", PetitionHandle.listCommunity);
-app.post("/petition/update", PetitionHandle.update);
-app.post("/petition/get", PetitionHandle.get);
+app.post("/admin/petition/create", PetitionHandle.create);
+app.post("/admin/petition/list", PetitionHandle.list);
+app.post("/admin/petition/list-category", PetitionHandle.listCategory);
+app.post("/admin/petition/list-community", PetitionHandle.listCommunity);
+app.post("/admin/petition/update", PetitionHandle.update);
+app.post("/admin/petition/get", PetitionHandle.get);
 
 //media
 app.post("/media/upload-single", multipartMiddleware, MediaHandle.uploadSingle);
 app.post("/media/decline-file", MediaHandle.declineFile);
+
+//services
+app.post("/admin/services/list-category", ServicesHandle.listCategory);
+app.post("/admin/services/list", ServicesHandle.listService);
+app.post("/admin/services/list-service-children", ServicesHandle.listServiceChildren);

@@ -11,19 +11,11 @@ const dashboard = {
   type: "group",
   children: [
     {
-      id: "services",
-      title: "Quản lý tiện ích",
-      type: "collapse",
+      id: "digital-utilities",
+      title: "Quản lý ứng dụng",
+      type: "item",
+      url: "/digital-utilities",
       icon: "/images/sidebar/icon-sidebar-tienich.png",
-      children: [
-        {
-          id: "services1",
-          title: "Tiện ích 1",
-          type: "item",
-          url: "/",
-          icon: "/images/sidebar/icon-sidebar-danhsach.png",
-        },
-      ],
     },
   ],
 };

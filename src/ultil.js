@@ -7,7 +7,6 @@ const CryptoJS = require("crypto-js");
 // Khóa và IV cho AES
 const key = CryptoJS.enc.Utf8.parse("12345678901234567890123456789012"); // 32 bytes
 const iv = CryptoJS.enc.Utf8.parse("1234567890123456"); // 16 bytes
-console.log({ key, iv });
 
 export const inputFormat = (input, format = ".000 đ") => {
   if (!input || typeof input !== "string") return "";
