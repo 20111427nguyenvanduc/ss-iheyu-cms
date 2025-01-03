@@ -19,7 +19,7 @@ import DrawerSearch from "../../components/Petition/DrawerSearch"
 import BtnTuChoiPhanAnh from "../../components/PetitionUnitBtn/BtnTuChoiPhanAnh"
 import BtnBaoTrung from "../../components/PetitionUnitBtn/BtnBaoTrung"
 import BtnChuyenXuLy from "../../components/PetitionUnitBtn/BtnChuyenXuLy"
-import BtnTuChoiXuLy from "../../components/PetitionUnitBtn/BtnTuChoiXuly"
+import BtnTuChoiXuLy from "../../components/PetitionUnitBtn/BtnTuChoiXuLy"
 
 import {list as listForUnit} from "../../services/petition"
 
