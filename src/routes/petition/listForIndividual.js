@@ -1,8 +1,8 @@
 import React from "react";
-import Component from "../../pages/petition/process"
+import Component from "../../pages/petition/listForIndividual"
 
-const title = "Xử lý phản ánh";
-const chunks = ["petition-process"];
+const title = "Danh sách xử lý";
+const chunks = ["list-for-individual"];
 
 function action(props) {
   return {

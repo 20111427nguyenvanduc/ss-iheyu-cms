@@ -6,7 +6,7 @@ import TabPanel from "@mui/lab/TabPanel"
 import {Box, Typography} from "@mui/material"
 import Info from "./Info"
 
-export default function Detail() {
+export default function Detail({dataSelected}) {
  const [value, setValue] = React.useState("1")
 
  const handleChange = (event, newValue) => {
@@ -21,22 +21,22 @@ export default function Detail() {
       onChange={handleChange}
       TabIndicatorProps={{
        style: {
-        backgroundColor: "#007CFE", // Màu của indicator
-        height: "2px", // Độ dày của indicator
+        backgroundColor: "#007CFE",
+        height: "2px",
        },
       }}
       sx={{
        "& .MuiTabs-flexContainer": {
-        gap: "48px", // Khoảng cách giữa các tab
+        gap: "48px",
        },
        "& .MuiTab-root": {
-        color: "#A1A7AE", // Màu không active
+        color: "#A1A7AE",
         fontWeight: 500,
         textTransform: "none",
         padding: "16px",
        },
        "& .Mui-selected": {
-        color: "#007CFE", // Màu active
+        color: "#007CFE",
         fontWeight: 600,
        },
       }}
@@ -67,8 +67,8 @@ export default function Detail() {
       />
      </TabList>
     </Box>
-    <TabPanel value='1' sx={{padding:'16px'}}>
-     <Info />
+    <TabPanel value='1' sx={{padding: "16px"}}>
+     <Info data={dataSelected} />
     </TabPanel>
     <TabPanel value='2'>Kết quả xử lý</TabPanel>
     <TabPanel value='3'>Bình luận</TabPanel>

@@ -6,13 +6,13 @@ import moment from "moment"
 import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
-import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField, Autocomplete, InputAdornment} from "@mui/material"
+import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField, Autocomplete, InputAdornment, MenuItem} from "@mui/material"
 import {create as createPosition, update as updatePosition} from "../../services/position"
 
 const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = null}) => {
  const [open, setOpen] = React.useState(false)
  const [name, setName] = useState("")
- const [icon, setIcon] = useState("https://cdn.haiphong.gov.vn/gov-hpg/upload/haiphong/product/2021/07-2021/So-Giao-duc-va-Dao-tao-12885-637620339902795980.jpg")
+ const [role, setRole] = useState("staff")
 
  useEffect(() => {
   if (open) {
@@ -43,7 +43,7 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
   }
 
   try {
-   createPosition({name, unit: _.get(unitCurrent, "_id"), permissions: [], groupPermissions: []}).then((res) => {
+   createPosition({name, unit: _.get(unitCurrent, "_id"), permissions: [], groupPermissions: [], role}).then((res) => {
     if (_.get(res, "code") === 200) {
      handleClose()
      onClose()
@@ -62,7 +62,7 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
    return false
   }
   try {
-   updatePosition({_id: _.get(detail, "_id"), name, unit: _.get(unitCurrent, "_id"), permissions: _.get(detail, "permissions"), groupPermissions: _.get(detail, "groupPermissions")}).then((res) => {
+   updatePosition({_id: _.get(detail, "_id"), name, unit: _.get(unitCurrent, "_id"), permissions: _.get(detail, "permissions"), groupPermissions: _.get(detail, "groupPermissions"), role}).then((res) => {
     if (_.get(res, "code") === 200) {
      handleClose()
      onClose()
@@ -82,7 +82,7 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
      <Button
       variant='contained'
       size='large'
-      sx={{padding:'12px 32px', background: "#00BF30", borderRadius: "12px", color: "#FFF", textTransform: "inherit", "&:hover": {backgroundColor: "#00BF30", color: "#FFF"}}}
+      sx={{padding: "12px 32px", background: "#00BF30", borderRadius: "12px", color: "#FFF", textTransform: "inherit", "&:hover": {backgroundColor: "#00BF30", color: "#FFF"}}}
       startIcon={<i className='icon-linear-briefcase' />}
      >
       Thêm chức vụ mới
@@ -117,6 +117,31 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
          sx: {borderRadius: "16px"},
         }}
        />
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+        Vai trò
+       </Typography>
+       <TextField
+        fullWidth
+        select
+        sx={{
+         "& .MuiSelect-select span::before": {
+          content: "'Chọn vai trò'",
+         },
+        }}
+        variant='outlined'
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+        inputProps={{name: "level", ariallabel: "level"}}
+       >
+        {[
+         {label: "Lãnh đạo", code: "leader"},
+         {label: "Nhân viên", code: "staff"},
+        ].map((option) => (
+         <MenuItem key={option.code} value={option.code}>
+          {option.label}
+         </MenuItem>
+        ))}
+       </TextField>
        <Button
         onClick={() => {
          if (detail) {
