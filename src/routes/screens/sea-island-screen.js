@@ -1,9 +1,9 @@
 import React from 'react';
-import Component from '../../../pages/digitalUtilities/screens/medical-screen';
+import Component from '../../pages/digitalUtilities/screens/sea-island-screen';
 import _ from 'lodash';
-
-const title = 'Y Tế';
-const chunks = ['medical-screen'];
+import CONSTANT from '../../const';
+const title = CONSTANT.SCREEN_TITLE['sea-island-screen'];
+const chunks = ['sea-island-screen'];
 
 function action(props) {
   return {

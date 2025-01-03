@@ -1,11 +1,33 @@
 export default {
- CODE: {
-  SUCCESS: 200,
-  FAIL: 300,
-  WRONG_PARAMS: 400,
-  ACCESS_DENINED: 403,
-  SYSTEM_ERROR: 500,
-  TOKEN_EXPIRE: 1993,
-  ORDER_EXPIRE: 1999,
- }
-}
+  CODE: {
+    SUCCESS: 200,
+    FAIL: 300,
+    WRONG_PARAMS: 400,
+    ACCESS_DENINED: 403,
+    SYSTEM_ERROR: 500,
+    TOKEN_EXPIRE: 1993,
+    ORDER_EXPIRE: 1999,
+  },
+  SCREEN_TITLE: {
+    'administrative-agency-screen': 'CQ hành chính',
+    'agriculture-screen': 'Nông nghiệp',
+    'chat-bot-screen': 'Trợ lý công dân',
+    'education-screen': 'Giáo dục',
+    'entertainment-screen': 'Giải trí',
+    'environmental-resources-screen': 'Tài nguyên - môi trường',
+    'errands-order-create-screen': 'Đăng ký tiếp dân',
+    'hotel-list-screen': 'Khách sạn',
+    'instructions-for-use-screen': 'Hướng dẫn sử dụng',
+    'medical-screen': 'Y tế',
+    'petition-screen': 'Phản ánh kiến nghị',
+    'pharmacy-location-screen': 'Hiệu thuốc',
+    'propagate-screen': 'Truyền thông tuyên truyền',
+    'restaurant-list-screen': 'Nhà hàng',
+    'sea-island-screen': 'Biển đảo',
+    'traffic-screen': 'Giao thông',
+    'travel-list-screen': 'Du lịch',
+    'tricks-warning-screen': 'Cảnh báo thủ đoạn',
+    'warning-information-screen': 'Thông tin cảnh báo',
+    'webview-screen': 'Báo chí',
+  },
+};

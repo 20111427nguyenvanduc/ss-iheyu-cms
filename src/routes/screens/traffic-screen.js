@@ -1,9 +1,9 @@
 import React from 'react';
-import Component from '../../../pages/digitalUtilities/screens/administrative-agency-screen';
+import Component from '../../pages/digitalUtilities/screens/traffic-screen';
 import _ from 'lodash';
-
-const title = 'Y Tế';
-const chunks = ['administrative-agency-screen'];
+import CONSTANT from '../../const';
+const title = CONSTANT.SCREEN_TITLE['traffic-screen'];
+const chunks = ['traffic-screen'];
 
 function action(props) {
   return {

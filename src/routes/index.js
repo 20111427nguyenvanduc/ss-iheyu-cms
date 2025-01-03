@@ -60,12 +60,12 @@ const routes = {
       load: () => import(/* webpackChunkName: 'forgot-password' */ './forgot-password'),
     },
     {
-      path: '/group-permission/:id',
-      load: () => import(/* webpackChunkName: 'group-permission-detail' */ './group-permission/detail'),
-    },
-    {
       path: '/group-permission',
       load: () => import(/* webpackChunkName: 'group-permission' */ './group-permission'),
+    },
+    {
+      path: '/group-permission/:id',
+      load: () => import(/* webpackChunkName: 'group-permission-detail' */ './group-permission/detail'),
     },
     {
       path: '/permissions',
@@ -73,16 +73,21 @@ const routes = {
     },
     {
       path: '/medical-screen/:id',
-      load: () => import(/* webpackChunkName: 'app-manager-detail' */ './digitalUtilities/screens/medical-screen'),
-    },
-    {
-      path: '/app-manager/:id',
-      load: () => import(/* webpackChunkName: 'app-manager-detail' */ './digitalUtilities/detail'),
+      load: () => import(/* webpackChunkName: 'medical-screen' */ './screens/medical-screen'),
     },
     {
       path: '/app-manager',
       load: () => import(/* webpackChunkName: 'app-manager' */ './digitalUtilities'),
     },
+    {
+      path: '/app-manager/:serviceCategory',
+      load: () => import(/* webpackChunkName: 'app-manager-detail' */ './digitalUtilities/detail'),
+    },
+    {
+      path: '/app-manager/:serviceCategory/:service',
+      load: () => import(/* webpackChunkName: 'app-manager-detail-children' */ './digitalUtilities/detailChidren'),
+    },
+
     {
       path: '(.*)',
       load: () => import(/* webpackChunkName: 'not-found' */ './not-found'),
