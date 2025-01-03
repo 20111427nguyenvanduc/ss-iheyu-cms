@@ -53,14 +53,14 @@ const EditCategory = ({children, onClose = () => {}}) => {
    <Dialog fullWidth={true} maxWidth={"xs"} open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
     <DialogTitle>
      <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-      Chỉnh sửa danh mục
+      Chỉnh sửa lĩnh vực
      </Typography>
     </DialogTitle>
     <DialogContent>
      <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px'>
       <Box sx={{width: "100%"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
        <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
-        Danh mục
+        Lĩnh vực
        </Typography>
        <Autocomplete
         fullWidth
@@ -74,7 +74,7 @@ const EditCategory = ({children, onClose = () => {}}) => {
          <TextField
           {...params}
           fullWidth
-          placeholder='Chọn danh mục'
+          placeholder='Chọn lĩnh vực'
           variant='outlined'
           sx={{
            "& .MuiOutlinedInput-root": {

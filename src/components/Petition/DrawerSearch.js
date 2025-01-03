@@ -160,98 +160,13 @@ export default function FilterOptions({filter, setFilter}) {
     />
    </Box>
 
-   <Divider sx={{my: "26px"}} />
-   <Grid container spacing={2} sx={{p: "0px 32px 0px 16px"}}>
-    <Grid item xs={12}>
-     <Typography variant='h5' sx={{fontSize: "18px", fontWeight: 400, mb: 1}}>
-      Giới tính
-     </Typography>
-     <Box sx={{display: "flex", gap: 2}}>
-      <FormGroup sx={{width: "50%"}}>
-       <FormControlLabel
-        control={<Checkbox checked={filterState.gender === "male"} onChange={(e) => updateFilterState({gender: filterState.gender === "male" ? "" : "male"})} />}
-        label={
-         <Typography variant='h5' sx={{fontSize: "16px", color: "#2E3236"}}>
-          Nam
-         </Typography>
-        }
-       />
-      </FormGroup>
-      <FormGroup sx={{width: "50%"}}>
-       <FormControlLabel
-        control={<Checkbox checked={filterState.gender === "female"} onChange={(e) => updateFilterState({gender: filterState.gender === "female" ? "" : "female"})} />}
-        label={
-         <Typography variant='h5' sx={{fontSize: "16px", color: "#2E3236"}}>
-          Nữ
-         </Typography>
-        }
-       />
-      </FormGroup>
-     </Box>
-    </Grid>
-    <Grid item xs={6}>
-     <Typography variant='h5' sx={{fontSize: "18px", fontWeight: 400, mb: 1}}>
-      Trạng thái
-     </Typography>
-     <TextField
-      fullWidth
-      select
-      sx={{
-       "& .MuiSelect-select span::before": {
-        content: "'Chọn trạng thái'",
-       },
-      }}
-      variant='outlined'
-      value={_.get(filterState, "active", "")}
-      onChange={(e) => updateFilterState({active: e.target.value})}
-      inputProps={{name: "active", ariallabel: "active"}}
-     >
-      {[
-       {label: "Đã kích hoạt", code: 1},
-       {label: "Chưa kích hoạt", code: 0},
-       {label: "Tất cả", code: ""},
-      ].map((option) => (
-       <MenuItem key={option.code} value={option.code}>
-        {option.label}
-       </MenuItem>
-      ))}
-     </TextField>
-    </Grid>
-    <Grid item xs={6}>
-     <Typography variant='h5' sx={{fontSize: "18px", fontWeight: 400, mb: 1}}>
-      Thời gian tạo
-     </Typography>
-     <TextField
-      fullWidth
-      select
-      sx={{
-       "& .MuiSelect-select span::before": {
-        content: "'Chọn trạng thái'",
-       },
-      }}
-      variant='outlined'
-      value={_.get(filterState, "sort", "")}
-      onChange={(e) => updateFilterState({sort: e.target.value})}
-      inputProps={{name: "sort", ariallabel: "sort"}}
-     >
-      {[
-       {label: "Mới nhất", code: 1},
-       {label: "Cũ nhất", code: 0},
-      ].map((option) => (
-       <MenuItem key={option.code} value={option.code}>
-        {option.label}
-       </MenuItem>
-      ))}
-     </TextField>
-    </Grid>
-   </Grid>
    <Box position='absolute' sx={{top: "auto", bottom: 0, p: "16px", left: 0, right: 0}}>
     {filter.isFilter ? (
-     <Button variant='outlined' fullWidth onClick={deleteFilter}>
+     <Button size='large' variant='outlined' fullWidth onClick={deleteFilter}>
       Xóa bộ lọc
      </Button>
     ) : (
-     <Button variant='contained' fullWidth onClick={confirmFilter}>
+     <Button size='large' variant='contained' fullWidth onClick={confirmFilter}>
       Tạo bộ lọc
      </Button>
     )}
@@ -261,8 +176,8 @@ export default function FilterOptions({filter, setFilter}) {
 
  return (
   <Fragment>
-   <Button aria-label='Bộ lọc' variant={filter.isFilter ? "contained" : "outlined"} onClick={toggleDrawer} startIcon={<i className='icon-linear-filter' />}>
-    {filter.isFilter ? "Bọ lọc đang dùng" : "Bộ lọc nâng cao"}
+   <Button sx={{width: "125px"}} aria-label='Bộ lọc' variant={filter.isFilter ? "contained" : "outlined"} onClick={toggleDrawer} startIcon={<i className='icon-linear-filter' />}>
+    {filter.isFilter ? "Bộ lọc" : "Bộ lọc"}
    </Button>
    <Drawer anchor='left' open={isOpen} onClose={toggleDrawer}>
     <Box sx={{display: "flex", alignItems: "center", padding: "16px", gap: 2}}>
