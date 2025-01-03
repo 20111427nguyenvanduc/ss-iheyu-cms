@@ -1,8 +1,8 @@
 import React from 'react';
-import Component from '../../../pages/digitalUtilities/screens/medical-screen';
+import Component from '../../pages/digitalUtilities/screens/medical-screen';
 import _ from 'lodash';
-
-const title = 'Y Tế';
+import CONSTANT from '../../const';
+const title = CONSTANT.SCREEN_TITLE['medical-screen'];
 const chunks = ['medical-screen'];
 
 function action(props) {

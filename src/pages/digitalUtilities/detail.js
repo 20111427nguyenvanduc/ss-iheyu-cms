@@ -201,6 +201,7 @@ const Activities = () => {
 };
 
 const ListUltilities = ({ items = [], setList, backBtn }) => {
+  const { pathname } = history.location;
   const [action, setAction] = useState('edit'); // action: [edit, hide, ordering]
   const [editUtility, setEditUtility] = useState();
   const toggleAction = (act) => {
@@ -236,13 +237,12 @@ const ListUltilities = ({ items = [], setList, backBtn }) => {
   };
 
   const onClickService = (item) => {
-    const { link, _id } = item;
-    history.push(`/${link}/${_id}`);
+    const { _id } = item;
+    history.push(`/${pathname}/${_id}`);
   };
 
   const isShowHide = action === 'hide';
   const isOrdered = action === 'ordering';
-  items.map((item) => console.log({ [item.link]: item.name }));
 
   return (
     <Fragment>
@@ -312,7 +312,7 @@ const ListUltilities = ({ items = [], setList, backBtn }) => {
   );
 };
 
-const UnitContainer = ({ id, backBtn }) => {
+const UnitContainer = ({ serviceCategory, backBtn }) => {
   const [list, setList] = useState([]);
   const [info, setInfo] = useState({});
   const getList = (serviceCategory) => {
@@ -323,10 +323,10 @@ const UnitContainer = ({ id, backBtn }) => {
   };
 
   useEffect(() => {
-    if (id) {
-      getList(id);
+    if (serviceCategory) {
+      getList(serviceCategory);
     }
-  }, [id]);
+  }, [serviceCategory]);
 
   return (
     <Fragment>
