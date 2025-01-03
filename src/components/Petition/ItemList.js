@@ -41,8 +41,7 @@ const ItemList = ({children, dataSelected, data = {}, onSelectItem = () => {}}) 
       gap: 1,
      }}
     >
-     <img src='/images/priority/priority-1.png' style={{width: "16px"}} />
-
+     <img src={`/images/priority/priority-${_.get(data, "priority", 0)}.png`} style={{width: "16px"}} />
      {translateStatusJob(_.get(data, "statusJob"))}
     </Box>
    </Box>

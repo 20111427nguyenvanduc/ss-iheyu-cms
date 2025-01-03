@@ -8,21 +8,17 @@ import ms from "ms"
 import toastr from "toastr"
 import {Avatar, Box, Button, Chip, FormControlLabel, IconButton, Paper, Tooltip, Breadcrumbs, Typography, Stack, Switch, Grid, Divider, AppBar, Toolbar} from "@mui/material"
 import Link from "../../components/Link/Link"
-import DataTable, {createCell, createRows} from "../../ui-component/table/DataTable"
-import SearchHeader from "../../ui-component/search/SearchHeader"
-import AddEdit from "../../components/Category/AddEdit"
-import {list, inactive as inactive} from "../../services/category"
-import AlertDialogDelete from "../../ui-component/dialog/AlertDialog"
 import Search from "../../components/Shared/Search"
 import ItemList from "../../components/Petition/ItemList"
 import Detail from "../../components/Petition/Detail"
-import Timeline from "../../components/Petition/TimeLine"
-import Pagination from "@mui/material/Pagination"
-import Reject from "../../components/Petition/Reject"
-import EditResult from "../../components/Petition/EditResult"
+import TimelinePetition from "../../components/Petition/TimeLine"
 import DrawerSearch from "../../components/Petition/DrawerSearch"
-
-import {listForIndividual} from "../../services/petition"
+import BtnTuChoiPhanAnh from "../../components/PetitionIndividualBtn/BtnTuChoiPhanAnh"
+import BtnBaoTrung from "../../components/PetitionIndividualBtn/BtnBaoTrung"
+import BtnChuyenXuLy from "../../components/PetitionIndividualBtn/BtnChuyenXuLy"
+import BtnTuChoiXuLy from "../../components/PetitionIndividualBtn/BtnTuChoiXuLy"
+import BtnTiepNhanXuLy from "../../components/PetitionIndividualBtn/BtnTiepNhanXuLy"
+import {listForIndividual, countForIndividual} from "../../services/petition"
 
 const StyledBox = styled(Box)(({theme}) => ({
  display: "flex",
@@ -38,7 +34,15 @@ const ListForIndividual = () => {
  const {user, configs} = useSelector((state) => state)
  const {region, regions} = configs
  const [textSearch, setTextSearch] = useState("")
- const [tab, setTab] = useState("")
+ const [tab, setTab] = useState(0)
+
+ const [listStatus, setListStatus] = useState([
+  {name: "Chờ xử lý", icon: "icon-bold-clock", value: 0, total: 0},
+  {name: "Đang xử lý", icon: "icon-bold-clock", value: 1, total: 0},
+  {name: "Sắp/đã hết hạn", icon: "icon-bold-clock", value: 2, total: 0},
+  {name: "Chờ duyệt kết quả", icon: "icon-bold-clock", value: 3, total: 0},
+  {name: "Đã xử lý", icon: "icon-bold-verify", value: 4, total: 0},
+ ])
 
  const [filter, updatedFilter] = useState({
   page: 0,
@@ -59,13 +63,14 @@ const ListForIndividual = () => {
 
  useEffect(() => {
   getList()
- }, [])
+  getCount()
+ }, [tab])
 
  const getList = () => {
   listForIndividual({
    tab,
    limit: 10,
-   sort: -1,
+   sort: 1,
    page: 0,
   }).then((res) => {
    if (_.get(res, "code") === 200) {
@@ -76,14 +81,20 @@ const ListForIndividual = () => {
   })
  }
 
- const listStatus = [
-  {name: "Tất cả", icon: "", value: "", total: ""},
-  {name: "Chờ xử lý", icon: "icon-bold-clock", value: 0, total: 10},
-  {name: "Đang xử lý", icon: "icon-bold-clock", value: 1, total: 10},
-  {name: "Sắp/đã hết hạn", icon: "icon-bold-clock", value: 2, total: 10},
-  {name: "Chờ duyệt kết quả", icon: "icon-bold-clock", value: 3, total: 10},
-  {name: "Đã xử lý", icon: "icon-bold-verify", value: 4, total: 10},
- ]
+ const getCount = () => {
+  countForIndividual({}).then((res) => {
+   if (_.get(res, "code") === 200) {
+    let data = _.get(res, "data", [])
+    setListStatus((prevListStatus) =>
+     prevListStatus.map((item) => {
+      const statusValue = item.value
+      const total = data[statusValue] !== undefined ? data[statusValue] : item.total
+      return {...item, total}
+     }),
+    )
+   }
+  })
+ }
 
  return (
   <Fragment>
@@ -213,9 +224,10 @@ const ListForIndividual = () => {
    <Divider sx={{borderColor: "#CCCFD3", margin: "16px 0", height: "2px"}} />
 
    <Box sx={{px: 2, display: "flex", justifyContent: "space-between", alignItems: "start", gap: 2}}>
-    <Box sx={{background: "#F6F5FC", border: "1px solid #CCCFD3", borderRadius: "8px", width: "35%", display: "flex", height: "600px", overflowY: "auto"}} flexDirection={"column"} gap={2}>
+    <Box sx={{background: "#F6F5FC", border: "1px solid #CCCFD3", borderRadius: "8px", width: "35%", display: "flex", height: "700px", overflowY: "auto"}} flexDirection={"column"} gap={2}>
      {dataListForUnit.map((item, i) => (
       <ItemList
+       key={i}
        dataSelected={dataSelected}
        data={item}
        onSelectItem={() => {
@@ -233,88 +245,26 @@ const ListForIndividual = () => {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "start",
-      height: "600px",
+      height: "700px",
       overflowY: "auto",
      }}
     >
-     <Box sx={{width: "70%", borderRight: "1px solid #CCCFD3"}}>{dataSelected ? <Detail dataSelected={dataSelected} /> : null}</Box>
-
-     <Box sx={{width: "30%"}}>
-      <Timeline />
-     </Box>
+     <Box sx={{width: "70%", borderRight: "1px solid #CCCFD3"}}>{dataSelected ? <Detail idSelected={_.get(dataSelected, "_id")} /> : null}</Box>
+     <Box sx={{width: "30%"}}>{dataSelected ? <TimelinePetition idSelected={_.get(dataSelected, "_id")} /> : null}</Box>
     </Box>
    </Box>
    <AppBar position='sticky' color='primary' sx={{top: "auto", bottom: 0, boxShadow: "0px -5px 4px 0px #7E7E7E26", background: "#FFF"}}>
     <Box sx={{p: 2, display: "flex", justifyContent: "space-between", alignItems: "start", gap: 2}}>
      <Box sx={{width: "35%", textAlign: "center"}}>{/* <Pagination count={10} color='primary' /> */}</Box>
-
-     <Box
-      sx={{
-       width: "64%",
-       display: "flex",
-       alignItems: "center",
-       justifyContent: "end",
-       gap: 2,
-      }}
-     >
-      <Reject>
-       <Button
-        variant='contained'
-        size='large'
-        sx={{
-         width: "180px",
-         background: "#FFE2E2",
-         textTransform: "inherit",
-         color: "#D30500",
-         "&:hover": {
-          backgroundColor: "#FFE2E2",
-          color: "#D30500",
-         },
-        }}
-       >
-        Từ chối phản ánh
-       </Button>
-      </Reject>
-
-      <Button
-       variant='contained'
-       size='large'
-       sx={{
-        width: "180px",
-        background: "#FFF",
-        textTransform: "inherit",
-        color: "#007CFE",
-        border: "1px solid #007CFE",
-        "&:hover": {
-         backgroundColor: "#FFF",
-         color: "#007CFE",
-        },
-       }}
-      >
-       Báo trùng
-      </Button>
-      <Button
-       variant='contained'
-       size='large'
-       sx={{
-        width: "180px",
-        background: "#E5F1FF",
-        textTransform: "inherit",
-        color: "#007CFE",
-        "&:hover": {
-         backgroundColor: "#E5F1FF",
-         color: "#007CFE",
-        },
-       }}
-      >
-       Phân phối xử lý
-      </Button>
-      <EditResult>
-       <Button onClick={() => {}} variant='contained' size='large' sx={{width: "180px", background: "#007CFE", borderRadius: "12px", textTransform: "inherit"}}>
-        Tiếp nhận xử lý
-       </Button>
-      </EditResult>
-     </Box>
+     {dataSelected ? (
+      <Box sx={{width: "64%", display: "flex", alignItems: "center", justifyContent: "end", gap: 2}}>
+       <BtnTuChoiPhanAnh idSelected={_.get(dataSelected, "_id")} />
+       <BtnTuChoiXuLy idSelected={_.get(dataSelected, "_id")} />
+       <BtnBaoTrung idSelected={_.get(dataSelected, "_id")} />
+       <BtnChuyenXuLy idSelected={_.get(dataSelected, "_id")} />
+       <BtnTiepNhanXuLy idSelected={_.get(dataSelected, "_id")} />
+      </Box>
+     ) : null}
     </Box>
    </AppBar>
   </Fragment>

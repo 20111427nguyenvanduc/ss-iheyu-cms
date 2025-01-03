@@ -7,15 +7,16 @@ import _ from "lodash"
 import ms from "ms"
 import toastr from "toastr"
 import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField, Autocomplete} from "@mui/material"
-import {create as createPermission, update as updatePermission} from "../../services/permission"
 import {list as listCategory} from "../../services/category"
 
-const EditCategory = ({children, onClose = () => {}}) => {
+const EditCategory = ({children, categoryDetail = null, onClose = () => {}}) => {
  const [open, setOpen] = React.useState(false)
  const [listCat, setListCat] = useState("")
- const [category, setCategory] = useState(null)
+ const [category, setCategory] = useState(categoryDetail)
 
- useEffect(() => {}, [])
+ useEffect(() => {
+  setCategory(categoryDetail)
+ }, [categoryDetail])
 
  useEffect(() => {
   getList()
@@ -36,8 +37,6 @@ const EditCategory = ({children, onClose = () => {}}) => {
    }
   })
  }
-
- const handleCreate = () => {}
 
  return (
   <React.Fragment>

@@ -32,7 +32,7 @@ export default function Info({data}) {
      <Typography variant='p' sx={{fontSize: "14px", color: "#2E3236", fontWeight: 400}}>
       {_.get(data, "category.name")}
      </Typography>
-     <EditCategory >
+     <EditCategory categoryDetail={_.get(data, "category")}>
       <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "20px", cursor: "pointer"}} />
      </EditCategory>
     </Box>
@@ -44,8 +44,8 @@ export default function Info({data}) {
      Mức độ:
     </Typography>
     <Box sx={{justifyContent: "start", alignItems: "center", display: "flex", gap: 1}}>
-     <img src='/images/priority/priority-1.png' style={{width: "16px"}} />
-     <EditPriority>
+     <img src={`/images/priority/priority-${_.get(data, "priority", 0)}.png`} style={{width: "16px"}} />
+     <EditPriority priorityDetail={_.get(data, "priority", 0)}>
       <i className='icon-bold-edit-2' style={{color: "#007CFE", fontSize: "20px", cursor: "pointer"}} />
      </EditPriority>
     </Box>

@@ -30,7 +30,6 @@ const routes = {
       path: '/user-manager/:id',
       load: () => import(/* webpackChunkName: 'user-manager-detail' */ './userManager/detail'),
     },
-
     {
       path: ['/unit'],
       load: () => import(/* webpackChunkName: 'unit' */ './unit'),
@@ -39,7 +38,14 @@ const routes = {
       path: '/unit/:id',
       load: () => import(/* webpackChunkName: 'unit-detail' */ './unit/detail'),
     },
-
+    {
+      path: ['/analytic'],
+      load: () => import(/* webpackChunkName: 'analytic' */ './analytic'),
+    },
+    {
+      path: ['/analytic/unit'],
+      load: () => import(/* webpackChunkName: 'analytic-unit' */ './analytic/unit'),
+    },
     {
       path: '/position/:id',
       load: () => import(/* webpackChunkName: 'position-detail' */ './position/detail'),

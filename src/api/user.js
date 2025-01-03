@@ -37,7 +37,7 @@ export default {
     authPost(url, req, res);
   },
   grantPermisstion(req, res) {
-    const url = `${IHEYU_SERVICE}/admin/user/grant-permission`;
+    const url = `${IHEYU_SERVICE}/api/v1.0/admin/user/grant-permission`;
     authPost(url, req, res);
   },
 };
