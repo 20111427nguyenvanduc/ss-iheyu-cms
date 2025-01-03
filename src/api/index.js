@@ -71,6 +71,13 @@ app.post("/admin/category-permission/list", CategoryPermissionHandle.list);
 //petition
 app.post("/admin/petition/list", PetitionHandle.list)
 app.post("/admin/petition/list-for-individual", PetitionHandle.listForIndividual)
+app.post("/admin/petition/count", PetitionHandle.count)
+app.post("/admin/petition/count-for-individual", PetitionHandle.countForIndividual)
+app.post("/admin/petition/get", PetitionHandle.get)
+app.post("/admin/petition/get-log-job", PetitionHandle.getLogJob)
+app.post("/admin/petition/tiep-nhan-xu-ly", PetitionHandle.tiepNhanXyLy)
+app.post("/admin/petition/get-user-by-unit", PetitionHandle.getUserByUnit)
+app.post("/admin/petition/get-unit-children", PetitionHandle.getUnitChildren)
 
 //media
 app.post("/media/upload-single", multipartMiddleware, MediaHandle.uploadSingle);

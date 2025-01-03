@@ -146,10 +146,10 @@ const AddEdit = ({children, onClose = () => {}, detail = null}) => {
        </Typography>
 
        <UploadImgSingle
-        id={"icon-unut"}
+        id={"icon-category"}
         width={"100%"}
         height={"150px"}
-        folder='icon-unit'
+        folder='icon-category'
         imageUrl={icon}
         onUploadSuccess={(imageUrl) => {
          setIcon(imageUrl)

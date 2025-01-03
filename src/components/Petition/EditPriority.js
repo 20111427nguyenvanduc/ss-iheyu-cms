@@ -1,4 +1,3 @@
-/* jslint es6 */
 import React, {useEffect, useState, Fragment} from "react"
 import {useSelector, useDispatch} from "react-redux"
 import {styled, useTheme} from "@mui/material/styles"
@@ -10,16 +9,42 @@ import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogT
 import {create as createPermission, update as updatePermission} from "../../services/permission"
 import {list as listCategory} from "../../services/category"
 
-const EditPriority = ({children, onClose = () => {}}) => {
+const EditPriority = ({children, priorityDetail = 0, onClose = () => {}}) => {
  const [open, setOpen] = React.useState(false)
- const [listCat, setListCat] = useState("")
- const [category, setCategory] = useState(null)
+ const [listPriority, setListPriority] = useState([
+  {
+   name: "Cao nhất",
+   value: 0,
+   url: "/images/priority/priority-0.png",
+  },
+  {
+   name: "Cao",
+   value: 1,
+   url: "/images/priority/priority-1.png",
+  },
+  {
+   name: "Trung bình",
+   value: 2,
+   url: "/images/priority/priority-2.png",
+  },
+  {
+   name: "Thấp",
+   value: 3,
+   url: "/images/priority/priority-3.png",
+  },
+  {
+   name: "Thấp nhất",
+   value: 4,
+   url: "/images/priority/priority-4.png",
+  },
+ ])
 
- useEffect(() => {}, [])
+ // Khởi tạo giá trị ban đầu của priority từ priorityDetail
+ const [priority, setPriority] = useState(priorityDetail)
 
  useEffect(() => {
-  getList()
- }, [])
+  setPriority(priorityDetail) // Cập nhật priority khi priorityDetail thay đổi
+ }, [priorityDetail])
 
  const handleClickOpen = () => {
   setOpen(true)
@@ -29,15 +54,9 @@ const EditPriority = ({children, onClose = () => {}}) => {
   setOpen(false)
  }
 
- const getList = () => {
-  listCategory({}).then((res) => {
-   if (_.get(res, "code") === 200) {
-    setListCat(_.get(res, "data"))
-   }
-  })
+ const handleCreate = () => {
+  // Handle create action
  }
-
- const handleCreate = () => {}
 
  return (
   <React.Fragment>
@@ -50,7 +69,7 @@ const EditPriority = ({children, onClose = () => {}}) => {
     {onClick: handleClickOpen},
    )}
 
-   <Dialog fullWidth={true} maxWidth={"xs"} open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
+   <Dialog fullWidth maxWidth='xs' open={open} onClose={handleClose} aria-labelledby='alert-dialog-title' aria-describedby='alert-dialog-description'>
     <DialogTitle>
      <Typography variant='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
       Chỉnh sửa mức độ
@@ -64,12 +83,18 @@ const EditPriority = ({children, onClose = () => {}}) => {
        </Typography>
        <Autocomplete
         fullWidth
-        options={listCat}
+        options={listPriority}
         getOptionLabel={(option) => _.get(option, "name", "")}
-        value={category}
+        value={listPriority.find((item) => _.get(item, "value") === priority) || null} // Bind the value based on priority value
         onChange={(e, value) => {
-         setCategory(value)
+         setPriority(_.get(value, "value", null)) // Only store the value when selected
         }}
+        renderOption={(props, option) => (
+         <li {...props} style={{display: "flex", alignItems: "center"}}>
+          <img src={_.get(option, "url", "")} alt={_.get(option, "name", "")} style={{width: "20px", height: "20px", margin: "0 8px"}} />
+          <Typography>{_.get(option, "name", "")}</Typography>
+         </li>
+        )}
         renderInput={(params) => (
          <TextField
           {...params}
@@ -81,10 +106,24 @@ const EditPriority = ({children, onClose = () => {}}) => {
             borderRadius: "16px",
            },
           }}
+          InputProps={{
+           ...params.InputProps,
+           startAdornment: priority !== null && (
+            <img
+             src={_.get(
+              listPriority.find((item) => _.get(item, "value") === priority),
+              "url",
+              "",
+             )}
+             alt='Selected Priority'
+             style={{width: "20px", height: "20px", margin: "0 8px"}}
+            />
+           ),
+          }}
          />
         )}
        />
-       <Button onClick={() => {}} fullWidth variant='contained' type='submit' sx={{borderRadius: "12px", background: "#007CFE", fontSize: "16px", padding: "8px"}}>
+       <Button onClick={handleCreate} fullWidth variant='contained' type='submit' sx={{borderRadius: "12px", background: "#007CFE", fontSize: "16px", padding: "8px"}}>
         Xác nhận
        </Button>
       </Box>

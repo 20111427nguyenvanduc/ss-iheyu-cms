@@ -62,14 +62,16 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
    return false
   }
   try {
-   updatePosition({_id: _.get(detail, "_id"), name, unit: _.get(unitCurrent, "_id"), permissions: _.get(detail, "permissions"), groupPermissions: _.get(detail, "groupPermissions"), role}).then((res) => {
-    if (_.get(res, "code") === 200) {
-     handleClose()
-     onClose()
-     resetState()
-     toastr.success("Cập nhật chức vụ thành công!")
-    }
-   })
+   updatePosition({_id: _.get(detail, "_id"), name, unit: _.get(unitCurrent, "_id"), permissions: _.get(detail, "permissions"), groupPermissions: _.get(detail, "groupPermissions"), role}).then(
+    (res) => {
+     if (_.get(res, "code") === 200) {
+      handleClose()
+      onClose()
+      resetState()
+      toastr.success("Cập nhật chức vụ thành công!")
+     }
+    },
+   )
   } catch (error) {
    toastr.error("Lỗi hệ thống. Vui lòng thử lại sau.")
   }
@@ -117,7 +119,7 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
          sx: {borderRadius: "16px"},
         }}
        />
-       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+       {/* <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
         Vai trò
        </Typography>
        <TextField
@@ -141,7 +143,7 @@ const AddEditPosition = ({children, onClose = () => {}, unitCurrent, detail = nu
           {option.label}
          </MenuItem>
         ))}
-       </TextField>
+       </TextField> */}
        <Button
         onClick={() => {
          if (detail) {

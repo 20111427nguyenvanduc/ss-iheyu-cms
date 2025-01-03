@@ -12,7 +12,8 @@ import RadioGroup from "@mui/material/RadioGroup"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import FormControl from "@mui/material/FormControl"
 import FormLabel from "@mui/material/FormLabel"
-import {getUserByUnit as listUser, getUnitChildren as listUnit} from "../../services/petition"
+import {list as listUnit} from "../../services/unit"
+import {list as listUser} from "../../services/user"
 
 const BtnChuyenXuLy = ({children, onClose = () => {}}) => {
  const [open, setOpen] = React.useState(false)
@@ -114,16 +115,10 @@ const BtnChuyenXuLy = ({children, onClose = () => {}}) => {
         <Autocomplete
          fullWidth
          options={dataListUser}
-         getOptionLabel={(option) => {
-          const name = _.get(option, "name", "")
-          const positions = _.get(option, "positions", [])
-           .map((pos) => pos.name)
-           .join(", ") // Nối các vị trí bằng dấu ", "
-          return positions ? `${name} - ${positions}` : name // Hiển thị tên và vị trí
-         }}
+         getOptionLabel={(option) => _.get(option, "name", "")}
          value={unit}
          onChange={(e, value) => {
-          setUnit(value)
+          setUser(value)
          }}
          renderInput={(params) => (
           <TextField
