@@ -1,10 +1,10 @@
-import React from "react";
-import Component from "../../pages/digitalUtilities";
+import React from 'react';
+import Component from '../../pages/digitalUtilities';
 
 function action(props) {
   return {
-    title: "Tiện ích",
-    chunks: ["digital-utilities"],
+    title: 'Tiện ích',
+    chunks: ['app-manager'],
     component: <Component {...props} />,
   };
 }

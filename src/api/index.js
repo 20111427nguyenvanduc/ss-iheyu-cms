@@ -82,3 +82,4 @@ app.post('/admin/services/list', ServicesHandle.listService);
 app.post('/admin/services/list-service-children', ServicesHandle.listServiceChildren);
 app.post('/admin/services/hide-show', ServicesHandle.hideShowService);
 app.post('/admin/services/ordering', ServicesHandle.orderingServices);
+app.post('/admin/services/update-icon', ServicesHandle.updateIconService);

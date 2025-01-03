@@ -17,3 +17,6 @@ export const hideShowService = (body = {}) => {
 export const orderingService = (body = {}) => {
   return axios.post('/admin/services/ordering', body);
 };
+export const updateIconService = (body = {}) => {
+  return axios.post('/admin/services/update-icon', body);
+};

@@ -10,24 +10,24 @@ const Frame = ({ icon, label, action = 'edit', open = 0, editAction = noFunc, hi
   const listActions = {
     edit: {
       icon: <EditIcon />,
-      label: 'Sửa',
+      title: 'Sửa',
       action: editAction,
     },
     hide: [
       {
         icon: <VisibilityOffIcon />,
-        label: 'Ẩn',
+        title: 'Ẩn',
         action: showAction,
       },
       {
         icon: <VisibilityIcon />,
-        label: 'Hiện',
+        title: 'Hiện',
         action: hideAction,
       },
     ],
     ordering: {
       icon: <ChangeCircleIcon />,
-      label: 'Sắp xếp',
+      title: 'Sắp xếp',
       action: orderingAction,
     },
     // Add more actions here...
@@ -43,6 +43,8 @@ const Frame = ({ icon, label, action = 'edit', open = 0, editAction = noFunc, hi
         border: 1,
         borderColor: 'grey.300',
         position: 'relative',
+        cursor: 'pointer',
+        userSelect: 'none',
       }}
       {...props}
     >

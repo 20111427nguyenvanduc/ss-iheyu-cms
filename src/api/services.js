@@ -21,7 +21,11 @@ export default {
     authPost(url, req, res);
   },
   orderingServices(req, res) {
-    const url = `${IHEYU_SERVICE}/admin/service/ordering`;
+    const url = `${IHEYU_SERVICE}/api/v1.0/admin/service/ordering`;
+    authPost(url, req, res);
+  },
+  updateIconService(req, res) {
+    const url = `${IHEYU_SERVICE}/api/v1.0/admin/service/update-icon`;
     authPost(url, req, res);
   },
 };

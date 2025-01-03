@@ -1,9 +1,9 @@
 import React from 'react';
-import Component from '../../pages/digitalUtilities/detail';
+import Component from '../../../pages/digitalUtilities/screens/administrative-agency-screen';
 import _ from 'lodash';
 
-const title = 'Tiện ích số';
-const chunks = ['app-manager-detail'];
+const title = 'Y Tế';
+const chunks = ['administrative-agency-screen'];
 
 function action(props) {
   return {

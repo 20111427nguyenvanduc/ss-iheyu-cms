@@ -45,6 +45,7 @@ const authPost = (url, req, res) => {
     },
     body: JSON.stringify(body),
   };
+
   request(options, (error, response, body) => {
     try {
       let bodyData = typeof body !== 'object' ? JSON.parse(body) : body ? body : { code: 300 };
@@ -53,15 +54,13 @@ const authPost = (url, req, res) => {
       }
       res.json(bodyData);
     } catch (e) {
-      console.log(url, body, e.message);
-
       res.json({
         code: 500,
         message: {
-          head: _.get(error, 'message', body),
+          head: 'Thông báo',
           body: 'Hệ thống bận vui lòng thử lại',
         },
-        error: e.message,
+        error: _.get(error, 'message', body) || e.message,
       });
     }
   });
@@ -105,10 +104,10 @@ const postFromData = (url, req, res) => {
       res.json({
         code: 500,
         message: {
-          head: _.get(error, 'message', body),
+          head: 'Thông báo',
           body: 'Hệ thống bận vui lòng thử lại',
         },
-        error: e,
+        error: _.get(error, 'message', body) || e.message,
       });
     }
   });
