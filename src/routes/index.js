@@ -39,6 +39,14 @@ const routes = {
    path: "/unit/:id",
    load: () => import(/* webpackChunkName: 'unit-detail' */ "./unit/detail"),
   },
+  {
+   path: ["/analytic"],
+   load: () => import(/* webpackChunkName: 'analytic' */ "./analytic"),
+  },
+  {
+   path: ["/analytic/unit"],
+   load: () => import(/* webpackChunkName: 'analytic-unit' */ "./analytic/unit"),
+  },
 
   {
    path: "/position/:id",

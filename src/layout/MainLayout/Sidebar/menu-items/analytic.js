@@ -6,12 +6,12 @@ import SchoolIcon from "@mui/icons-material/School"
 import NewspaperIcon from "@mui/icons-material/Newspaper"
 
 const dashboard = {
- id: "anaytic",
+ id: "analytic",
  title: "",
  type: "group",
  children: [
   {
-   id: "manage-anaytic",
+   id: "manage-analytic",
    title: "Thống kê",
    type: "collapse",
    icon: "/images/sidebar/icon-sidebar-thongke.png",
@@ -20,21 +20,21 @@ const dashboard = {
      id: "anaytic-overview",
      title: "Tổng quan",
      type: "item",
-     url: "/anaytic",
+     url: "/analytic",
      icon: "/images/sidebar/icon-sidebar-danhsach.png",
     },
     {
-     id: "anaytic-unit",
+     id: "analytic-unit",
      title: "Đơn vị xử lý",
      type: "item",
-     url: "/anaytic/unit",
+     url: "/analytic/unit",
      icon: "/images/sidebar/icon-sidebar-danhsach.png",
     },
     {
-     id: "anaytic-category",
+     id: "analytic-category",
      title: "Đơn vị xử lý",
      type: "item",
-     url: "/anaytic/category",
+     url: "/analytic/category",
      icon: "/images/sidebar/icon-sidebar-danhsach.png",
     },
    ],

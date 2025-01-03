@@ -9,8 +9,14 @@ import toastr from "toastr"
 import {Button, Typography, Dialog, Stack, DialogActions, DialogContent, DialogTitle, Box, TextField, Autocomplete, InputAdornment, Chip} from "@mui/material"
 import {create as createUnit, update as updateUnit} from "../../services/unit"
 import UploadImgSingle from "../tools/UploadImgSingle"
+import {Editor} from "@tinymce/tinymce-react"
+import Radio from "@mui/material/Radio"
+import RadioGroup from "@mui/material/RadioGroup"
+import FormControlLabel from "@mui/material/FormControlLabel"
+import FormControl from "@mui/material/FormControl"
+import FormLabel from "@mui/material/FormLabel"
 
-const Reject = ({children, onClose = () => {}}) => {
+const EditResult = ({children, onClose = () => {}}) => {
  const [open, setOpen] = React.useState(false)
  const [reson, setReson] = useState("")
  const [icon, setIcon] = useState("")
@@ -37,27 +43,29 @@ const Reject = ({children, onClose = () => {}}) => {
    <Dialog fullWidth={true} maxWidth={"xs"} open={open} onClose={handleClose}>
     <DialogTitle>
      <Typography component='p' sx={{fontSize: "22px", color: "#2E3236", fontWeight: 700}}>
-      Từ chối xử lý
+      Sửa kết quả
      </Typography>
     </DialogTitle>
     <DialogContent>
      <Box display='flex' flexDirection='column' justifyContent='center' alignItems='center' gap='20px'>
       <Box sx={{width: "100%"}} display='flex' flexDirection='column' justifyContent='center' alignItems='start' gap='16px'>
        <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
-        Lý do từ chối
+        Nội dung kết quả xử lý
         <Typography component='span' sx={{color: "#D30500", fontWeight: 500, fontSize: "18px"}}>
          *
         </Typography>
        </Typography>
-       <TextField
-        fullWidth
-        placeholder='Nhập nội dung'
-        variant='outlined'
+       <Editor
+        onEditorChange={(editedValue) => {
+         setReson(editedValue)
+        }}
+        apiKey='sqvdxm07q23ih36ctijf9mvec8dyzd254g0ng5cs0wb2svy0'
         value={reson}
-        onChange={(e) => setReson(e.target.value)}
-        inputProps={{name: "name", ariallabel: "name"}}
-        multiline
-        rows={4}
+        init={{
+         selector: "textarea",
+         toolbar:
+          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
+        }}
        />
        <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
         File đính kèm
@@ -87,6 +95,19 @@ const Reject = ({children, onClose = () => {}}) => {
          <Chip label='Chọn file ' />
         </Stack>
        </UploadImgSingle>
+
+       <Typography variant='p' sx={{fontSize: "18px", color: "#4A4F55", fontWeight: 400}}>
+        Công khai phản ánh
+        <Typography component='span' sx={{color: "#D30500", fontWeight: 500, fontSize: "18px"}}>
+         *
+        </Typography>{" "}
+       </Typography>
+       <FormControl>
+        <RadioGroup row aria-labelledby='demo-form-control-label-placement' name='position'>
+         <FormControlLabel value='bottom' control={<Radio />} label='Có' />
+         <FormControlLabel value='end' control={<Radio />} label='Không' />
+        </RadioGroup>
+       </FormControl>
       </Box>
      </Box>
     </DialogContent>
@@ -117,4 +138,4 @@ const Reject = ({children, onClose = () => {}}) => {
  )
 }
 
-export default Reject
+export default EditResult
