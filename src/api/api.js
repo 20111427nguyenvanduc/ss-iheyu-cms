@@ -1,12 +1,12 @@
-import fs from "fs";
-import request from "request";
+import fs from 'fs';
+import request from 'request';
 
 const apiPost = (url, body, cb, headers) => {
   let options = {
     url: url,
-    method: "POST",
+    method: 'POST',
     headers: {
-      "content-type": "application/json",
+      'content-type': 'application/json',
       ...headers,
     },
     body: JSON.stringify(body),
@@ -26,7 +26,7 @@ const apiPost = (url, body, cb, headers) => {
       cb({
         code: 500,
         message: {
-          body: "Hệ thống đang bận vui lòng thử lại sau",
+          body: 'Hệ thống đang bận vui lòng thử lại sau',
         },
       });
     }
@@ -35,12 +35,10 @@ const apiPost = (url, body, cb, headers) => {
 
 const authPost = (url, req, res) => {
   const body = req.body;
-  const headers = { token: _.get(req, "user.token") }; // Đính token vào header
-  console.log('hahatoken: ',_.get(req, "user.token"));
-  
+  const headers = { token: _.get(req, 'user.token') }; // Đính token vào header
   let options = {
     url: url,
-    method: "POST",
+    method: 'POST',
     headers: {
       ...req.headers,
       ...headers,
@@ -49,43 +47,47 @@ const authPost = (url, req, res) => {
   };
   request(options, (error, response, body) => {
     try {
-      let bodyData = typeof body !== "object" ? JSON.parse(body) : body ? body : { code: 300 };
-      if (_.get(bodyData, "code") === 1993) {
+      let bodyData = typeof body !== 'object' ? JSON.parse(body) : body ? body : { code: 300 };
+      if (_.get(bodyData, 'code') === 1993) {
         req.logout();
       }
       res.json(bodyData);
     } catch (e) {
+      console.log(url, body, e.message);
+
       res.json({
         code: 500,
         message: {
-          body: e.message,
+          head: _.get(error, 'message', body),
+          body: 'Hệ thống bận vui lòng thử lại',
         },
+        error: e.message,
       });
     }
   });
 };
 
 const postFromData = (url, req, res) => {
-  const headers = { token: _.get(req, "user.token") }; // Đính token vào header
-  let file = _.get(req, "files.fileUpload.path", "");
+  const headers = { token: _.get(req, 'user.token') }; // Đính token vào header
+  let file = _.get(req, 'files.fileUpload.path', '');
   let formData = {
     ...req.body,
-    folder: req.body.folder || "test2",
+    folder: req.body.folder || 'test2',
     fileUpload: {
       value: fs.readFileSync(file),
       options: {
-        filename: "image.jpg",
+        filename: 'image.jpg',
       },
-      ContentType: "image/jpeg",
-      ContentDisposition: "inline",
+      ContentType: 'image/jpeg',
+      ContentDisposition: 'inline',
     },
   };
   let options = {
     url,
-    method: "POST",
+    method: 'POST',
     strictSSL: false,
     headers: {
-      "content-type": "multipart/form-data",
+      'content-type': 'multipart/form-data',
       ...headers,
     },
     formData,
@@ -94,8 +96,8 @@ const postFromData = (url, req, res) => {
 
   request(options, (error, response, body) => {
     try {
-      let bodyData = typeof body !== "object" ? JSON.parse(body) : body ? body : { code: 300 };
-      if (_.get(bodyData, "code") === 1993) {
+      let bodyData = typeof body !== 'object' ? JSON.parse(body) : body ? body : { code: 300 };
+      if (_.get(bodyData, 'code') === 1993) {
         req.logout();
       }
       res.json(bodyData);
@@ -103,8 +105,10 @@ const postFromData = (url, req, res) => {
       res.json({
         code: 500,
         message: {
-          body: e.message,
+          head: _.get(error, 'message', body),
+          body: 'Hệ thống bận vui lòng thử lại',
         },
+        error: e,
       });
     }
   });
