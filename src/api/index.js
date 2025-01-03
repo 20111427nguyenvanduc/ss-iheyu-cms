@@ -69,17 +69,8 @@ app.post("/admin/category/inactive", CategoryHandle.inactive);
 app.post("/admin/category-permission/list", CategoryPermissionHandle.list);
 
 //petition
-<<<<<<< Updated upstream
-app.post("/admin/petition/create", PetitionHandle.create);
-app.post("/admin/petition/list", PetitionHandle.list);
-app.post("/admin/petition/list-category", PetitionHandle.listCategory);
-app.post("/admin/petition/list-community", PetitionHandle.listCommunity);
-app.post("/admin/petition/update", PetitionHandle.update);
-app.post("/admin/petition/get", PetitionHandle.get);
-=======
 app.post("/admin/petition/list", PetitionHandle.list)
 app.post("/admin/petition/list-for-individual", PetitionHandle.listForIndividual)
->>>>>>> Stashed changes
 
 //media
 app.post("/media/upload-single", multipartMiddleware, MediaHandle.uploadSingle);
